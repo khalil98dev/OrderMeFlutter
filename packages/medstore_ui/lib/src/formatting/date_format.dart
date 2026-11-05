@@ -1,0 +1,23 @@
+import 'dart:ui' show Locale;
+
+import 'package:intl/intl.dart';
+
+/// Dates the way each language writes them, with Western digits in Arabic (the Algerian habit).
+///
+/// ```dart
+/// AppDateFormat.day(invoice.dueDate, locale);        // "30/11/2026"
+/// AppDateFormat.dateTime(order.placedAt, locale);    // "04/11/2026 21:34"
+/// AppDateFormat.month(DateTime(2026, 11), locale);   // "novembre 2026"
+/// ```
+///
+/// Instants from the API are UTC; they are shown in the device's time zone.
+abstract final class AppDateFormat {
+  static String _tag(Locale locale) => locale.languageCode == 'ar' ? 'ar_DZ' : 'fr_DZ';
+
+  static String day(DateTime date, Locale locale) => DateFormat('dd/MM/yyyy', _tag(locale)).format(date);
+
+  static String dateTime(DateTime instant, Locale locale) =>
+      DateFormat('dd/MM/yyyy HH:mm', _tag(locale)).format(instant.toLocal());
+
+  static String month(DateTime date, Locale locale) => DateFormat.yMMMM(_tag(locale)).format(date);
+}

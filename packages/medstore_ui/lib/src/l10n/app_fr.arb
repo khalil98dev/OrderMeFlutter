@@ -1,0 +1,617 @@
+{
+  "@@locale": "fr",
+  "appName": "MedStore",
+  "adminSubtitle": "Administration",
+  "loginTitle": "Connexion",
+  "loginSubtitleAdmin": "Espace de l'équipe MedStore",
+  "loginSubtitleTeacher": "Commandez vos impressions",
+  "userName": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "showPassword": "Afficher le mot de passe",
+  "hidePassword": "Masquer le mot de passe",
+  "signIn": "Se connecter",
+  "signOut": "Se déconnecter",
+  "fieldRequired": "Ce champ est obligatoire.",
+  "wrongCredentials": "Nom d'utilisateur ou mot de passe incorrect.",
+  "failureNetwork": "Impossible de joindre le serveur. Vérifiez votre connexion.",
+  "failureUnauthorized": "Votre session a expiré. Reconnectez-vous.",
+  "failureForbidden": "Vous n'avez pas l'autorisation de faire cela.",
+  "failureNotFound": "Élément introuvable.",
+  "failureConflict": "Cet élément a été modifié entre-temps. Actualisez puis réessayez.",
+  "failureValidation": "Veuillez corriger les champs indiqués.",
+  "failureWrongApp": "Ce compte ne peut pas utiliser cette application.",
+  "failureServer": "Le serveur a rencontré une erreur. Réessayez plus tard.",
+  "failureUnexpected": "Une erreur inattendue s'est produite.",
+  "retry": "Réessayer",
+  "errorTitle": "Une erreur est survenue",
+  "search": "Rechercher",
+  "cancel": "Annuler",
+  "confirm": "Confirmer",
+  "close": "Fermer",
+  "loading": "Chargement…",
+  "decreaseQuantity": "Diminuer la quantité",
+  "increaseQuantity": "Augmenter la quantité",
+  "offline": "Hors ligne",
+  "comingSoonTitle": "Bientôt disponible",
+  "comingSoonMessage": "Cet écran sera construit dans une prochaine étape.",
+  "sectionOperations": "Opérations",
+  "sectionFinance": "Finance",
+  "sectionSystem": "Système",
+  "navDashboard": "Tableau de bord",
+  "navOrders": "Commandes",
+  "navProducts": "Produits",
+  "navTeachers": "Enseignants",
+  "navSchools": "Établissements",
+  "navInvoices": "Factures",
+  "navWallet": "Portefeuille",
+  "navDebts": "Créances",
+  "navNotifications": "Notifications",
+  "navSettings": "Paramètres",
+  "navProfile": "Profil",
+  "collapseSidebar": "Réduire la barre latérale",
+  "expandSidebar": "Déployer la barre latérale",
+  "language": "Langue",
+  "languageArabic": "العربية",
+  "languageFrench": "Français",
+  "save": "Enregistrer",
+  "edit": "Modifier",
+  "delete": "Supprimer",
+  "filterAll": "Tous",
+  "noResultsTitle": "Aucun résultat",
+  "noResultsMessage": "Essayez un autre mot ou retirez un filtre.",
+  "tooLong": "{max} caractères au plus.",
+  "@tooLong": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "productTypeGuide": "Guide",
+  "productTypePracticeBook": "Cahier d'exercices",
+  "productTypeExamCollection": "Recueil d'examens",
+  "productTypeOther": "Autre",
+  "productAvailable": "Disponible",
+  "productUnavailable": "Indisponible",
+  "priceHidden": "Prix masqué",
+  "pricePerCopy": "{price} / exemplaire",
+  "@pricePerCopy": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCount": "{count, plural, =1{1 page} other{{count} pages}}",
+  "@pageCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "productsCount": "{count, plural, =0{Aucun produit} =1{1 produit} other{{count} produits}}",
+  "@productsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchProducts": "Rechercher un produit",
+  "noProductsTitle": "Aucun produit",
+  "noProductsTeacherMessage": "Vos livres apparaîtront ici dès que l'équipe MedStore les aura préparés.",
+  "noProductsAdminMessage": "Créez le premier produit d'un enseignant.",
+  "productDetails": "Détails",
+  "productUnavailableNotice": "Ce produit ne peut pas être commandé pour le moment.",
+  "newProduct": "Nouveau produit",
+  "editProduct": "Modifier le produit",
+  "fieldName": "Nom",
+  "fieldCode": "Code",
+  "fieldDescription": "Description",
+  "fieldSubject": "Matière",
+  "fieldLevel": "Niveau",
+  "fieldType": "Type",
+  "fieldPageCount": "Nombre de pages",
+  "fieldPrice": "Prix par exemplaire (DA)",
+  "fieldTeacher": "Enseignant",
+  "fieldAvailable": "Disponible à la commande",
+  "fieldAvailableHint": "Décoché, le produit reste visible mais ne peut plus être commandé.",
+  "fieldCover": "Couverture",
+  "ownerCannotChange": "Le propriétaire d'un produit ne change pas.",
+  "chooseTeacher": "Choisir un enseignant",
+  "chooseImage": "Choisir une image",
+  "replaceImage": "Remplacer",
+  "removeImage": "Retirer",
+  "imageHint": "JPEG, PNG ou WebP, 5 Mo au plus.",
+  "imageTooLarge": "L'image dépasse 5 Mo.",
+  "priceInvalid": "Saisissez un prix valide (0 ou plus).",
+  "pageCountInvalid": "Saisissez un nombre de pages supérieur à 0.",
+  "deleteProductTitle": "Supprimer « {name} » ?",
+  "@deleteProductTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteProductMessage": "Le produit disparaît de la liste. Les commandes passées le gardent.",
+  "productSaved": "Produit enregistré",
+  "productDeleted": "Produit supprimé",
+  "codeTaken": "Ce code est déjà utilisé par un autre produit.",
+  "imageTypeInvalid": "L'image doit être un fichier JPEG, PNG ou WebP.",
+  "teacherUnavailable": "Cet enseignant n'existe pas ou est désactivé.",
+  "savedButCoverFailed": "Le produit est enregistré, mais pas la couverture. Réessayez.",
+  "back": "Retour",
+  "clear": "Effacer",
+  "choose": "Choisir",
+  "add": "Ajouter",
+  "remove": "Retirer",
+  "create": "Créer",
+  "refresh": "Actualiser",
+  "downloadPdf": "Télécharger le PDF",
+  "fileSaved": "Fichier enregistré : {path}",
+  "@fileSaved": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "none": "Aucun",
+  "periodFrom": "Du",
+  "periodTo": "Au",
+  "total": "Total",
+  "details": "Détails",
+  "fieldNotes": "Notes",
+  "fieldNote": "Note",
+  "fieldReason": "Motif",
+  "fieldAmount": "Montant (DA)",
+  "amountInvalid": "Saisissez un montant supérieur à 0, avec 2 décimales au plus.",
+  "voidedBadge": "Annulé",
+  "voidAction": "Annuler définitivement",
+  "byName": "par {name}",
+  "@byName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "active": "Actif",
+  "inactive": "Désactivé",
+  "deactivate": "Désactiver",
+  "validationUserNameTaken": "Ce nom d'utilisateur est déjà pris.",
+  "validationPassword": "Le mot de passe doit contenir au moins 8 caractères.",
+  "validationPhone": "Numéro de téléphone invalide.",
+  "validationEmail": "Adresse e-mail invalide.",
+  "colNumber": "N°",
+  "colTeacher": "Enseignant",
+  "colDate": "Date",
+  "colStatus": "Statut",
+  "colTotal": "Total",
+  "colQuantity": "Qté",
+  "colProduct": "Produit",
+  "colUnitPrice": "Prix unitaire",
+  "colLines": "Lignes",
+  "colAmount": "Montant",
+  "colBalance": "Solde",
+  "colBalanceAfter": "Solde après",
+  "colType": "Type",
+  "colDueDate": "Échéance",
+  "colPaid": "Payé",
+  "colDue": "Reste dû",
+  "colOrders": "Commandes",
+  "colCopies": "Exemplaires",
+  "colPhone": "Téléphone",
+  "colSchool": "Établissement",
+  "colReceipt": "Reçu",
+  "colLabel": "Libellé",
+  "account": "Compte",
+  "changePassword": "Changer le mot de passe",
+  "currentPassword": "Mot de passe actuel",
+  "newPassword": "Nouveau mot de passe",
+  "confirmPassword": "Confirmer le mot de passe",
+  "passwordsDoNotMatch": "Les deux mots de passe ne sont pas identiques.",
+  "passwordChanged": "Mot de passe changé. Les autres appareils devront se reconnecter.",
+  "currentPasswordWrong": "Le mot de passe actuel est incorrect.",
+  "changePasswordHint": "Changer le mot de passe termine toutes les sessions ouvertes.",
+  "fieldRoles": "Rôles",
+  "billingSettings": "Facturation",
+  "autoSettle": "Régler automatiquement",
+  "autoSettleHint": "Après chaque facture, créance ou dépôt, l'argent du portefeuille paie ce qui est dû, le plus ancien d'abord.",
+  "defaultPaymentTerms": "Échéance par défaut des nouveaux enseignants",
+  "settingsSaved": "Paramètres enregistrés",
+  "lastChanged": "Modifié le {date} par {name}",
+  "@lastChanged": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldPaymentTerms": "Échéance",
+  "paymentTermsImmediate": "Comptant",
+  "paymentTermsEndOfMonth": "Fin de mois",
+  "paymentTermsEndOfYear": "Fin d'année",
+  "paymentTermsDefault": "Par défaut (paramètres)",
+  "teachersCount": "{count, plural, =0{Aucun enseignant} =1{1 enseignant} other{{count} enseignants}}",
+  "@teachersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchTeachers": "Rechercher un enseignant",
+  "newTeacher": "Nouvel enseignant",
+  "editTeacher": "Modifier l'enseignant",
+  "fieldFullName": "Nom complet",
+  "fieldPhone": "Téléphone",
+  "fieldEmail": "E-mail",
+  "fieldSchool": "Établissement",
+  "fieldStatus": "Statut",
+  "signInAccount": "Compte de connexion",
+  "signInAccountHint": "L'enseignant se connecte à l'application mobile avec ce nom et ce mot de passe.",
+  "deactivateTeacherTitle": "Désactiver {name} ?",
+  "@deactivateTeacherTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deactivateTeacherMessage": "Son compte est fermé et ses sessions terminées. Ses commandes et factures restent.",
+  "teacherDeactivated": "Enseignant désactivé",
+  "teacherSaved": "Enseignant enregistré",
+  "noTeachersTitle": "Aucun enseignant",
+  "noTeachersMessage": "Créez le premier compte enseignant.",
+  "allTeachers": "Tous les enseignants",
+  "chooseSchool": "Choisir un établissement",
+  "statement": "Relevé de compte",
+  "statementInvoices": "Factures de la période",
+  "statementMovements": "Mouvements du portefeuille",
+  "statementOpenDebts": "Créances ouvertes",
+  "totalsInvoiced": "Facturé",
+  "totalsDeposited": "Déposé",
+  "totalsPaidFromWallet": "Payé par le portefeuille",
+  "owedNow": "Dû aujourd'hui",
+  "overdueNow": "En retard aujourd'hui",
+  "walletBalanceNow": "Solde du portefeuille",
+  "nothingInPeriod": "Rien sur cette période.",
+  "periodTooLong": "Choisissez une période de 366 jours au plus.",
+  "schoolsCount": "{count, plural, =0{Aucun établissement} =1{1 établissement} other{{count} établissements}}",
+  "@schoolsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchSchools": "Rechercher un établissement",
+  "newSchool": "Nouvel établissement",
+  "editSchool": "Modifier l'établissement",
+  "fieldWilaya": "Wilaya (code)",
+  "fieldCity": "Ville",
+  "fieldSchoolLevel": "Cycle",
+  "fieldSchoolType": "Secteur",
+  "schoolLevelPrimary": "Primaire",
+  "schoolLevelMiddle": "Moyen",
+  "schoolLevelSecondary": "Secondaire",
+  "schoolLevelUniversity": "Université",
+  "schoolLevelOther": "Autre",
+  "schoolTypePublic": "Public",
+  "schoolTypePrivate": "Privé",
+  "schoolSaved": "Établissement enregistré",
+  "noSchoolsTitle": "Aucun établissement",
+  "noSchoolsMessage": "Ajoutez les établissements où enseignent vos clients.",
+  "wilayaInvalid": "Saisissez un code de wilaya entre 1 et 58.",
+  "wilayaLabel": "Wilaya {code}",
+  "@wilayaLabel": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+  "ordersCount": "{count, plural, =0{Aucune commande} =1{1 commande} other{{count} commandes}}",
+  "@ordersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newOrder": "Nouvelle commande",
+  "orderNumber": "Commande n° {number}",
+  "@orderNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "searchOrderNumber": "N° de commande",
+  "orderStatusPending": "En attente",
+  "orderStatusInPreparation": "En préparation",
+  "orderStatusReady": "Prête",
+  "orderStatusDelivered": "Livrée",
+  "orderStatusCancelled": "Annulée",
+  "orderLines": "Lignes",
+  "orderHistory": "Historique",
+  "actionStartPreparation": "Commencer la préparation",
+  "actionMarkReady": "Marquer prête",
+  "actionMarkDelivered": "Marquer livrée",
+  "actionCancelOrder": "Annuler la commande",
+  "statusNoteLabel": "Note pour l'enseignant",
+  "changeStatusTitle": "Passer la commande à « {status} » ?",
+  "@changeStatusTitle": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "cancelOrderMessage": "Le motif est montré à l'enseignant. Il est obligatoire une fois la préparation commencée.",
+  "orderStatusChanged": "Statut mis à jour",
+  "reviseOrder": "Modifier les lignes",
+  "orderSaved": "Commande enregistrée",
+  "orderPlaced": "Commande n° {number} créée",
+  "@orderPlaced": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "addProduct": "Ajouter un produit",
+  "noLines": "Ajoutez au moins un produit.",
+  "actorClient": "Enseignant",
+  "actorStaff": "Équipe",
+  "noOrdersTitle": "Aucune commande",
+  "noOrdersMessage": "Les commandes des enseignants apparaîtront ici.",
+  "chooseProduct": "Choisir un produit",
+  "chooseTeacherFirst": "Choisissez d'abord l'enseignant.",
+  "orderEditableHint": "Les lignes se modifient tant que la commande est en attente ou en préparation.",
+  "noProductsForTeacher": "Cet enseignant n'a aucun produit disponible.",
+  "linesCount": "{count, plural, =1{1 ligne} other{{count} lignes}}",
+  "@linesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "walletsCount": "{count, plural, =0{Aucun portefeuille} =1{1 portefeuille} other{{count} portefeuilles}}",
+  "@walletsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "balance": "Solde",
+  "totalDeposited": "Total déposé",
+  "lastMovement": "Dernier mouvement",
+  "newDeposit": "Nouveau dépôt",
+  "newWithdrawal": "Nouveau retrait",
+  "settleNow": "Régler maintenant",
+  "settleNowMessage": "L'argent du portefeuille paie les factures et créances dues, les plus anciennes d'abord.",
+  "fieldMethod": "Moyen de paiement",
+  "fieldReference": "Référence",
+  "referenceHint": "N° de virement, page du carnet…",
+  "paymentMethodCash": "Espèces",
+  "paymentMethodBankTransfer": "Virement",
+  "paymentMethodOther": "Autre",
+  "txDeposit": "Dépôt",
+  "txWithdrawal": "Retrait",
+  "txReversal": "Annulation",
+  "txInvoicePayment": "Paiement de facture",
+  "txOtherPayment": "Paiement de créance",
+  "allTypes": "Tous les types",
+  "voidTransaction": "Annuler l'opération",
+  "voidTransactionMessage": "Une écriture inverse est ajoutée. L'opération reste visible, marquée annulée.",
+  "downloadReceipt": "Télécharger le reçu",
+  "depositRecorded": "Dépôt enregistré ({receipt})",
+  "@depositRecorded": {
+    "placeholders": {
+      "receipt": {
+        "type": "String"
+      }
+    }
+  },
+  "withdrawalRecorded": "Retrait enregistré",
+  "transactionVoided": "Opération annulée",
+  "settledAmount": "{amount} réglés depuis le portefeuille",
+  "@settledAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "noWalletsTitle": "Aucun portefeuille",
+  "noWalletsMessage": "Un portefeuille apparaît au premier dépôt.",
+  "noTransactionsTitle": "Aucune opération",
+  "withdrawalHint": "Jamais plus que le solde.",
+  "invoicesCount": "{count, plural, =0{Aucune facture} =1{1 facture} other{{count} factures}}",
+  "@invoicesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newInvoice": "Nouvelle facture",
+  "paymentStatusUnpaid": "Non payée",
+  "paymentStatusPartiallyPaid": "Payée en partie",
+  "paymentStatusPaid": "Payée",
+  "overdue": "En retard",
+  "onlyOverdue": "En retard seulement",
+  "includeVoided": "Inclure les annulées",
+  "fieldPaymentStatus": "Paiement",
+  "issueDate": "Date d'émission",
+  "dueDate": "Échéance",
+  "amountPaid": "Payé",
+  "amountDue": "Reste dû",
+  "invoicePayments": "Paiements",
+  "refundedOn": "Remboursé le {date}",
+  "@refundedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "voidInvoice": "Annuler la facture",
+  "voidInvoiceMessage": "Ses exemplaires retournent aux commandes et ses paiements au portefeuille.",
+  "settleFromWallet": "Régler depuis le portefeuille",
+  "settleAmountLabel": "Montant (vide : le maximum possible)",
+  "uninvoicedTitle": "Exemplaires à facturer",
+  "noUninvoiced": "Rien à facturer pour cet enseignant.",
+  "toInvoice": "À facturer",
+  "available": "Disponible",
+  "issueInvoice": "Émettre la facture",
+  "invoiceIssued": "Facture {label} émise",
+  "@invoiceIssued": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceVoided": "Facture annulée",
+  "invoiceSettled": "Facture réglée",
+  "fromOrders": "Commandes : {numbers}",
+  "@fromOrders": {
+    "placeholders": {
+      "numbers": {
+        "type": "String"
+      }
+    }
+  },
+  "noInvoicesTitle": "Aucune facture",
+  "noInvoicesMessage": "Émettez une facture à partir des commandes d'un enseignant.",
+  "nothingSelected": "Saisissez au moins une quantité à facturer.",
+  "quantityTooHigh": "Au plus {max}.",
+  "@quantityTooHigh": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "onlyOwing": "Seulement ceux qui doivent",
+  "totalOwed": "Total dû",
+  "overdueInvoices": "Factures en retard",
+  "upcomingInvoices": "Factures à venir",
+  "openDebts": "Créances",
+  "oldestDue": "Plus ancienne échéance",
+  "newDebt": "Nouvelle créance",
+  "debtDueHint": "Vide : due aujourd'hui.",
+  "debtKindInvoice": "Facture",
+  "debtKindDebt": "Créance",
+  "includeClosed": "Inclure les soldées",
+  "writeOff": "Passer en perte",
+  "writeOffMessage": "Ce qui reste de la créance est abandonné.",
+  "debtCreated": "Créance enregistrée",
+  "debtSettled": "Créance réglée",
+  "debtWrittenOff": "Créance passée en perte",
+  "writtenOff": "Abandonné",
+  "writtenOffOn": "Abandonné le {date} : {reason}",
+  "@writtenOffOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "noDebtsTitle": "Personne ne doit rien",
+  "noDebtsMessage": "Les factures impayées et les créances saisies apparaîtront ici.",
+  "debtDescriptionHint": "Dû d'avant l'application, ajustement…",
+  "navReports": "Rapports",
+  "navSecurity": "Sécurité",
+  "thePeriod": "Sur la période",
+  "today": "Aujourd'hui",
+  "ordersPlaced": "Commandes passées",
+  "copiesOrdered": "Exemplaires commandés",
+  "amountOrdered": "Montant commandé",
+  "invoicesIssued": "Factures émises",
+  "amountInvoiced": "Montant facturé",
+  "depositsCount": "Dépôts",
+  "amountDeposited": "Montant déposé",
+  "amountPaidFromWallets": "Payé par les portefeuilles",
+  "newTeachers": "Nouveaux enseignants",
+  "activeTeachers": "Enseignants actifs",
+  "heldInWallets": "Dans les portefeuilles",
+  "ordersByStatus": "Commandes par statut",
+  "salesReport": "Ventes",
+  "groupBy": "Regrouper par",
+  "groupByProduct": "Produit",
+  "groupByClient": "Enseignant",
+  "groupBySchool": "Établissement",
+  "groupByWilaya": "Wilaya",
+  "groupByMonth": "Mois",
+  "noSalesTitle": "Aucune vente sur la période",
+  "tabRoles": "Rôles",
+  "tabUsers": "Utilisateurs",
+  "tabResources": "Ressources",
+  "newRole": "Nouveau rôle",
+  "fieldRoleName": "Nom du rôle",
+  "roleCreated": "Rôle créé",
+  "permissionsOf": "Permissions : {role}",
+  "@permissionsOf": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "permissionsSaved": "Permissions enregistrées",
+  "editPermissions": "Modifier les permissions",
+  "permCreate": "Créer",
+  "permRead": "Lire",
+  "permSet": "Modifier",
+  "permDelete": "Supprimer",
+  "securedFields": "Champs protégés",
+  "resourceCol": "Ressource",
+  "grantsCount": "{count, plural, =0{Aucune permission} =1{1 ressource accordée} other{{count} ressources accordées}}",
+  "@grantsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adminRoleNotice": "Le rôle Admin reçoit toutes les permissions à chaque démarrage du serveur.",
+  "newUser": "Nouvel utilisateur",
+  "userCreated": "Utilisateur créé",
+  "editRoles": "Rôles",
+  "rolesSaved": "Rôles enregistrés. L'utilisateur doit se reconnecter.",
+  "rolesOf": "Rôles de {name}",
+  "@rolesOf": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deactivateUserTitle": "Désactiver {name} ?",
+  "@deactivateUserTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deactivateUserMessage": "Le compte ne peut plus se connecter et ses sessions sont terminées.",
+  "userDeactivated": "Utilisateur désactivé",
+  "teacherAccountsHint": "Les comptes enseignants se gèrent dans Enseignants.",
+  "chooseRoles": "Choisissez au moins un rôle."
+}

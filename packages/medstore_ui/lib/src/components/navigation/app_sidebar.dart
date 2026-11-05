@@ -1,0 +1,316 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Tooltip;
+
+import '../../tokens/app_colors.dart';
+import '../../tokens/app_metrics.dart';
+import '../../tokens/app_typography.dart';
+import '../display/app_logo.dart';
+
+class AppSidebarItem {
+  const AppSidebarItem({required this.label, required this.icon, this.activeIcon, this.section});
+
+  final String label;
+  final IconData icon;
+  final IconData? activeIcon;
+
+  /// Items with the same section are grouped under its title.
+  final String? section;
+}
+
+/// macOS-style sidebar for the desktop app: sections, a garnet selection, and a collapse button that
+/// shrinks it to an icon rail.
+///
+/// Direction-aware: the border and the collapse animation sit on the *end* side, so in Arabic the
+/// sidebar is on the right and everything mirrors.
+class AppSidebar extends StatelessWidget {
+  const AppSidebar({
+    super.key,
+    required this.items,
+    required this.selectedIndex,
+    required this.onSelected,
+    required this.title,
+    required this.subtitle,
+    required this.collapsed,
+    required this.onToggleCollapsed,
+    required this.toggleLabel,
+    this.footer,
+  });
+
+  static const double expandedWidth = 256;
+  static const double collapsedWidth = 72;
+
+  // Below this width the content switches to the compact rail.
+  static const double _compactBelow = 160;
+
+  final List<AppSidebarItem> items;
+  final int selectedIndex;
+  final ValueChanged<int> onSelected;
+  final String title;
+  final String subtitle;
+  final bool collapsed;
+  final VoidCallback onToggleCollapsed;
+  final String toggleLabel;
+
+  /// Shown at the bottom (signed-in user, sign out). Receives whether the rail is compact.
+  final Widget Function(BuildContext context, bool compact)? footer;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: AppDurations.of(context, AppDurations.expand),
+      curve: AppDurations.standard,
+      width: collapsed ? collapsedWidth : expandedWidth,
+      decoration: BoxDecoration(
+        color: AppColors.sidebar.resolveFrom(context),
+        border: BorderDirectional(
+          end: BorderSide(color: AppColors.separator.resolveFrom(context), width: 0.5),
+        ),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final compact = constraints.maxWidth < _compactBelow;
+          return SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _Header(
+                  compact: compact,
+                  title: title,
+                  subtitle: subtitle,
+                  toggleLabel: toggleLabel,
+                  onToggle: onToggleCollapsed,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: compact ? AppSpacing.xs : AppSpacing.sm,
+                      vertical: AppSpacing.xs,
+                    ),
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      final previous = index > 0 ? items[index - 1].section : null;
+                      final startsSection = item.section != null && item.section != previous;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (startsSection)
+                            _SectionTitle(text: item.section!, compact: compact, first: index == 0),
+                          _SidebarTile(
+                            item: item,
+                            selected: index == selectedIndex,
+                            compact: compact,
+                            onTap: () => onSelected(index),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                if (footer != null) footer!(context, compact),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({
+    required this.compact,
+    required this.title,
+    required this.subtitle,
+    required this.toggleLabel,
+    required this.onToggle,
+  });
+
+  final bool compact;
+  final String title;
+  final String subtitle;
+  final String toggleLabel;
+  final VoidCallback onToggle;
+
+  @override
+  Widget build(BuildContext context) {
+    final toggle = Tooltip(
+      message: toggleLabel,
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        minimumSize: const Size.square(32),
+        onPressed: onToggle,
+        child: Icon(
+          CupertinoIcons.sidebar_left,
+          size: 18,
+          color: AppColors.textSecondary.resolveFrom(context),
+          semanticLabel: toggleLabel,
+        ),
+      ),
+    );
+
+    if (compact) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+        child: Column(
+          children: [
+            const AppLogo(size: 36),
+            const SizedBox(height: AppSpacing.xs),
+            toggle,
+          ],
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.sm, AppSpacing.sm),
+      child: Row(
+        children: [
+          const AppLogo(size: 36),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.headline.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
+                ),
+                Text(
+                  subtitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption.copyWith(color: AppColors.textSecondary.resolveFrom(context)),
+                ),
+              ],
+            ),
+          ),
+          toggle,
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle({required this.text, required this.compact, required this.first});
+
+  final String text;
+  final bool compact;
+  final bool first;
+
+  @override
+  Widget build(BuildContext context) {
+    if (compact) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: first ? 0 : AppSpacing.xs),
+        child: first
+            ? const SizedBox.shrink()
+            : Container(height: 0.5, color: AppColors.separator.resolveFrom(context)),
+      );
+    }
+    return Padding(
+      padding: EdgeInsetsDirectional.only(
+        start: AppSpacing.sm,
+        end: AppSpacing.sm,
+        top: first ? AppSpacing.xxs : AppSpacing.md,
+        bottom: AppSpacing.xxs,
+      ),
+      child: Text(
+        text.toUpperCase(),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppTypography.caption.copyWith(
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.8,
+          color: AppColors.textTertiary.resolveFrom(context),
+        ),
+      ),
+    );
+  }
+}
+
+class _SidebarTile extends StatefulWidget {
+  const _SidebarTile({
+    required this.item,
+    required this.selected,
+    required this.compact,
+    required this.onTap,
+  });
+
+  final AppSidebarItem item;
+  final bool selected;
+  final bool compact;
+  final VoidCallback onTap;
+
+  @override
+  State<_SidebarTile> createState() => _SidebarTileState();
+}
+
+class _SidebarTileState extends State<_SidebarTile> {
+  var _hovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final item = widget.item;
+    final selected = widget.selected;
+    final color = selected
+        ? AppColors.brand.resolveFrom(context)
+        : AppColors.textPrimary.resolveFrom(context);
+    final background = selected
+        ? AppColors.brandTint.resolveFrom(context)
+        : _hovered
+        ? AppColors.hover.resolveFrom(context)
+        : const Color(0x00000000);
+    final icon = Icon(selected ? (item.activeIcon ?? item.icon) : item.icon, size: 19, color: color);
+
+    final tile = Semantics(
+      button: true,
+      selected: selected,
+      label: item.label,
+      excludeSemantics: true,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _hovered = true),
+        onExit: (_) => setState(() => _hovered = false),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: widget.onTap,
+          child: AnimatedContainer(
+            duration: AppDurations.of(context, AppDurations.micro),
+            height: 36,
+            margin: const EdgeInsets.only(bottom: 2),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+            decoration: BoxDecoration(color: background, borderRadius: AppRadii.smRadius),
+            child: widget.compact
+                ? Center(child: icon)
+                : Row(
+                    children: [
+                      icon,
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          item.label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.subheadline.copyWith(
+                            color: color,
+                            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+      ),
+    );
+
+    return widget.compact ? Tooltip(message: item.label, child: tile) : tile;
+  }
+}

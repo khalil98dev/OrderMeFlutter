@@ -1,0 +1,28 @@
+name: medstore_ui
+description: "MedStore design system: tokens, Cupertino theme, components, ar/fr strings"
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ^3.12.0
+
+resolution: workspace
+
+dependencies:
+  cupertino_icons: ^1.0.9
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  medstore_core:
+    path: ../medstore_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+flutter:
+  generate: true
+  assets:
+    - assets/brand/

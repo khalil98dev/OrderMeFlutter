@@ -1,0 +1,44 @@
+# Shared lint rules for every package in the workspace. Members include this file.
+include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 110
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    # Missing const and unawaited futures cost performance or hide bugs: treat as errors.
+    prefer_const_constructors: error
+    prefer_const_constructors_in_immutables: error
+    unawaited_futures: error
+    # Private named parameters (`this._x`) are new in Dart; the explicit `_x = x` initializer stays our style.
+    prefer_initializing_formals: ignore
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+linter:
+  rules:
+    # Performance: let Flutter skip rebuilding what cannot change.
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - avoid_unnecessary_containers
+    - sized_box_for_whitespace
+    - use_colored_box
+    - use_decorated_box
+    # Correctness
+    - unawaited_futures
+    - cancel_subscriptions
+    - close_sinks
+    - always_declare_return_types
+    - avoid_dynamic_calls
+    - prefer_final_locals
+    - prefer_final_fields
+    - avoid_print
+    - use_build_context_synchronously
+    - directives_ordering

@@ -1,0 +1,16 @@
+name: medstore_workspace
+description: Workspace root for the MedStore Flutter apps. Not an app itself.
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+workspace:
+  - apps/medstore_admin
+  - apps/medstore_teacher
+  - packages/medstore_core
+  - packages/medstore_ui
+  - packages/medstore_ui/example
+
+dev_dependencies:
+  flutter_lints: ^6.0.0

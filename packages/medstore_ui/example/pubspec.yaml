@@ -1,0 +1,21 @@
+name: medstore_ui_gallery
+description: "Live catalog of the MedStore components"
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  medstore_core:
+    path: ../../medstore_core
+  medstore_ui:
+    path: ..
+
+flutter:
+  uses-material-design: false
