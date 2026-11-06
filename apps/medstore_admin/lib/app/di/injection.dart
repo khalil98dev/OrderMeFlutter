@@ -93,6 +93,8 @@ Future<void> configureDependencies() async {
     ..registerLazySingleton(() => VoidInvoice(sl()))
     ..registerLazySingleton(() => SettleInvoice(sl()))
     ..registerLazySingleton(() => DownloadInvoicePdf(sl()))
+    ..registerLazySingleton(() => CollectInvoicePayment(sl()))
+    ..registerLazySingleton(() => ListInvoicedProducts(sl()))
     // Debts
     ..registerLazySingleton<DebtRepository>(() => DebtRepositoryImpl(sl()))
     ..registerLazySingleton(() => ListDebtOverview(sl()))

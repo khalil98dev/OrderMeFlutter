@@ -33,6 +33,12 @@ class InvoicesPage extends StatelessWidget {
       subtitle: total > 0 ? strings.invoicesCount(total) : null,
       actions: [
         AppButton(
+          label: strings.byProductTitle,
+          icon: AppIcons.reports,
+          variant: AppButtonVariant.plain,
+          onPressed: () => _open(context, '/invoices/by-product'),
+        ),
+        AppButton(
           label: strings.newInvoice,
           icon: AppIcons.add,
           onPressed: () => _open(context, '/invoices/new'),

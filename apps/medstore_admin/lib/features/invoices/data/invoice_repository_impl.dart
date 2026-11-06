@@ -64,6 +64,25 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
       _api.post('$_admin/$id/settle', data: {'amount': amount}, decode: invoiceFromJson);
 
   @override
+  Future<Result<Invoice>> collect(String id, CollectDraft draft) => _api.post(
+    '$_admin/$id/collect',
+    data: {'method': draft.method.apiName, 'amount': draft.amount, 'reference': draft.reference},
+    decode: invoiceFromJson,
+  );
+
+  @override
+  Future<Result<InvoicedProducts>> byProduct(InvoicedProductsFilter filter) => _api.get(
+    '$_admin/by-product',
+    query: {
+      if (filter.clientId != null) 'clientId': filter.clientId,
+      if (filter.from != null) 'from': apiDay(filter.from!),
+      if (filter.to != null) 'to': apiDay(filter.to!),
+      if (filter.onlyUnpaid) 'onlyUnpaid': true,
+    },
+    decode: invoicedProductsFromJson,
+  );
+
+  @override
   Future<Result<Uint8List>> pdf(String id) => _api.get(
     '$_shared/$id/pdf',
     options: Options(responseType: ResponseType.bytes),
@@ -123,6 +142,57 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
           amount: payment.money('amount'),
           paidAt: payment.instant('paidAt'),
           refundedAt: payment.instantOrNull('refundedAt'),
+        );
+      }),
+    );
+  }
+
+  static InvoicedProducts invoicedProductsFromJson(Object? raw) {
+    final json = JsonMap.of(raw);
+    return InvoicedProducts(
+      clientName: json.stringOrNull('clientName'),
+      quantity: json.integer('quantity'),
+      total: json.money('total'),
+      amountDue: json.money('amountDue'),
+      invoiceCount: json.integer('invoiceCount'),
+      products: json.list('products', (raw) {
+        final product = JsonMap.of(raw);
+        return InvoicedProduct(
+          productId: product.string('productId'),
+          productName: product.string('productName'),
+          productCode: product.stringOrNull('productCode'),
+          quantity: product.integer('quantity'),
+          total: product.money('total'),
+          amountDue: product.money('amountDue'),
+          invoiceCount: product.integer('invoiceCount'),
+          sources: product.list('sources', _source),
+        );
+      }),
+    );
+  }
+
+  static InvoicedProductSource _source(Object? raw) {
+    final json = JsonMap.of(raw);
+    return InvoicedProductSource(
+      invoiceId: json.string('invoiceId'),
+      invoiceLabel: json.string('invoiceLabel'),
+      issueDate: json.day('issueDate'),
+      dueDate: json.day('dueDate'),
+      clientId: json.string('clientId'),
+      clientName: json.stringOrNull('clientName'),
+      unitPrice: json.money('unitPrice'),
+      quantity: json.integer('quantity'),
+      lineTotal: json.money('lineTotal'),
+      amountDue: json.money('amountDue'),
+      paymentStatus:
+          InvoicePaymentStatus.fromApiOrNull(json.stringOrNull('paymentStatus')) ??
+          InvoicePaymentStatus.unpaid,
+      orders: json.list('orders', (raw) {
+        final order = JsonMap.of(raw);
+        return InvoiceLineOrder(
+          orderId: order.string('orderId'),
+          orderNumber: order.integer('orderNumber'),
+          quantity: order.integer('quantity'),
         );
       }),
     );

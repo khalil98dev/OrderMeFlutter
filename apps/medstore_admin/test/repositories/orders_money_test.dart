@@ -5,6 +5,7 @@ import 'package:medstore_admin/features/debts/data/debt_repository_impl.dart';
 import 'package:medstore_admin/features/debts/domain/debts.dart';
 import 'package:medstore_admin/features/invoices/data/invoice_repository_impl.dart';
 import 'package:medstore_admin/features/invoices/domain/invoice.dart';
+import 'package:medstore_admin/features/invoices/domain/invoice_repository.dart';
 import 'package:medstore_admin/features/orders/data/admin_order_repository_impl.dart';
 import 'package:medstore_admin/features/orders/domain/admin_orders.dart';
 import 'package:medstore_admin/features/wallets/data/wallet_repository_impl.dart';
@@ -160,6 +161,28 @@ void main() {
       expect(api.lastBody, {'status': 'Cancelled', 'note': 'Papier épuisé'});
     });
 
+    test('marking Ready reads the invoice it issued and what is left as debt', () async {
+      api.reply = (_) => const FakeReply({
+        'orderId': 'o1',
+        'status': 'Ready',
+        'invoiceId': 'i1',
+        'invoiceLabel': 'INV-000042',
+        'invoiceTotal': 45000,
+        'paidFromWallet': 10000,
+        'amountDue': 35000,
+      });
+      final outcome = okValue(await repository.changeStatus('o1', OrderStatus.ready));
+      expect(outcome.issuedInvoice, isTrue);
+      expect(outcome.invoiceLabel, 'INV-000042');
+      expect(outcome.paidFromWallet, 10000);
+      expect(outcome.amountDue, 35000);
+    });
+
+    test('a move that issues nothing (or an empty answer) has no invoice', () async {
+      final outcome = okValue(await repository.changeStatus('o1', OrderStatus.inPreparation));
+      expect(outcome.issuedInvoice, isFalse);
+    });
+
     test('a move the order does not allow is a conflict with the server sentence', () async {
       api.reply = (_) =>
           FakeReply(problem(409, title: 'An order that is Pending cannot become Delivered.'), status: 409);
@@ -281,6 +304,94 @@ void main() {
       api.reply = (_) => FakeReply(Uint8List.fromList([9]));
       await repository.pdf('i1');
       expect(api.last.path, '/api/invoices/i1/pdf');
+    });
+
+    test('collects a counter payment for one invoice', () async {
+      api.reply = (_) => const FakeReply(_invoiceJson);
+      await repository.collect(
+        'i1',
+        const CollectDraft(method: PaymentMethod.cash, amount: 500, reference: 'R1'),
+      );
+      expect(api.last.method, 'POST');
+      expect(api.last.path, '/api/admin/invoices/i1/collect');
+      expect(api.lastBody, {'method': 'Cash', 'amount': 500, 'reference': 'R1'});
+    });
+
+    test('adds up the invoices by product, with where each total comes from', () async {
+      api.reply = (_) => const FakeReply({
+        'clientId': 't1',
+        'clientName': 'Amina',
+        'quantity': 150,
+        'total': 15000,
+        'amountDue': 5000,
+        'invoiceCount': 2,
+        'products': [
+          {
+            'productId': 'p1',
+            'productName': 'Maths',
+            'quantity': 150,
+            'total': 15000,
+            'amountDue': 5000,
+            'invoiceCount': 2,
+            'sources': [
+              {
+                'invoiceId': 'i2',
+                'invoiceLabel': 'INV-000002',
+                'issueDate': '2026-11-05',
+                'dueDate': '2026-11-30',
+                'clientId': 't1',
+                'clientName': 'Amina',
+                'unitPrice': 100,
+                'quantity': 50,
+                'lineTotal': 5000,
+                'amountDue': 5000,
+                'paymentStatus': 'Unpaid',
+                'orders': [
+                  {'orderId': 'o2', 'orderNumber': 1043, 'quantity': 50},
+                ],
+              },
+              {
+                'invoiceId': 'i1',
+                'invoiceLabel': 'INV-000001',
+                'issueDate': '2026-11-04',
+                'dueDate': '2026-11-30',
+                'clientId': 't1',
+                'clientName': 'Amina',
+                'unitPrice': 100,
+                'quantity': 100,
+                'lineTotal': 10000,
+                'amountDue': 0,
+                'paymentStatus': 'Paid',
+                'orders': [
+                  {'orderId': 'o1', 'orderNumber': 1042, 'quantity': 100},
+                ],
+              },
+            ],
+          },
+        ],
+      });
+      final summary = okValue(
+        await repository.byProduct(
+          InvoicedProductsFilter(
+            clientId: 't1',
+            from: DateTime(2026, 11),
+            to: DateTime(2026, 11, 30),
+            onlyUnpaid: true,
+          ),
+        ),
+      );
+      expect(api.last.path, '/api/admin/invoices/by-product');
+      expect(api.last.queryParameters, {
+        'clientId': 't1',
+        'from': '2026-11-01',
+        'to': '2026-11-30',
+        'onlyUnpaid': true,
+      });
+      final maths = summary.products.single;
+      expect(maths.quantity, 150);
+      expect(maths.sources.map((source) => source.quantity), [50, 100]);
+      expect(maths.sources.last.paymentStatus, InvoicePaymentStatus.paid);
+      expect(maths.sources.first.orders.single.orderNumber, 1043);
     });
 
     test('a teacher-visible invoice without payment fields reads them as null', () async {

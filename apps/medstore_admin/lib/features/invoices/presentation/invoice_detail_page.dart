@@ -8,13 +8,16 @@ import '../../../app/files/save_file.dart';
 import '../../../app/forms/form_values.dart';
 import '../../../app/l10n/labels.dart';
 import '../../../app/shell/admin_page.dart';
+import '../../../app/widgets/submit_dialog.dart';
 import '../domain/invoice.dart';
 import '../domain/invoice_repository.dart';
+import 'collect_payment_dialog.dart';
 import 'invoices_page.dart';
 
 /// One invoice: lines and the orders they came from, payments, and the PDF, settle and void actions.
 ///
-/// Expects a `LoadCubit<Invoice>`, [VoidInvoice], [SettleInvoice] and [DownloadInvoicePdf] above it.
+/// Expects a `LoadCubit<Invoice>`, [VoidInvoice], [SettleInvoice], [CollectInvoicePayment] and
+/// [DownloadInvoicePdf] above it.
 class InvoiceDetailPage extends StatelessWidget {
   const InvoiceDetailPage({super.key});
 
@@ -41,12 +44,18 @@ class InvoiceDetailPage extends StatelessWidget {
               () => context.read<DownloadInvoicePdf>()(invoice.id),
             ),
           ),
-          if (invoice.canSettle)
+          if (invoice.canSettle) ...[
             AppButton(
               label: strings.settleFromWallet,
               variant: AppButtonVariant.tinted,
               onPressed: () => _settle(context, invoice),
             ),
+            AppButton(
+              label: strings.collectPayment,
+              icon: AppIcons.wallet,
+              onPressed: () => _collect(context, invoice),
+            ),
+          ],
           if (!invoice.summary.isVoided)
             AppButton(
               label: strings.voidInvoice,
@@ -93,6 +102,20 @@ class InvoiceDetailPage extends StatelessWidget {
       case Err(:final failure):
         showAppToast(context, problemText(strings, failure), tone: AppTone.danger);
     }
+  }
+
+  /// The teacher pays at the counter: a deposit that pays this invoice first.
+  static Future<void> _collect(BuildContext context, Invoice invoice) async {
+    final strings = AppStrings.of(context);
+    final cubit = context.read<LoadCubit<Invoice>>();
+    final collect = context.read<CollectInvoicePayment>();
+    final result = await showSubmitDialog<Invoice>(
+      context,
+      builder: (_) => CollectPaymentDialog(invoice: invoice, collect: collect),
+    );
+    if (!result.saved || !context.mounted) return;
+    cubit.show(result.value!);
+    showAppToast(context, strings.paymentCollected, tone: AppTone.success);
   }
 
   static Future<void> _void(BuildContext context, Invoice invoice) async {

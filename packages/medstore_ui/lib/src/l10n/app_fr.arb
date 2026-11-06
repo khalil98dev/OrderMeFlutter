@@ -733,5 +733,45 @@
         "type": "String"
       }
     }
-  }
+  },
+  "byProductTitle": "Résumé par produit",
+  "byProductSubtitle": "Toutes les factures de la période, regroupées par produit",
+  "onlyUnpaid": "Seulement les impayées",
+  "colInvoices": "Factures",
+  "totalQuantity": "Quantité totale",
+  "noInvoicedProductsTitle": "Aucune facture sur cette période",
+  "noInvoicedProductsMessage": "Changez la période, l'enseignant ou le filtre des impayées.",
+  "invoicedProductSources": "D'où vient ce total : {product}",
+  "@invoicedProductSources": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+  "collectPayment": "Encaisser",
+  "collectPaymentTitle": "Encaisser au comptoir",
+  "collectPaymentMessage": "Reste dû : {amount}. Le paiement est enregistré comme un versement (avec reçu) et règle cette facture en premier.",
+  "@collectPaymentMessage": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "collectAmountLabel": "Montant (vide : tout le reste dû)",
+  "paymentCollected": "Paiement encaissé",
+  "invoiceIssuedTitle": "Facture {label} émise",
+  "@invoiceIssuedTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceIssuedMessage": "La commande est prête : sa facture a été émise automatiquement. L'enseignant pourra payer le reste à la librairie.",
+  "paidFromWallet": "Payé par le portefeuille",
+  "leftAsDebt": "Reste dû (créance)",
+  "viewInvoice": "Voir la facture",
+  "fullyPaidFromWallet": "Entièrement réglée par le portefeuille."
 }

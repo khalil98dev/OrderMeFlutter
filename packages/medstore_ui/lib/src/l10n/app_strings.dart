@@ -2737,6 +2737,120 @@ abstract class AppStrings {
   /// In fr, this message translates to:
   /// **'« {name} » est disponible à la commande.'**
   String notifProductMessage(String name);
+
+  /// No description provided for @byProductTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résumé par produit'**
+  String get byProductTitle;
+
+  /// No description provided for @byProductSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les factures de la période, regroupées par produit'**
+  String get byProductSubtitle;
+
+  /// No description provided for @onlyUnpaid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seulement les impayées'**
+  String get onlyUnpaid;
+
+  /// No description provided for @colInvoices.
+  ///
+  /// In fr, this message translates to:
+  /// **'Factures'**
+  String get colInvoices;
+
+  /// No description provided for @totalQuantity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité totale'**
+  String get totalQuantity;
+
+  /// No description provided for @noInvoicedProductsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune facture sur cette période'**
+  String get noInvoicedProductsTitle;
+
+  /// No description provided for @noInvoicedProductsMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changez la période, l\'enseignant ou le filtre des impayées.'**
+  String get noInvoicedProductsMessage;
+
+  /// No description provided for @invoicedProductSources.
+  ///
+  /// In fr, this message translates to:
+  /// **'D\'où vient ce total : {product}'**
+  String invoicedProductSources(String product);
+
+  /// No description provided for @collectPayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaisser'**
+  String get collectPayment;
+
+  /// No description provided for @collectPaymentTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Encaisser au comptoir'**
+  String get collectPaymentTitle;
+
+  /// No description provided for @collectPaymentMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reste dû : {amount}. Le paiement est enregistré comme un versement (avec reçu) et règle cette facture en premier.'**
+  String collectPaymentMessage(String amount);
+
+  /// No description provided for @collectAmountLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montant (vide : tout le reste dû)'**
+  String get collectAmountLabel;
+
+  /// No description provided for @paymentCollected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement encaissé'**
+  String get paymentCollected;
+
+  /// No description provided for @invoiceIssuedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facture {label} émise'**
+  String invoiceIssuedTitle(String label);
+
+  /// No description provided for @invoiceIssuedMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'La commande est prête : sa facture a été émise automatiquement. L\'enseignant pourra payer le reste à la librairie.'**
+  String get invoiceIssuedMessage;
+
+  /// No description provided for @paidFromWallet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Payé par le portefeuille'**
+  String get paidFromWallet;
+
+  /// No description provided for @leftAsDebt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reste dû (créance)'**
+  String get leftAsDebt;
+
+  /// No description provided for @viewInvoice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la facture'**
+  String get viewInvoice;
+
+  /// No description provided for @fullyPaidFromWallet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entièrement réglée par le portefeuille.'**
+  String get fullyPaidFromWallet;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

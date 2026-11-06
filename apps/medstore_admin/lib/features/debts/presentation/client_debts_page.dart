@@ -47,6 +47,17 @@ class _ClientDebtsPageState extends State<ClientDebtsPage> {
       onBack: context.canPop() ? () => context.pop() : null,
       actions: [
         AppButton(
+          label: strings.byProductTitle,
+          icon: AppIcons.reports,
+          variant: AppButtonVariant.plain,
+          onPressed: () => context.go(
+            Uri(
+              path: '/invoices/by-product',
+              queryParameters: {'clientId': widget.clientId, 'clientName': ?debts?.totals.clientName},
+            ).toString(),
+          ),
+        ),
+        AppButton(
           label: strings.navWallet,
           icon: AppIcons.wallet,
           variant: AppButtonVariant.plain,

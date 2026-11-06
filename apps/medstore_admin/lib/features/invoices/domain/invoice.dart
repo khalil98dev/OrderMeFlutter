@@ -284,3 +284,126 @@ final class InvoiceDraft extends Equatable {
   @override
   List<Object?> get props => [clientId, available, quantities, notes];
 }
+
+/// What the by-product summary covers: issue dates (both ends included), one teacher or all, and
+/// whether only invoices with something left to pay count (to settle a teacher's debt).
+final class InvoicedProductsFilter extends Equatable {
+  const InvoicedProductsFilter({this.clientId, this.clientName, this.from, this.to, this.onlyUnpaid = false});
+
+  final String? clientId;
+
+  /// Shown in the teacher filter; not sent.
+  final String? clientName;
+  final DateTime? from;
+  final DateTime? to;
+  final bool onlyUnpaid;
+
+  InvoicedProductsFilter copyWith({
+    (String, String)? Function()? client,
+    DateTime? Function()? from,
+    DateTime? Function()? to,
+    bool? onlyUnpaid,
+  }) {
+    final teacher = client == null ? null : client();
+    return InvoicedProductsFilter(
+      clientId: client == null ? clientId : teacher?.$1,
+      clientName: client == null ? clientName : teacher?.$2,
+      from: from == null ? this.from : from(),
+      to: to == null ? this.to : to(),
+      onlyUnpaid: onlyUnpaid ?? this.onlyUnpaid,
+    );
+  }
+
+  @override
+  List<Object?> get props => [clientId, from, to, onlyUnpaid];
+}
+
+/// One invoice line behind a product's total. [amountDue] is the line's share of what is left on its invoice.
+final class InvoicedProductSource extends Equatable {
+  const InvoicedProductSource({
+    required this.invoiceId,
+    required this.invoiceLabel,
+    required this.issueDate,
+    required this.dueDate,
+    required this.clientId,
+    required this.unitPrice,
+    required this.quantity,
+    required this.lineTotal,
+    required this.amountDue,
+    required this.paymentStatus,
+    required this.orders,
+    this.clientName,
+  });
+
+  final String invoiceId;
+  final String invoiceLabel;
+  final DateTime issueDate;
+  final DateTime dueDate;
+  final String clientId;
+  final String? clientName;
+  final num unitPrice;
+  final int quantity;
+  final num lineTotal;
+  final num amountDue;
+  final InvoicePaymentStatus paymentStatus;
+  final List<InvoiceLineOrder> orders;
+
+  @override
+  List<Object?> get props => [
+    invoiceId,
+    clientId,
+    unitPrice,
+    quantity,
+    lineTotal,
+    amountDue,
+    paymentStatus,
+    orders,
+  ];
+}
+
+/// Everything invoiced of one product in the period: "Math Guide 3AS · 150 copies · 67 500 DA".
+final class InvoicedProduct extends Equatable {
+  const InvoicedProduct({
+    required this.productId,
+    required this.productName,
+    required this.quantity,
+    required this.total,
+    required this.amountDue,
+    required this.invoiceCount,
+    required this.sources,
+    this.productCode,
+  });
+
+  final String productId;
+  final String productName;
+  final String? productCode;
+  final int quantity;
+  final num total;
+  final num amountDue;
+  final int invoiceCount;
+  final List<InvoicedProductSource> sources;
+
+  @override
+  List<Object?> get props => [productId, quantity, total, amountDue, invoiceCount, sources];
+}
+
+final class InvoicedProducts extends Equatable {
+  const InvoicedProducts({
+    required this.quantity,
+    required this.total,
+    required this.amountDue,
+    required this.invoiceCount,
+    required this.products,
+    this.clientName,
+  });
+
+  final String? clientName;
+  final int quantity;
+  final num total;
+  final num amountDue;
+  final int invoiceCount;
+  final List<InvoicedProduct> products;
+
+  @override
+  List<Object?> get props => [clientName, quantity, total, amountDue, invoiceCount, products];
+}
