@@ -30,7 +30,7 @@ class AdminProductsPage extends StatelessWidget {
       actions: [
         AppButton(
           label: strings.newProduct,
-          icon: CupertinoIcons.add,
+          icon: AppIcons.add,
           onPressed: () => _openForm(context, path: '/products/new'),
         ),
       ],
@@ -162,7 +162,7 @@ class _ProductList extends StatelessWidget {
       failure: state.failure,
       onRetry: cubit.load,
       empty: AppEmptyState(
-        icon: filtered ? CupertinoIcons.search : CupertinoIcons.book,
+        icon: filtered ? AppIcons.search : AppIcons.products,
         title: filtered ? strings.noResultsTitle : strings.noProductsTitle,
         message: filtered ? strings.noResultsMessage : strings.noProductsAdminMessage,
       ),

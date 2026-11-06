@@ -51,7 +51,7 @@ class _CartPageState extends State<CartPage> {
       builder: (dialog) => CupertinoAlertDialog(
         title: Column(
           children: [
-            Icon(CupertinoIcons.checkmark_seal_fill, size: 48, color: AppColors.signal.resolveFrom(dialog)),
+            Icon(AppIcons.verified, size: 48, color: AppColors.signal.resolveFrom(dialog)),
             const SizedBox(height: AppSpacing.xs),
             Text(strings.orderSentTitle),
           ],
@@ -96,7 +96,7 @@ class _CartPageState extends State<CartPage> {
         child: SafeArea(
           child: cart.isEmpty
               ? AppEmptyState(
-                  icon: CupertinoIcons.cart,
+                  icon: AppIcons.cart,
                   title: strings.cartEmptyTitle,
                   message: strings.cartEmptyMessage,
                   action: AppButton(label: strings.browseProducts, onPressed: () => context.pop()),
@@ -157,7 +157,7 @@ class _CartLineTile extends StatelessWidget {
           color: AppColors.destructive.resolveFrom(context),
           borderRadius: SoftCard.radius,
         ),
-        child: const Icon(CupertinoIcons.delete, color: AppColors.onBrand),
+        child: const Icon(AppIcons.delete, color: AppColors.onBrand),
       ),
       child: SoftCard(
         padding: const EdgeInsets.all(AppSpacing.sm),
@@ -190,7 +190,7 @@ class _CartLineTile extends StatelessWidget {
                       ),
                       const Spacer(),
                       AppIconButton(
-                        icon: CupertinoIcons.trash,
+                        icon: AppIcons.delete,
                         label: strings.remove,
                         tone: AppTone.danger,
                         onPressed: () => cart.remove(product.id),
@@ -258,7 +258,7 @@ class _Summary extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             AppButton(
               label: strings.placeOrder,
-              icon: CupertinoIcons.paperplane_fill,
+              icon: AppIcons.send,
               expand: true,
               isLoading: submit.isBusy,
               onPressed: cart.canOrder ? onPlace : null,

@@ -148,7 +148,7 @@ class _Greeting extends StatelessWidget {
               color: AppColors.onBrand.withValues(alpha: 0.16),
               shape: BoxShape.circle,
             ),
-            child: const Icon(CupertinoIcons.book_fill, size: 32, color: AppColors.onBrand),
+            child: const Icon(AppIcons.products, size: 32, color: AppColors.onBrand),
           ),
         ],
       ),
@@ -177,7 +177,7 @@ class _ProductsSliver extends StatelessWidget {
           loading: const _GridSkeleton(),
           builder: (_) => const SizedBox.shrink(),
           empty: AppEmptyState(
-            icon: searching ? CupertinoIcons.search : CupertinoIcons.book,
+            icon: searching ? AppIcons.search : AppIcons.products,
             title: searching ? strings.noResultsTitle : strings.noProductsTitle,
             message: searching ? strings.noResultsMessage : strings.noProductsTeacherMessage,
           ),

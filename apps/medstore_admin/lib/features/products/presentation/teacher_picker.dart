@@ -37,10 +37,7 @@ class TeacherField extends StatelessWidget {
           ),
           child: AppListTile(
             leading: teacher == null
-                ? Icon(
-                    CupertinoIcons.person_crop_circle_badge_plus,
-                    color: AppColors.brand.resolveFrom(context),
-                  )
+                ? Icon(AppIcons.addPerson, color: AppColors.brand.resolveFrom(context))
                 : AppAvatar(name: teacher.fullName, size: 32),
             title: teacher?.fullName ?? strings.chooseTeacher,
             subtitle: teacher?.schoolName,
@@ -142,7 +139,7 @@ class _TeacherPickerDialogState extends State<_TeacherPickerDialog> {
                     hasData: _teachers.isNotEmpty,
                     failure: _failure,
                     onRetry: () => _search(_query),
-                    empty: AppEmptyState(icon: CupertinoIcons.person_2, title: strings.noResultsTitle),
+                    empty: AppEmptyState(icon: AppIcons.teachers, title: strings.noResultsTitle),
                     builder: (context) => ListView.builder(
                       itemCount: _teachers.length,
                       itemBuilder: (context, index) {

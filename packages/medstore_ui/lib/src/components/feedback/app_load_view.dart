@@ -18,7 +18,7 @@ import 'app_skeleton.dart';
 ///   failure: state.failure,
 ///   hasData: state.orders.isNotEmpty,
 ///   onRetry: cubit.load,
-///   empty: AppEmptyState(icon: CupertinoIcons.cart, title: strings.noOrders),
+///   empty: AppEmptyState(icon: AppIcons.cart, title: strings.noOrders),
 ///   builder: (context) => OrdersList(state.orders),
 /// )
 /// ```

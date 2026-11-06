@@ -84,12 +84,15 @@ class AppTable extends StatelessWidget {
       height: 36,
       children: [
         for (final column in columns)
+          // Small capitals, spaced out: reads as a header without competing with the rows.
           Text(
-            column.label,
+            column.label.toUpperCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTypography.footnote.copyWith(
+            style: AppTypography.caption.copyWith(
+              fontSize: 11,
               fontWeight: FontWeight.w600,
+              letterSpacing: 0.6,
               color: AppColors.textSecondary.resolveFrom(context),
             ),
           ),

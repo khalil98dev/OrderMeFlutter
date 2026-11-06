@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../l10n/app_strings.dart';
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 
@@ -11,7 +12,7 @@ import '../../tokens/app_typography.dart';
 /// AppPageHeader(
 ///   title: strings.navOrders,
 ///   subtitle: strings.ordersCount(state.total),
-///   actions: [AppButton(label: strings.newOrder, icon: CupertinoIcons.add, onPressed: newOrder)],
+///   actions: [AppButton(label: strings.newOrder, icon: AppIcons.add, onPressed: newOrder)],
 /// )
 /// ```
 ///
@@ -50,7 +51,7 @@ class AppPageHeader extends StatelessWidget {
             minimumSize: const Size.square(AppSpacing.minTouchTarget),
             onPressed: onBack,
             child: Icon(
-              CupertinoIcons.chevron_back,
+              AppIcons.back,
               color: AppColors.brand.resolveFrom(context),
               semanticLabel: backLabel ?? AppStrings.of(context).back,
             ),

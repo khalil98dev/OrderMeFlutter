@@ -233,12 +233,7 @@ class _AddBar extends StatelessWidget {
             AppQuantityStepper(value: copies, max: CartCubit.maxCopies, onChanged: onCopies),
             const SizedBox(width: AppSpacing.md),
             Expanded(
-              child: AppButton(
-                label: strings.addToCart,
-                icon: CupertinoIcons.cart_badge_plus,
-                expand: true,
-                onPressed: onAdd,
-              ),
+              child: AppButton(label: strings.addToCart, icon: AppIcons.cart, expand: true, onPressed: onAdd),
             ),
           ],
         ),

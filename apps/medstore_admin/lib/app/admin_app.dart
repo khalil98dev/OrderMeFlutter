@@ -7,6 +7,7 @@ import 'package:medstore_ui/medstore_ui.dart';
 
 import '../features/notifications/domain/notification.dart';
 import '../features/notifications/presentation/unread_cubit.dart';
+import '../features/orders/presentation/order_changes.dart';
 import 'di/injection.dart';
 import 'router/admin_router.dart';
 
@@ -62,6 +63,8 @@ class _AdminAppState extends State<AdminApp> {
         RepositoryProvider.value(value: sl<ProductImages>()),
         // Live notifications: the shell announces them, lists reload on them.
         RepositoryProvider.value(value: sl<NotificationRepository>()),
+        // An order changed on its page: the orders list reloads.
+        RepositoryProvider.value(value: sl<OrderChanges>()),
       ],
       child: BlocListener<AuthCubit, AuthState>(
         listenWhen: (previous, current) => previous.runtimeType != current.runtimeType,

@@ -31,7 +31,7 @@ class CartBar extends StatelessWidget {
         count: cart.copies,
         color: expanded ? AppColors.textPrimary.resolveFrom(context) : null,
         child: Icon(
-          expanded ? CupertinoIcons.cart_fill : CupertinoIcons.cart,
+          expanded ? AppIcons.cart : AppIcons.cart,
           size: 24,
           color: expanded ? AppColors.onBrand : brand,
         ),

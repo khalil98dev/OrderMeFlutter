@@ -25,7 +25,7 @@ class ButtonsSection extends StatelessWidget {
               AppButton(
                 label: tr(context, 'Supprimer', 'حذف'),
                 variant: AppButtonVariant.destructive,
-                icon: CupertinoIcons.trash,
+                icon: AppIcons.delete,
                 onPressed: () {},
               ),
             ],
@@ -52,7 +52,7 @@ class ButtonsSection extends StatelessWidget {
                     label: save,
                     size: AppButtonSize.small,
                     variant: AppButtonVariant.tinted,
-                    icon: CupertinoIcons.add,
+                    icon: AppIcons.add,
                     onPressed: () {},
                   ),
                 ],
@@ -67,27 +67,23 @@ class ButtonsSection extends StatelessWidget {
           child: Wrap(
             spacing: AppSpacing.xs,
             children: [
+              AppIconButton(icon: AppIcons.edit, label: tr(context, 'Modifier', 'تعديل'), onPressed: () {}),
               AppIconButton(
-                icon: CupertinoIcons.pencil,
-                label: tr(context, 'Modifier', 'تعديل'),
-                onPressed: () {},
-              ),
-              AppIconButton(
-                icon: CupertinoIcons.printer,
+                icon: AppIcons.print,
                 label: tr(context, 'Imprimer', 'طباعة'),
                 tone: AppTone.brand,
                 filled: true,
                 onPressed: () {},
               ),
               AppIconButton(
-                icon: CupertinoIcons.trash,
+                icon: AppIcons.delete,
                 label: tr(context, 'Supprimer', 'حذف'),
                 tone: AppTone.danger,
                 filled: true,
                 onPressed: () {},
               ),
               AppIconButton(
-                icon: CupertinoIcons.check_mark,
+                icon: AppIcons.check,
                 label: tr(context, 'Livrée', 'تم التسليم'),
                 tone: AppTone.success,
                 filled: true,

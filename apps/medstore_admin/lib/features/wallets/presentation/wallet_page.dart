@@ -45,11 +45,11 @@ class WalletPage extends StatelessWidget {
         ),
         AppButton(
           label: strings.newWithdrawal,
-          icon: CupertinoIcons.minus,
+          icon: AppIcons.remove,
           variant: AppButtonVariant.tinted,
           onPressed: () => _withdraw(context),
         ),
-        AppButton(label: strings.newDeposit, icon: CupertinoIcons.add, onPressed: () => _deposit(context)),
+        AppButton(label: strings.newDeposit, icon: AppIcons.add, onPressed: () => _deposit(context)),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,7 +66,7 @@ class WalletPage extends StatelessWidget {
                 child: AppMetricCard(
                   label: strings.balance,
                   value: wallet == null ? '—' : MoneyFormat.dzd(wallet.balance, locale),
-                  icon: CupertinoIcons.money_dollar_circle,
+                  icon: AppIcons.wallet,
                   tone: AppTone.success,
                 ),
               ),
@@ -198,7 +198,7 @@ class _Ledger extends StatelessWidget {
         AppTableColumn.amount(strings.colBalanceAfter),
         const AppTableColumn('', width: 84),
       ],
-      empty: AppEmptyState(icon: CupertinoIcons.list_bullet, title: strings.noTransactionsTitle),
+      empty: AppEmptyState(icon: AppIcons.list, title: strings.noTransactionsTitle),
       cells: (context, entry) => [
         Text(AppDateFormat.dateTime(entry.occurredAt, locale)),
         Row(
@@ -227,7 +227,7 @@ class _Ledger extends StatelessWidget {
           children: [
             if (entry.hasReceipt)
               AppIconButton(
-                icon: CupertinoIcons.arrow_down_doc,
+                icon: AppIcons.download,
                 label: strings.downloadReceipt,
                 onPressed: () => savePdf(
                   context,
@@ -237,7 +237,7 @@ class _Ledger extends StatelessWidget {
               ),
             if (entry.canBeVoided)
               AppIconButton(
-                icon: CupertinoIcons.arrow_uturn_left,
+                icon: AppIcons.undo,
                 label: strings.voidTransaction,
                 tone: AppTone.danger,
                 onPressed: () => _void(context, entry),

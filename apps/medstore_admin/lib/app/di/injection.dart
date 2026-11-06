@@ -10,6 +10,7 @@ import '../../features/notifications/domain/notification.dart';
 import '../../features/notifications/presentation/unread_cubit.dart';
 import '../../features/orders/data/admin_order_repository_impl.dart';
 import '../../features/orders/domain/admin_orders.dart';
+import '../../features/orders/presentation/order_changes.dart';
 import '../../features/products/data/admin_product_repository_impl.dart';
 import '../../features/products/domain/admin_product_repository.dart';
 import '../../features/products/domain/admin_product_usecases.dart';
@@ -72,6 +73,7 @@ Future<void> configureDependencies() async {
     ..registerLazySingleton(() => PlaceOrder(sl()))
     ..registerLazySingleton(() => ReviseOrder(sl()))
     ..registerLazySingleton(() => ChangeOrderStatus(sl()))
+    ..registerLazySingleton(OrderChanges.new, dispose: (changes) => changes.dispose())
     // Wallets
     ..registerLazySingleton<WalletRepository>(() => WalletRepositoryImpl(sl()))
     ..registerLazySingleton(() => ListWallets(sl()))

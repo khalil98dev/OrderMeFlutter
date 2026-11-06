@@ -164,7 +164,7 @@ class _OrderDetails extends StatelessWidget {
               OrderStatusTracker(status: order.status),
               if (order.status == OrderStatus.ready) ...[
                 const SizedBox(height: AppSpacing.lg),
-                AppMessage(text: strings.readyPickupHint, tone: AppTone.brand, icon: CupertinoIcons.bag_fill),
+                AppMessage(text: strings.readyPickupHint, tone: AppTone.brand, icon: AppIcons.bag),
               ],
             ],
           ),
@@ -177,7 +177,7 @@ class _OrderDetails extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           AppButton(
             label: strings.confirmDelivery,
-            icon: CupertinoIcons.checkmark_seal_fill,
+            icon: AppIcons.verified,
             expand: true,
             isLoading: submit.isBusy,
             onPressed: onConfirmDelivery,
@@ -265,7 +265,7 @@ class _OrderDetails extends StatelessWidget {
           const SizedBox(height: AppSpacing.lg),
           AppButton(
             label: strings.actionCancelOrder,
-            icon: CupertinoIcons.xmark,
+            icon: AppIcons.close,
             variant: AppButtonVariant.destructive,
             expand: true,
             onPressed: submit.isBusy ? null : onCancel,

@@ -11,6 +11,7 @@ import '../../../app/shell/admin_page.dart';
 import '../../notifications/presentation/reload_on_notification.dart';
 import '../../teachers/domain/teacher_directory.dart';
 import '../domain/admin_orders.dart';
+import 'order_changes.dart';
 import 'order_detail_page.dart';
 import 'order_editor_cubit.dart';
 import 'order_editor_page.dart';
@@ -30,7 +31,11 @@ GoRoute ordersRoute() => GoRoute(
         child: ReloadOnNotification(
           when: (notification) => notification.orderId != null,
           onArrival: (context) => unawaited(context.read<OrdersCubit>().load()),
-          child: const OrdersPage(),
+          // A status changed or lines revised on an order's page, however it was opened.
+          child: ReloadOnOrderChange(
+            onChange: (context, _) => unawaited(context.read<OrdersCubit>().load()),
+            child: const OrdersPage(),
+          ),
         ),
       ),
     ),

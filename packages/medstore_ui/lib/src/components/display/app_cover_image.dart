@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 
 /// A book cover (or any picture) with a rounded frame, a fade-in, and a placeholder when there is no
@@ -19,7 +20,7 @@ class AppCoverImage extends StatelessWidget {
     required this.image,
     required this.width,
     this.height,
-    this.placeholderIcon = CupertinoIcons.book,
+    this.placeholderIcon = AppIcons.products,
     this.semanticLabel,
   });
 

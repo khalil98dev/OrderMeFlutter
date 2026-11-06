@@ -9,7 +9,7 @@ import '../../tokens/app_typography.dart';
 ///
 /// ```dart
 /// AppEmptyState(
-///   icon: CupertinoIcons.cart,
+///   icon: AppIcons.cart,
 ///   title: strings.noOrdersTitle,
 ///   message: strings.noOrdersMessage,
 ///   action: AppButton(label: strings.newOrder, onPressed: newOrder),

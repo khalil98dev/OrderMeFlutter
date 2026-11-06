@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../l10n/app_strings.dart';
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 
@@ -44,7 +45,7 @@ class AppQuantityStepper extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _StepButton(
-            icon: CupertinoIcons.minus,
+            icon: AppIcons.remove,
             label: strings.decreaseQuantity,
             onPressed: _canDecrease ? () => onChanged!(value - step) : null,
           ),
@@ -59,7 +60,7 @@ class AppQuantityStepper extends StatelessWidget {
             ),
           ),
           _StepButton(
-            icon: CupertinoIcons.plus,
+            icon: AppIcons.add,
             label: strings.increaseQuantity,
             onPressed: _canIncrease ? () => onChanged!(value + step) : null,
           ),

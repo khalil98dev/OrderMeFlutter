@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../formatting/date_format.dart';
 import '../../l10n/app_strings.dart';
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../buttons/app_button.dart';
 import '../feedback/app_dialog.dart';
 import 'app_field_box.dart';
@@ -55,7 +56,7 @@ class AppDateField extends StatelessWidget {
       label: label,
       value: value == null ? null : AppDateFormat.day(value, locale),
       placeholder: placeholder ?? strings.choose,
-      icon: CupertinoIcons.calendar,
+      icon: AppIcons.calendar,
       errorText: errorText,
       isRequired: isRequired,
       onTap: onChanged == null ? null : () => _open(context, onChanged),
@@ -65,7 +66,7 @@ class AppDateField extends StatelessWidget {
               minimumSize: const Size.square(32),
               onPressed: () => onChanged(null),
               child: Icon(
-                CupertinoIcons.clear_circled_solid,
+                AppIcons.cancelled,
                 size: 18,
                 color: AppColors.textTertiary.resolveFrom(context),
                 semanticLabel: strings.clear,

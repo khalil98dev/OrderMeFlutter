@@ -94,7 +94,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
             ),
             AppButton(
               label: strings.save,
-              icon: CupertinoIcons.check_mark,
+              icon: AppIcons.check,
               isLoading: state.isSaving,
               onPressed: () => cubit.save(_draft(), _cover),
             ),

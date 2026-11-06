@@ -96,7 +96,7 @@ class _UserFooter extends StatelessWidget {
         minimumSize: const Size.square(32),
         onPressed: () => context.read<AuthCubit>().signOut(),
         child: Icon(
-          CupertinoIcons.square_arrow_right,
+          AppIcons.signOut,
           size: 18,
           color: AppColors.textSecondary.resolveFrom(context),
           semanticLabel: strings.signOut,

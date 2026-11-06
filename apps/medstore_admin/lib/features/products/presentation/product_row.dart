@@ -78,9 +78,9 @@ class ProductRow extends StatelessWidget {
                 child: ProductAvailabilityBadge(isAvailable: product.isAvailable),
               ),
             ),
-            AppIconButton(icon: CupertinoIcons.pencil, label: strings.edit, onPressed: onEdit),
+            AppIconButton(icon: AppIcons.edit, label: strings.edit, onPressed: onEdit),
             AppIconButton(
-              icon: CupertinoIcons.trash,
+              icon: AppIcons.delete,
               label: strings.delete,
               tone: AppTone.danger,
               onPressed: onDelete,

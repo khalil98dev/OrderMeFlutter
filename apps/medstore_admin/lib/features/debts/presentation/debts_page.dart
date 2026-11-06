@@ -30,9 +30,7 @@ class DebtsPage extends StatelessWidget {
     return AdminPage(
       title: strings.navDebts,
       subtitle: total > 0 ? strings.teachersCount(total) : null,
-      actions: [
-        AppButton(label: strings.newDebt, icon: CupertinoIcons.add, onPressed: () => _create(context)),
-      ],
+      actions: [AppButton(label: strings.newDebt, icon: AppIcons.add, onPressed: () => _create(context))],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -69,7 +67,7 @@ class DebtsPage extends StatelessWidget {
                 await cubit.load();
               },
               empty: AppEmptyState(
-                icon: CupertinoIcons.checkmark_seal,
+                icon: AppIcons.verified,
                 title: strings.noDebtsTitle,
                 message: strings.noDebtsMessage,
                 tone: AppTone.success,

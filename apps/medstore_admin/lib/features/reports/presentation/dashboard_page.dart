@@ -40,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
       title: strings.navDashboard,
       actions: [
         PeriodBar(from: _period.from, to: _period.to, width: 170, onChanged: _setPeriod),
-        AppIconButton(icon: CupertinoIcons.refresh, label: strings.refresh, onPressed: cubit.load),
+        AppIconButton(icon: AppIcons.refresh, label: strings.refresh, onPressed: cubit.load),
       ],
       child: AppLoadView(
         isLoading: state.isLoading || (!state.hasData && state.failure == null),
@@ -88,28 +88,23 @@ class _Summary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         group(strings.today, [
-          (strings.owedNow, money(report.owedNow), CupertinoIcons.exclamationmark_circle, AppTone.warning),
-          (strings.overdueNow, money(report.overdueNow), CupertinoIcons.clock, AppTone.danger),
-          (
-            strings.heldInWallets,
-            money(report.heldInWalletsNow),
-            CupertinoIcons.money_dollar_circle,
-            AppTone.success,
-          ),
-          (strings.activeTeachers, '${report.activeTeachers}', CupertinoIcons.person_2, AppTone.info),
+          (strings.owedNow, money(report.owedNow), AppIcons.error, AppTone.warning),
+          (strings.overdueNow, money(report.overdueNow), AppIcons.clock, AppTone.danger),
+          (strings.heldInWallets, money(report.heldInWalletsNow), AppIcons.wallet, AppTone.success),
+          (strings.activeTeachers, '${report.activeTeachers}', AppIcons.teachers, AppTone.info),
         ]),
         group(
           '${strings.thePeriod} · ${AppDateFormat.day(report.from, locale)} – ${AppDateFormat.day(report.to, locale)}',
           [
-            (strings.ordersPlaced, '${report.ordersPlaced}', CupertinoIcons.cart, AppTone.brand),
-            (strings.copiesOrdered, '${report.copiesOrdered}', CupertinoIcons.book, AppTone.neutral),
+            (strings.ordersPlaced, '${report.ordersPlaced}', AppIcons.cart, AppTone.brand),
+            (strings.copiesOrdered, '${report.copiesOrdered}', AppIcons.products, AppTone.neutral),
             (strings.amountOrdered, money(report.amountOrdered), null, AppTone.neutral),
-            (strings.invoicesIssued, '${report.invoicesIssued}', CupertinoIcons.doc_text, AppTone.info),
+            (strings.invoicesIssued, '${report.invoicesIssued}', AppIcons.invoices, AppTone.info),
             (strings.amountInvoiced, money(report.amountInvoiced), null, AppTone.info),
-            (strings.depositsCount, '${report.deposits}', CupertinoIcons.arrow_down_circle, AppTone.success),
+            (strings.depositsCount, '${report.deposits}', AppIcons.downloadCircle, AppTone.success),
             (strings.amountDeposited, money(report.amountDeposited), null, AppTone.success),
             (strings.amountPaidFromWallets, money(report.amountPaidFromWallets), null, AppTone.success),
-            (strings.newTeachers, '${report.newTeachers}', CupertinoIcons.person_add, AppTone.brand),
+            (strings.newTeachers, '${report.newTeachers}', AppIcons.addPerson, AppTone.brand),
           ],
         ),
         group(strings.ordersByStatus, [

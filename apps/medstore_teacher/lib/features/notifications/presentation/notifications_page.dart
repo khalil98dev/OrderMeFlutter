@@ -126,7 +126,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   onRetry: cubit.load,
                   builder: (_) => const SizedBox.shrink(),
                   empty: AppEmptyState(
-                    icon: CupertinoIcons.bell,
+                    icon: AppIcons.notifications,
                     title: strings.noNotificationsTitle,
                     message: strings.noNotificationsMessage,
                   ),

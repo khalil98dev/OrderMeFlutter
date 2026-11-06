@@ -40,23 +40,23 @@ class _NavigationSectionState extends State<NavigationSection> {
                   items: [
                     AppSidebarItem(
                       label: strings.navDashboard,
-                      icon: CupertinoIcons.square_grid_2x2,
+                      icon: AppIcons.dashboard,
                       section: strings.sectionOperations,
                     ),
                     AppSidebarItem(
                       label: strings.navOrders,
-                      icon: CupertinoIcons.cart,
-                      activeIcon: CupertinoIcons.cart_fill,
+                      icon: AppIcons.cart,
+                      activeIcon: AppIcons.cart,
                       section: strings.sectionOperations,
                     ),
                     AppSidebarItem(
                       label: strings.navInvoices,
-                      icon: CupertinoIcons.doc_text,
+                      icon: AppIcons.invoices,
                       section: strings.sectionFinance,
                     ),
                     AppSidebarItem(
                       label: strings.navSettings,
-                      icon: CupertinoIcons.gear,
+                      icon: AppIcons.settings,
                       section: strings.sectionSystem,
                     ),
                   ],
@@ -73,14 +73,10 @@ class _NavigationSectionState extends State<NavigationSection> {
                             title: strings.navOrders,
                             subtitle: tr(context, '14 à préparer', '14 للتحضير'),
                             actions: [
-                              AppIconButton(
-                                icon: CupertinoIcons.arrow_clockwise,
-                                label: strings.retry,
-                                onPressed: () {},
-                              ),
+                              AppIconButton(icon: AppIcons.retry, label: strings.retry, onPressed: () {}),
                               AppButton(
                                 label: tr(context, 'Nouvelle commande', 'طلب جديد'),
-                                icon: CupertinoIcons.add,
+                                icon: AppIcons.add,
                                 onPressed: () {},
                               ),
                             ],

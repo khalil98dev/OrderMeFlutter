@@ -8,7 +8,7 @@ import '../../tokens/app_typography.dart';
 ///
 /// ```dart
 /// AppBadge(label: strings.statusReady, tone: AppTone.success)
-/// AppBadge(label: strings.statusPending, tone: AppTone.warning, icon: CupertinoIcons.clock)
+/// AppBadge(label: strings.statusPending, tone: AppTone.warning, icon: AppIcons.clock)
 /// ```
 ///
 /// Map your domain value to a tone in the feature (for example `OrderStatus.ready → AppTone.success`),

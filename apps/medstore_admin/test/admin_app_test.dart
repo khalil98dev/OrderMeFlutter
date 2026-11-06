@@ -7,6 +7,7 @@ import 'package:medstore_admin/app/admin_app.dart';
 import 'package:medstore_admin/app/di/injection.dart';
 import 'package:medstore_admin/features/notifications/domain/notification.dart';
 import 'package:medstore_admin/features/notifications/presentation/unread_cubit.dart';
+import 'package:medstore_admin/features/orders/presentation/order_changes.dart';
 import 'package:medstore_admin/features/reports/domain/reports.dart';
 import 'package:medstore_core/medstore_core.dart';
 import 'package:mocktail/mocktail.dart';
@@ -71,7 +72,8 @@ void main() {
       ..registerSingleton(GetSummaryReport(reports))
       ..registerSingleton<NotificationRepository>(notifications)
       // Lazy: built by the app inside the test's fake-async zone, so live events reach it on pump.
-      ..registerLazySingleton(() => UnreadCubit(notifications));
+      ..registerLazySingleton(() => UnreadCubit(notifications))
+      ..registerLazySingleton(OrderChanges.new);
   });
 
   testWidgets('signed out: the login form is shown', (tester) async {

@@ -105,7 +105,7 @@ class _OrdersSliver extends StatelessWidget {
           onRetry: context.read<MyOrdersCubit>().load,
           builder: (_) => const SizedBox.shrink(),
           empty: AppEmptyState(
-            icon: CupertinoIcons.cart,
+            icon: AppIcons.cart,
             title: strings.noOrdersTitle,
             message: strings.noOrdersTeacherMessage,
             action: AppButton(label: strings.browseProducts, onPressed: () => context.go('/products')),

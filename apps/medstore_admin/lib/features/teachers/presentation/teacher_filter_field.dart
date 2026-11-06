@@ -37,7 +37,7 @@ class TeacherFilterField extends StatelessWidget {
       label: label ?? strings.fieldTeacher,
       value: name,
       placeholder: allowNone ? strings.allTeachers : strings.chooseTeacher,
-      icon: CupertinoIcons.person,
+      icon: AppIcons.person,
       errorText: errorText,
       isRequired: !allowNone,
       onTap: () async {
@@ -45,11 +45,7 @@ class TeacherFilterField extends StatelessWidget {
         if (teacher != null) onChanged((teacher.id, teacher.fullName));
       },
       trailing: allowNone && name != null
-          ? AppIconButton(
-              icon: CupertinoIcons.clear_circled_solid,
-              label: strings.clear,
-              onPressed: () => onChanged(null),
-            )
+          ? AppIconButton(icon: AppIcons.cancelled, label: strings.clear, onPressed: () => onChanged(null))
           : null,
     );
   }

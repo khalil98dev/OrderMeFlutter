@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 import '../surfaces/pressable.dart';
@@ -15,7 +16,7 @@ import 'app_field_label.dart';
 ///   label: strings.fieldTeacher,
 ///   value: teacher?.fullName,
 ///   placeholder: strings.chooseTeacher,
-///   icon: CupertinoIcons.person,
+///   icon: AppIcons.person,
 ///   onTap: pickTeacher,
 /// )
 /// ```
@@ -93,11 +94,7 @@ class AppFieldBox extends StatelessWidget {
                       ),
                     ),
                     ?trailing,
-                    Icon(
-                      CupertinoIcons.chevron_up_chevron_down,
-                      size: 16,
-                      color: AppColors.textTertiary.resolveFrom(context),
-                    ),
+                    Icon(AppIcons.sort, size: 16, color: AppColors.textTertiary.resolveFrom(context)),
                   ],
                 ),
               ),

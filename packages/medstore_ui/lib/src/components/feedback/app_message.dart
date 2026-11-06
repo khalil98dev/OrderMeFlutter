@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_tone.dart';
 import '../../tokens/app_typography.dart';
@@ -22,10 +23,10 @@ class AppMessage extends StatelessWidget {
   final IconData? icon;
 
   static IconData _defaultIcon(AppTone tone) => switch (tone) {
-    AppTone.danger => CupertinoIcons.exclamationmark_circle,
-    AppTone.warning => CupertinoIcons.exclamationmark_triangle,
-    AppTone.success => CupertinoIcons.check_mark_circled,
-    AppTone.neutral || AppTone.brand || AppTone.info => CupertinoIcons.info_circle,
+    AppTone.danger => AppIcons.error,
+    AppTone.warning => AppIcons.warning,
+    AppTone.success => AppIcons.success,
+    AppTone.neutral || AppTone.brand || AppTone.info => AppIcons.info,
   };
 
   @override

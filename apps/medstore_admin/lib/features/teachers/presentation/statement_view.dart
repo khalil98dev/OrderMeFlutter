@@ -63,7 +63,7 @@ class _StatementViewState extends State<StatementView> {
             const SizedBox(width: AppSpacing.sm),
             AppButton(
               label: strings.downloadPdf,
-              icon: CupertinoIcons.arrow_down_doc,
+              icon: AppIcons.download,
               variant: AppButtonVariant.tinted,
               onPressed: () =>
                   savePdf(context, 'releve-${apiDay(_from)}-${apiDay(_to)}.pdf', () => download(_params)),

@@ -43,9 +43,9 @@ class _SecurityPageState extends State<SecurityPage> {
           onChanged: (tab) => setState(() => _tab = tab),
         ),
         if (_tab == _Tab.roles)
-          AppButton(label: strings.newRole, icon: CupertinoIcons.add, onPressed: () => _newRole(context)),
+          AppButton(label: strings.newRole, icon: AppIcons.add, onPressed: () => _newRole(context)),
         if (_tab == _Tab.users)
-          AppButton(label: strings.newUser, icon: CupertinoIcons.add, onPressed: () => _newUser(context)),
+          AppButton(label: strings.newUser, icon: AppIcons.add, onPressed: () => _newUser(context)),
       ],
       child: switch (_tab) {
         _Tab.roles => const _RolesTab(),
@@ -115,7 +115,7 @@ class _RolesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
     return _ListView<Role>(
-      icon: CupertinoIcons.lock_shield,
+      icon: AppIcons.security,
       builder: (context, roles) => AppTable(
         columns: [
           AppTableColumn(strings.fieldRoleName, width: 200),
@@ -144,7 +144,7 @@ class _UsersTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
     return _ListView<AdminUser>(
-      icon: CupertinoIcons.person_2,
+      icon: AppIcons.teachers,
       builder: (context, users) => AppTable(
         columns: [
           AppTableColumn(strings.userName, flex: 2),
@@ -176,13 +176,13 @@ class _UsersTab extends StatelessWidget {
                 // Teachers' accounts are managed with the teacher.
                 if (!user.isTeacher)
                   AppIconButton(
-                    icon: CupertinoIcons.lock_shield,
+                    icon: AppIcons.security,
                     label: strings.editRoles,
                     onPressed: () => _editRoles(context, user),
                   ),
                 if (user.isActive && !user.isTeacher)
                   AppIconButton(
-                    icon: CupertinoIcons.person_crop_circle_badge_xmark,
+                    icon: AppIcons.removePerson,
                     label: strings.deactivate,
                     tone: AppTone.danger,
                     onPressed: () => _deactivate(context, user),
@@ -240,7 +240,7 @@ class _ResourcesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
     return _ListView<SecuredResource>(
-      icon: CupertinoIcons.cube_box,
+      icon: AppIcons.orders,
       builder: (context, resources) => AppTable(
         rowHeight: 64,
         columns: [

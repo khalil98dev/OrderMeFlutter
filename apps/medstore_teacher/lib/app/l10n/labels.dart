@@ -23,11 +23,11 @@ AppTone orderStatusTone(OrderStatus status) => switch (status) {
 };
 
 IconData orderStatusIcon(OrderStatus status) => switch (status) {
-  OrderStatus.pending => CupertinoIcons.clock,
-  OrderStatus.inPreparation => CupertinoIcons.hammer,
-  OrderStatus.ready => CupertinoIcons.bag,
-  OrderStatus.delivered => CupertinoIcons.checkmark_seal,
-  OrderStatus.cancelled => CupertinoIcons.xmark_circle,
+  OrderStatus.pending => AppIcons.clock,
+  OrderStatus.inPreparation => AppIcons.preparing,
+  OrderStatus.ready => AppIcons.bag,
+  OrderStatus.delivered => AppIcons.verified,
+  OrderStatus.cancelled => AppIcons.cancelled,
 };
 
 /// The notification's title and message in the app's language, rebuilt from its type and data.
@@ -66,12 +66,12 @@ IconData orderStatusIcon(OrderStatus status) => switch (status) {
 }
 
 IconData notificationIcon(TeacherNotification n) => switch (n.type) {
-  NotificationKind.orderPlacedForYou => CupertinoIcons.cart_fill,
+  NotificationKind.orderPlacedForYou => AppIcons.cart,
   NotificationKind.orderStatusChanged => orderStatusIcon(OrderStatus.fromApi(n.data['status'])),
-  NotificationKind.invoiceIssued => CupertinoIcons.doc_text_fill,
-  NotificationKind.depositRecorded => CupertinoIcons.money_dollar_circle_fill,
-  NotificationKind.productCreated => CupertinoIcons.book_fill,
-  NotificationKind.other => CupertinoIcons.bell_fill,
+  NotificationKind.invoiceIssued => AppIcons.invoices,
+  NotificationKind.depositRecorded => AppIcons.wallet,
+  NotificationKind.productCreated => AppIcons.products,
+  NotificationKind.other => AppIcons.notifications,
 };
 
 AppTone notificationTone(TeacherNotification n) => switch (n.type) {

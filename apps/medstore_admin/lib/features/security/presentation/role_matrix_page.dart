@@ -38,7 +38,7 @@ class RoleMatrixPage extends StatelessWidget {
             ),
             AppButton(
               label: strings.save,
-              icon: CupertinoIcons.check_mark,
+              icon: AppIcons.check,
               isLoading: state.isSaving,
               onPressed: state.isDirty ? cubit.save : null,
             ),

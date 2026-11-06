@@ -98,6 +98,6 @@ void main() {
         ],
       ),
     );
-    expect(find.byIcon(CupertinoIcons.chevron_forward), findsOneWidget);
+    expect(find.byIcon(AppIcons.forward), findsOneWidget);
   });
 }

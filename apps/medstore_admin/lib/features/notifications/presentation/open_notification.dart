@@ -19,12 +19,12 @@ String? notificationRoute(AppNotification notification) => switch (notification.
 };
 
 IconData notificationIcon(AppNotification notification) => switch (notification.type) {
-  'OrderPlaced' || 'OrderPlacedForYou' => CupertinoIcons.cart_fill_badge_plus,
-  'OrderStatusChanged' => CupertinoIcons.cube_box_fill,
-  'InvoiceIssued' => CupertinoIcons.doc_text_fill,
-  'DepositRecorded' => CupertinoIcons.money_dollar_circle_fill,
-  'ProductCreated' => CupertinoIcons.book_fill,
-  _ => CupertinoIcons.bell_fill,
+  'OrderPlaced' || 'OrderPlacedForYou' => AppIcons.cart,
+  'OrderStatusChanged' => AppIcons.orders,
+  'InvoiceIssued' => AppIcons.invoices,
+  'DepositRecorded' => AppIcons.wallet,
+  'ProductCreated' => AppIcons.products,
+  _ => AppIcons.notifications,
 };
 
 AppTone notificationTone(AppNotification notification) => switch (notification.type) {

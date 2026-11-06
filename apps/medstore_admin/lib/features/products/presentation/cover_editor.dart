@@ -73,7 +73,7 @@ class CoverEditor extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           AppButton(
             label: preview == null ? strings.chooseImage : strings.replaceImage,
-            icon: CupertinoIcons.photo,
+            icon: AppIcons.image,
             variant: AppButtonVariant.tinted,
             onPressed: _choose,
           ),

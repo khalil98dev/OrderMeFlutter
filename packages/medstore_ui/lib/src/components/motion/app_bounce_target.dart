@@ -11,7 +11,7 @@ import '../../tokens/app_metrics.dart';
 /// ```dart
 /// final _cartKey = GlobalKey<AppBounceTargetState>();
 ///
-/// AppBounceTarget(key: _cartKey, child: const Icon(CupertinoIcons.cart));
+/// AppBounceTarget(key: _cartKey, child: const Icon(AppIcons.cart));
 /// ```
 class AppBounceTarget extends StatefulWidget {
   const AppBounceTarget({super.key, required this.child});

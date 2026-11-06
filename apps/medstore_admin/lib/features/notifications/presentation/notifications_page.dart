@@ -64,7 +64,7 @@ class _NotificationsView extends StatelessWidget {
       actions: [
         AppButton(
           label: strings.markAllRead,
-          icon: CupertinoIcons.checkmark_alt,
+          icon: AppIcons.checkAll,
           onPressed: unread == 0 ? null : () => _markAll(context),
         ),
       ],
@@ -87,7 +87,7 @@ class _NotificationsView extends StatelessWidget {
               failure: state.failure,
               onRetry: cubit.load,
               empty: AppEmptyState(
-                icon: CupertinoIcons.bell,
+                icon: AppIcons.notifications,
                 title: strings.noNotificationsTitle,
                 message: strings.noNotificationsMessage,
               ),
@@ -241,11 +241,7 @@ class _NotificationTileState extends State<_NotificationTile> {
                     ),
                     if (opens) ...[
                       const SizedBox(height: AppSpacing.xs),
-                      Icon(
-                        CupertinoIcons.chevron_forward,
-                        size: 14,
-                        color: AppColors.textTertiary.resolveFrom(context),
-                      ),
+                      Icon(AppIcons.forward, size: 14, color: AppColors.textTertiary.resolveFrom(context)),
                     ],
                   ],
                 ),

@@ -52,7 +52,7 @@ class ListsSection extends StatelessWidget {
             header: strings.navProfile,
             children: [
               AppListTile(
-                leading: Icon(CupertinoIcons.globe, color: AppColors.brand.resolveFrom(context)),
+                leading: Icon(AppIcons.language, color: AppColors.brand.resolveFrom(context)),
                 title: strings.language,
                 trailing: Text(tr(context, 'Français', 'العربية')),
                 onTap: () {},

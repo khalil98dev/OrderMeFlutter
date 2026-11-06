@@ -86,7 +86,7 @@ class AppButton extends StatelessWidget {
           color: enabled || isLoading ? colors.foreground : AppColors.textTertiary.resolveFrom(context),
           textStyle: small
               ? AppTypography.footnote.copyWith(fontWeight: FontWeight.w600)
-              : AppTypography.headline,
+              : AppTypography.callout.copyWith(fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -117,7 +117,7 @@ class _Content extends StatelessWidget {
     final leading = isLoading
         ? CupertinoActivityIndicator(color: color, radius: 8)
         : icon != null
-        ? Icon(icon, size: textStyle.fontSize! + 2, color: color)
+        ? Icon(icon, size: textStyle.fontSize! + 1, color: color)
         : null;
 
     return Row(

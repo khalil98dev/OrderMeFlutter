@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Tooltip;
 
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 import '../display/app_logo.dart';
@@ -152,7 +153,7 @@ class _Header extends StatelessWidget {
         minimumSize: const Size.square(32),
         onPressed: onToggle,
         child: Icon(
-          CupertinoIcons.sidebar_left,
+          AppIcons.sidebar,
           size: 18,
           color: AppColors.textSecondary.resolveFrom(context),
           semanticLabel: toggleLabel,

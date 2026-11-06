@@ -5,6 +5,7 @@ import '../../components/display/app_badge.dart';
 import '../../formatting/money_format.dart';
 import '../../l10n/app_strings.dart';
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_tone.dart';
 import '../../tokens/app_typography.dart';
 
@@ -27,11 +28,7 @@ class ProductAvailabilityBadge extends StatelessWidget {
     final strings = AppStrings.of(context);
     return isAvailable
         ? AppBadge(label: strings.productAvailable, tone: AppTone.success)
-        : AppBadge(
-            label: strings.productUnavailable,
-            tone: AppTone.warning,
-            icon: CupertinoIcons.pause_circle,
-          );
+        : AppBadge(label: strings.productUnavailable, tone: AppTone.warning, icon: AppIcons.paused);
   }
 }
 

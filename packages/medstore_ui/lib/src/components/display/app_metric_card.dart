@@ -9,7 +9,7 @@ import '../surfaces/app_card.dart';
 /// A dashboard number with its label: "Orders to prepare · 14".
 ///
 /// ```dart
-/// AppMetricCard(label: strings.ordersToPrepare, value: '14', icon: CupertinoIcons.cart, tone: AppTone.warning)
+/// AppMetricCard(label: strings.ordersToPrepare, value: '14', icon: AppIcons.cart, tone: AppTone.warning)
 /// AppMetricCard(label: strings.collectedThisMonth, value: MoneyFormat.dzd(total, locale), caption: strings.vsLastMonth)
 /// ```
 class AppMetricCard extends StatelessWidget {

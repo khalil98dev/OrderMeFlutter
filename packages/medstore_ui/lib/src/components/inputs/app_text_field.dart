@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../l10n/app_strings.dart';
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 
@@ -113,7 +114,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   minimumSize: const Size.square(AppSpacing.minTouchTarget),
                   onPressed: () => setState(() => _hidden = !_hidden),
                   child: Icon(
-                    _hidden ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
+                    _hidden ? AppIcons.show : AppIcons.hide,
                     size: 20,
                     color: AppColors.textSecondary.resolveFrom(context),
                     semanticLabel: _hidden ? strings.showPassword : strings.hidePassword,

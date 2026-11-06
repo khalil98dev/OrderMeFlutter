@@ -39,19 +39,19 @@ class TeacherDetailPage extends StatelessWidget {
         if (teacher != null) ...[
           AppButton(
             label: strings.navWallet,
-            icon: CupertinoIcons.money_dollar_circle,
+            icon: AppIcons.wallet,
             variant: AppButtonVariant.plain,
             onPressed: () => context.go('/wallet/${teacher.id}'),
           ),
           AppButton(
             label: strings.navDebts,
-            icon: CupertinoIcons.exclamationmark_triangle,
+            icon: AppIcons.warning,
             variant: AppButtonVariant.plain,
             onPressed: () => context.go('/debts/${teacher.id}'),
           ),
           AppButton(
             label: strings.edit,
-            icon: CupertinoIcons.pencil,
+            icon: AppIcons.edit,
             variant: AppButtonVariant.tinted,
             onPressed: () => _edit(context, teacher),
           ),

@@ -77,26 +77,26 @@ abstract final class AppColors {
   // ── Surfaces ─────────────────────────────────────────────────────────────
   /// Page background, under grouped content.
   static const canvas = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF2F2F7),
-    darkColor: Color(0xFF000000),
+    color: Color(0xFFF5F6F8),
+    darkColor: Color(0xFF0B0B0E),
   );
 
   /// Cards, rows, fields.
   static const surface = CupertinoDynamicColor.withBrightness(
     color: Color(0xFFFFFFFF),
-    darkColor: Color(0xFF1C1C1E),
+    darkColor: Color(0xFF17181C),
   );
 
   /// Nested surfaces, dialogs, popovers.
   static const surfaceRaised = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF9F9FB),
-    darkColor: Color(0xFF2C2C2E),
+    color: Color(0xFFF9FAFB),
+    darkColor: Color(0xFF222328),
   );
 
   /// Desktop sidebar.
   static const sidebar = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF6F6F7),
-    darkColor: Color(0xFF1E1E1E),
+    color: Color(0xFFFFFFFF),
+    darkColor: Color(0xFF111215),
   );
 
   /// Translucent navigation and tab bars (blurred behind).
@@ -111,23 +111,23 @@ abstract final class AppColors {
     darkColor: Color(0xFFF2F4F8),
   );
   static const textSecondary = CupertinoDynamicColor.withBrightness(
-    color: Color(0x993C3C43),
-    darkColor: Color(0x99EBEBF5),
+    color: Color(0xFF5D6472),
+    darkColor: Color(0xFFA3A9B6),
   );
   static const textTertiary = CupertinoDynamicColor.withBrightness(
-    color: Color(0x4D3C3C43),
-    darkColor: Color(0x4DEBEBF5),
+    color: Color(0xFF98A0AD),
+    darkColor: Color(0xFF6B7280),
   );
   static const onBrand = Color(0xFFFFFFFF);
 
   // ── Lines and states ─────────────────────────────────────────────────────
   static const separator = CupertinoDynamicColor.withBrightness(
-    color: Color(0x333C3C43),
-    darkColor: Color(0x40545458),
+    color: Color(0xFFEAECF0),
+    darkColor: Color(0xFF2A2C33),
   );
   static const border = CupertinoDynamicColor.withBrightness(
-    color: Color(0x1F000000),
-    darkColor: Color(0x26FFFFFF),
+    color: Color(0xFFE4E7EC),
+    darkColor: Color(0xFF2E3038),
   );
   static const hover = CupertinoDynamicColor.withBrightness(
     color: Color(0x0A000000),

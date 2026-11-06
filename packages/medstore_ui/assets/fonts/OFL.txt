@@ -1,0 +1,6 @@
+Inter — Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
+IBM Plex Sans Arabic — Copyright (c) 2017 IBM Corp. (https://github.com/IBM/plex)
+
+Both fonts are licensed under the SIL Open Font License, Version 1.1.
+The license is available with a FAQ at: https://openfontlicense.org
+Files downloaded from Google Fonts (fonts.gstatic.com), verified by SHA-256.

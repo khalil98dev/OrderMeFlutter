@@ -178,7 +178,7 @@ class _BannerCard extends StatelessWidget {
                     minimumSize: const Size.square(24),
                     onPressed: onClose,
                     child: Icon(
-                      CupertinoIcons.xmark,
+                      AppIcons.close,
                       size: 14,
                       color: AppColors.textSecondary.resolveFrom(context),
                       semanticLabel: strings.close,

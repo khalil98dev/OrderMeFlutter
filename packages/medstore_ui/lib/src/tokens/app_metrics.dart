@@ -18,17 +18,36 @@ abstract final class AppSpacing {
   static const EdgeInsets card = EdgeInsets.all(md);
 }
 
-/// Continuous, Apple-like corner radii.
+/// Soft, generous corner radii.
 abstract final class AppRadii {
-  static const double xs = 6;
-  static const double sm = 10;
-  static const double md = 14;
-  static const double lg = 18;
+  static const double xs = 8;
+  static const double sm = 12;
+  static const double md = 16;
+  static const double lg = 22;
 
   static const BorderRadius xsRadius = BorderRadius.all(Radius.circular(xs));
   static const BorderRadius smRadius = BorderRadius.all(Radius.circular(sm));
   static const BorderRadius mdRadius = BorderRadius.all(Radius.circular(md));
   static const BorderRadius lgRadius = BorderRadius.all(Radius.circular(lg));
+}
+
+/// Soft, wide, low shadows: a surface lifts off the canvas without a hard edge. Light mode only; in
+/// dark mode surfaces are told apart by their lighter grey and the hairline border.
+abstract final class AppShadows {
+  /// Cards and table frames at rest.
+  static const List<BoxShadow> card = [
+    BoxShadow(color: Color(0x0A101828), blurRadius: 2, offset: Offset(0, 1)),
+    BoxShadow(color: Color(0x0F101828), blurRadius: 16, offset: Offset(0, 6)),
+  ];
+
+  /// A card under the pointer, popovers, toasts.
+  static const List<BoxShadow> raised = [
+    BoxShadow(color: Color(0x0F101828), blurRadius: 4, offset: Offset(0, 2)),
+    BoxShadow(color: Color(0x1A101828), blurRadius: 28, offset: Offset(0, 12)),
+  ];
+
+  static List<BoxShadow> of(BuildContext context, List<BoxShadow> shadows) =>
+      MediaQuery.platformBrightnessOf(context) == Brightness.dark ? const [] : shadows;
 }
 
 /// Motion. Every animation goes through [of], so "reduce motion" turns them all off.

@@ -59,7 +59,7 @@ class ProfilePage extends StatelessWidget {
               SoftCard(
                 child: Row(
                   children: [
-                    Icon(CupertinoIcons.globe, color: AppColors.brand.resolveFrom(context)),
+                    Icon(AppIcons.language, color: AppColors.brand.resolveFrom(context)),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Text(
@@ -77,7 +77,7 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               AppButton(
                 label: strings.signOut,
-                icon: CupertinoIcons.square_arrow_right,
+                icon: AppIcons.signOut,
                 variant: AppButtonVariant.destructive,
                 expand: true,
                 onPressed: () => context.read<AuthCubit>().signOut(),

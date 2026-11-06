@@ -47,7 +47,7 @@ class WalletsPage extends StatelessWidget {
                 await cubit.load(); // the balance may have changed
               },
               empty: AppEmptyState(
-                icon: CupertinoIcons.money_dollar_circle,
+                icon: AppIcons.wallet,
                 title: strings.noWalletsTitle,
                 message: strings.noWalletsMessage,
               ),

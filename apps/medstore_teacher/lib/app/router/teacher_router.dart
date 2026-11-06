@@ -36,30 +36,15 @@ class TeacherTab {
 }
 
 const teacherTabs = <TeacherTab>[
-  TeacherTab(
-    path: '/products',
-    icon: CupertinoIcons.book,
-    activeIcon: CupertinoIcons.book_fill,
-    label: _products,
-  ),
-  TeacherTab(
-    path: '/orders',
-    icon: CupertinoIcons.cube_box,
-    activeIcon: CupertinoIcons.cube_box_fill,
-    label: _orders,
-  ),
+  TeacherTab(path: '/products', icon: AppIcons.products, activeIcon: AppIcons.products, label: _products),
+  TeacherTab(path: '/orders', icon: AppIcons.orders, activeIcon: AppIcons.orders, label: _orders),
   TeacherTab(
     path: '/notifications',
-    icon: CupertinoIcons.bell,
-    activeIcon: CupertinoIcons.bell_fill,
+    icon: AppIcons.notifications,
+    activeIcon: AppIcons.notifications,
     label: _notifications,
   ),
-  TeacherTab(
-    path: '/profile',
-    icon: CupertinoIcons.person_crop_circle,
-    activeIcon: CupertinoIcons.person_crop_circle_fill,
-    label: _profile,
-  ),
+  TeacherTab(path: '/profile', icon: AppIcons.profile, activeIcon: AppIcons.profile, label: _profile),
 ];
 
 String _products(AppStrings s) => s.navProducts;
