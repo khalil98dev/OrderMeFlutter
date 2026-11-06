@@ -5,6 +5,8 @@ import '../../features/debts/data/debt_repository_impl.dart';
 import '../../features/debts/domain/debts.dart';
 import '../../features/invoices/data/invoice_repository_impl.dart';
 import '../../features/invoices/domain/invoice_repository.dart';
+import '../../features/notifications/data/notification_repository_impl.dart';
+import '../../features/notifications/domain/notification.dart';
 import '../../features/orders/data/admin_order_repository_impl.dart';
 import '../../features/orders/domain/admin_orders.dart';
 import '../../features/products/data/admin_product_repository_impl.dart';
@@ -96,6 +98,13 @@ Future<void> configureDependencies() async {
     ..registerLazySingleton(() => CreateDebt(sl()))
     ..registerLazySingleton(() => SettleDebt(sl()))
     ..registerLazySingleton(() => WriteOffDebt(sl()))
+    // Notifications
+    ..registerLazySingleton<NotificationRepository>(
+      () => NotificationRepositoryImpl(api: sl(), realtime: sl()),
+    )
+    ..registerLazySingleton(() => ListNotifications(sl()))
+    ..registerLazySingleton(() => MarkNotificationRead(sl()))
+    ..registerLazySingleton(() => MarkAllNotificationsRead(sl()))
     // Reports
     ..registerLazySingleton<ReportRepository>(() => ReportRepositoryImpl(sl()))
     ..registerLazySingleton(() => GetSummaryReport(sl()))

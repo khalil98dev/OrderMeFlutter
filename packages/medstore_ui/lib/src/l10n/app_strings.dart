@@ -2479,6 +2479,30 @@ abstract class AppStrings {
   /// In fr, this message translates to:
   /// **'Choisissez au moins un rôle.'**
   String get chooseRoles;
+
+  /// No description provided for @markAllRead.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout marquer comme lu'**
+  String get markAllRead;
+
+  /// No description provided for @unreadOnly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non lues seulement'**
+  String get unreadOnly;
+
+  /// No description provided for @noNotificationsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune notification'**
+  String get noNotificationsTitle;
+
+  /// No description provided for @noNotificationsMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les nouvelles notifications apparaîtront ici.'**
+  String get noNotificationsMessage;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

@@ -1349,4 +1349,16 @@ class AppStringsAr extends AppStrings {
 
   @override
   String get chooseRoles => 'اختر دورًا واحدًا على الأقل.';
+
+  @override
+  String get markAllRead => 'تعليم الكل كمقروء';
+
+  @override
+  String get unreadOnly => 'غير المقروءة فقط';
+
+  @override
+  String get noNotificationsTitle => 'لا توجد إشعارات';
+
+  @override
+  String get noNotificationsMessage => 'ستظهر الإشعارات الجديدة هنا.';
 }

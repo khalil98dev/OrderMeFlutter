@@ -4,6 +4,7 @@ import 'package:medstore_core/medstore_core.dart';
 import '../../features/auth/login_page.dart';
 import '../../features/debts/presentation/debts_routes.dart';
 import '../../features/invoices/presentation/invoices_routes.dart';
+import '../../features/notifications/presentation/notifications_routes.dart';
 import '../../features/orders/presentation/orders_routes.dart';
 import '../../features/products/products_routes.dart';
 import '../../features/reports/presentation/reports_routes.dart';
@@ -61,7 +62,7 @@ class AdminRouter {
     );
   }
 
-  /// Every built section gets its own routes; notifications show "coming soon" until they are built.
+  /// Every built section gets its own routes; a section not built yet shows "coming soon".
   static GoRoute _routeFor(AdminDestination destination) => switch (destination.path) {
     '/orders' => ordersRoute(),
     '/products' => productsRoute(),
@@ -74,6 +75,7 @@ class AdminRouter {
     '/reports' => salesRoute(),
     '/security' => securityRoute(),
     '/settings' => settingsRoute(),
+    '/notifications' => notificationsRoute(),
     _ => GoRoute(
       path: destination.path,
       pageBuilder: (_, _) => NoTransitionPage(child: ComingSoonPage(destination: destination)),

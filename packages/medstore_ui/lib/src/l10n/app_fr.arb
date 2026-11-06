@@ -613,5 +613,9 @@
   "deactivateUserMessage": "Le compte ne peut plus se connecter et ses sessions sont terminées.",
   "userDeactivated": "Utilisateur désactivé",
   "teacherAccountsHint": "Les comptes enseignants se gèrent dans Enseignants.",
-  "chooseRoles": "Choisissez au moins un rôle."
+  "chooseRoles": "Choisissez au moins un rôle.",
+  "markAllRead": "Tout marquer comme lu",
+  "unreadOnly": "Non lues seulement",
+  "noNotificationsTitle": "Aucune notification",
+  "noNotificationsMessage": "Les nouvelles notifications apparaîtront ici."
 }

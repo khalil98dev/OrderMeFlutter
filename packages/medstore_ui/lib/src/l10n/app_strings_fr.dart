@@ -1321,4 +1321,16 @@ class AppStringsFr extends AppStrings {
 
   @override
   String get chooseRoles => 'Choisissez au moins un rôle.';
+
+  @override
+  String get markAllRead => 'Tout marquer comme lu';
+
+  @override
+  String get unreadOnly => 'Non lues seulement';
+
+  @override
+  String get noNotificationsTitle => 'Aucune notification';
+
+  @override
+  String get noNotificationsMessage => 'Les nouvelles notifications apparaîtront ici.';
 }

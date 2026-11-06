@@ -397,5 +397,9 @@
   "deactivateUserMessage": "لن يتمكن الحساب من الدخول وتنتهي جلساته.",
   "userDeactivated": "تم تعطيل المستخدم",
   "teacherAccountsHint": "تُدار حسابات الأساتذة من قسم الأساتذة.",
-  "chooseRoles": "اختر دورًا واحدًا على الأقل."
+  "chooseRoles": "اختر دورًا واحدًا على الأقل.",
+  "markAllRead": "تعليم الكل كمقروء",
+  "unreadOnly": "غير المقروءة فقط",
+  "noNotificationsTitle": "لا توجد إشعارات",
+  "noNotificationsMessage": "ستظهر الإشعارات الجديدة هنا."
 }
