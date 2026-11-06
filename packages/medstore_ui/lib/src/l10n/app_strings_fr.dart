@@ -1478,4 +1478,68 @@ class AppStringsFr extends AppStrings {
   String notifProductMessage(String name) {
     return '« $name » est disponible à la commande.';
   }
+
+  @override
+  String get byProductTitle => 'Résumé par produit';
+
+  @override
+  String get byProductSubtitle => 'Toutes les factures de la période, regroupées par produit';
+
+  @override
+  String get onlyUnpaid => 'Seulement les impayées';
+
+  @override
+  String get colInvoices => 'Factures';
+
+  @override
+  String get totalQuantity => 'Quantité totale';
+
+  @override
+  String get noInvoicedProductsTitle => 'Aucune facture sur cette période';
+
+  @override
+  String get noInvoicedProductsMessage => 'Changez la période, l\'enseignant ou le filtre des impayées.';
+
+  @override
+  String invoicedProductSources(String product) {
+    return 'D\'où vient ce total : $product';
+  }
+
+  @override
+  String get collectPayment => 'Encaisser';
+
+  @override
+  String get collectPaymentTitle => 'Encaisser au comptoir';
+
+  @override
+  String collectPaymentMessage(String amount) {
+    return 'Reste dû : $amount. Le paiement est enregistré comme un versement (avec reçu) et règle cette facture en premier.';
+  }
+
+  @override
+  String get collectAmountLabel => 'Montant (vide : tout le reste dû)';
+
+  @override
+  String get paymentCollected => 'Paiement encaissé';
+
+  @override
+  String invoiceIssuedTitle(String label) {
+    return 'Facture $label émise';
+  }
+
+  @override
+  String get invoiceIssuedMessage =>
+      'La commande est prête : sa facture a été émise automatiquement. L\'enseignant pourra payer le reste à la librairie.';
+
+  @override
+  String get paidFromWallet => 'Payé par le portefeuille';
+
+  @override
+  String get leftAsDebt => 'Reste dû (créance)';
+
+  @override
+  String get viewInvoice => 'Voir la facture';
+
+  @override
+  String get fullyPaidFromWallet => 'Entièrement réglée par le portefeuille.';
 }

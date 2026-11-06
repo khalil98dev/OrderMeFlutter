@@ -130,6 +130,31 @@ final class OrderDraft extends Equatable {
   List<Object?> get props => [clientId, lines, notes];
 }
 
+/// What a move did. Marking an order Ready issues its invoice for every copy not yet invoiced: the
+/// wallet pays what it can, and [amountDue] is left as the teacher's debt until they pay at the counter.
+final class StatusChangeOutcome extends Equatable {
+  const StatusChangeOutcome({
+    this.invoiceId,
+    this.invoiceLabel,
+    this.invoiceTotal,
+    this.paidFromWallet,
+    this.amountDue,
+  });
+
+  final String? invoiceId;
+
+  /// "INV-000042".
+  final String? invoiceLabel;
+  final num? invoiceTotal;
+  final num? paidFromWallet;
+  final num? amountDue;
+
+  bool get issuedInvoice => invoiceId != null;
+
+  @override
+  List<Object?> get props => [invoiceId, invoiceLabel, invoiceTotal, paidFromWallet, amountDue];
+}
+
 /// `/api/admin/orders`. One order with its lines is read through the shared `GetOrder`.
 abstract interface class AdminOrderRepository {
   /// Newest first.
@@ -141,8 +166,8 @@ abstract interface class AdminOrderRepository {
   /// While Pending or InPreparation: replaces the notes and every line.
   Future<Result<void>> revise(String orderId, OrderDraft draft);
 
-  /// A move allowed by the order's rules; any other answers 409.
-  Future<Result<void>> changeStatus(String orderId, OrderStatus status, {String? note});
+  /// A move allowed by the order's rules; any other answers 409. Ready issues the order's invoice.
+  Future<Result<StatusChangeOutcome>> changeStatus(String orderId, OrderStatus status, {String? note});
 }
 
 class ListOrders {
@@ -187,12 +212,12 @@ final class ChangeOrderStatusParams {
   final String? note;
 }
 
-class ChangeOrderStatus implements UseCase<void, ChangeOrderStatusParams> {
+class ChangeOrderStatus implements UseCase<StatusChangeOutcome, ChangeOrderStatusParams> {
   const ChangeOrderStatus(this._repository);
 
   final AdminOrderRepository _repository;
 
   @override
-  Future<Result<void>> call(ChangeOrderStatusParams params) =>
+  Future<Result<StatusChangeOutcome>> call(ChangeOrderStatusParams params) =>
       _repository.changeStatus(params.orderId, params.status, note: params.note);
 }

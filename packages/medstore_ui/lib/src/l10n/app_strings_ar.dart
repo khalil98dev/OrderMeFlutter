@@ -1509,4 +1509,67 @@ class AppStringsAr extends AppStrings {
   String notifProductMessage(String name) {
     return '«$name» متوفر للطلب.';
   }
+
+  @override
+  String get byProductTitle => 'ملخص حسب المنتج';
+
+  @override
+  String get byProductSubtitle => 'كل فواتير الفترة، مجمّعة حسب المنتج';
+
+  @override
+  String get onlyUnpaid => 'غير المدفوعة فقط';
+
+  @override
+  String get colInvoices => 'الفواتير';
+
+  @override
+  String get totalQuantity => 'الكمية الإجمالية';
+
+  @override
+  String get noInvoicedProductsTitle => 'لا توجد فواتير في هذه الفترة';
+
+  @override
+  String get noInvoicedProductsMessage => 'غيّر الفترة أو الأستاذ أو مرشّح غير المدفوعة.';
+
+  @override
+  String invoicedProductSources(String product) {
+    return 'مصدر هذا المجموع: $product';
+  }
+
+  @override
+  String get collectPayment => 'تحصيل';
+
+  @override
+  String get collectPaymentTitle => 'تحصيل في المكتبة';
+
+  @override
+  String collectPaymentMessage(String amount) {
+    return 'المبلغ المتبقي: $amount. يُسجَّل الدفع كإيداع (مع وصل) ويُسدِّد هذه الفاتورة أولاً.';
+  }
+
+  @override
+  String get collectAmountLabel => 'المبلغ (فارغ: كل المبلغ المتبقي)';
+
+  @override
+  String get paymentCollected => 'تم تحصيل الدفع';
+
+  @override
+  String invoiceIssuedTitle(String label) {
+    return 'تم إصدار الفاتورة $label';
+  }
+
+  @override
+  String get invoiceIssuedMessage => 'الطلب جاهز: صدرت فاتورته تلقائياً. يمكن للأستاذ دفع الباقي في المكتبة.';
+
+  @override
+  String get paidFromWallet => 'مدفوع من المحفظة';
+
+  @override
+  String get leftAsDebt => 'المتبقي (دَين)';
+
+  @override
+  String get viewInvoice => 'عرض الفاتورة';
+
+  @override
+  String get fullyPaidFromWallet => 'سُدِّدت بالكامل من المحفظة.';
 }

@@ -91,15 +91,70 @@ class OrderDetailPage extends StatelessWidget {
     final result = await changeStatus(ChangeOrderStatusParams(order.id, status, note: note));
     if (!context.mounted) return;
     switch (result) {
-      case Ok():
-        showAppToast(context, strings.orderStatusChanged, tone: AppTone.success);
+      case Ok(:final value):
         changes.changed(order.id); // the orders list shows the new status
         await cubit.load();
+        if (!context.mounted) return;
+        if (value.issuedInvoice) {
+          await _showIssuedInvoice(context, value);
+        } else {
+          showAppToast(context, strings.orderStatusChanged, tone: AppTone.success);
+        }
       case Err(:final failure):
         showAppToast(context, problemText(strings, failure), tone: AppTone.danger);
         changes.changed(order.id); // a 409 means it changed meanwhile: the list may be stale too
         await cubit.load(); // show the current state
     }
+  }
+
+  /// Ready issued the order's invoice: what it came to, what the wallet paid, what is left as debt.
+  static Future<void> _showIssuedInvoice(BuildContext context, StatusChangeOutcome outcome) async {
+    final strings = AppStrings.of(context);
+    final locale = Localizations.localeOf(context);
+    String money(num? value) => MoneyFormat.dzd(value ?? 0, locale);
+    final due = outcome.amountDue ?? 0;
+
+    final open = await showAppDialog<bool>(
+      context,
+      builder: (dialogContext) => AppDialog(
+        title: strings.invoiceIssuedTitle(outcome.invoiceLabel ?? ''),
+        actions: [
+          AppButton(
+            label: strings.close,
+            variant: AppButtonVariant.plain,
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+          ),
+          AppButton(
+            label: strings.viewInvoice,
+            icon: AppIcons.invoices,
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+          ),
+        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(strings.invoiceIssuedMessage, style: AppTypography.body),
+            const SizedBox(height: AppSpacing.md),
+            AppInfoRow(label: strings.total, value: money(outcome.invoiceTotal)),
+            AppInfoRow(label: strings.paidFromWallet, value: money(outcome.paidFromWallet)),
+            AppInfoRow(
+              label: strings.leftAsDebt,
+              emphasized: true,
+              child: AppMoney(
+                due,
+                style: AppTypography.headline,
+                tone: due > 0 ? AppTone.warning : AppTone.success,
+              ),
+            ),
+            if (due == 0) ...[
+              const SizedBox(height: AppSpacing.sm),
+              AppMessage(text: strings.fullyPaidFromWallet, tone: AppTone.success),
+            ],
+          ],
+        ),
+      ),
+    );
+    if (open == true && context.mounted) await context.push<String>('/invoices/${outcome.invoiceId}');
   }
 }
 

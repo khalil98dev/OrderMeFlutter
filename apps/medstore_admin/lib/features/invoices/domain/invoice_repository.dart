@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:medstore_core/medstore_core.dart';
 
+import '../../wallets/domain/wallet.dart';
 import 'invoice.dart';
 
 /// `/api/admin/invoices` for the team's actions; one invoice and its PDF are read through
@@ -24,8 +25,51 @@ abstract interface class InvoiceRepository {
   /// Pays from the wallet: [amount], or as much as possible when null.
   Future<Result<Invoice>> settle(String id, {num? amount});
 
+  /// Money paid at the counter for this invoice: recorded as a deposit that pays this invoice first.
+  /// [CollectDraft.amount] null: exactly what is due.
+  Future<Result<Invoice>> collect(String id, CollectDraft draft);
+
+  /// The period's invoices added up by product, each with the invoice lines behind it.
+  Future<Result<InvoicedProducts>> byProduct(InvoicedProductsFilter filter);
+
   /// Stamped void when voided.
   Future<Result<Uint8List>> pdf(String id);
+}
+
+/// A payment taken at the counter for one invoice.
+final class CollectDraft {
+  const CollectDraft({required this.method, this.amount, this.reference});
+
+  final PaymentMethod method;
+
+  /// Null: exactly what is due.
+  final num? amount;
+  final String? reference;
+}
+
+final class CollectParams {
+  const CollectParams(this.invoiceId, this.draft);
+
+  final String invoiceId;
+  final CollectDraft draft;
+}
+
+class CollectInvoicePayment implements UseCase<Invoice, CollectParams> {
+  const CollectInvoicePayment(this._repository);
+
+  final InvoiceRepository _repository;
+
+  @override
+  Future<Result<Invoice>> call(CollectParams params) => _repository.collect(params.invoiceId, params.draft);
+}
+
+class ListInvoicedProducts implements UseCase<InvoicedProducts, InvoicedProductsFilter> {
+  const ListInvoicedProducts(this._repository);
+
+  final InvoiceRepository _repository;
+
+  @override
+  Future<Result<InvoicedProducts>> call(InvoicedProductsFilter filter) => _repository.byProduct(filter);
 }
 
 class ListInvoices {

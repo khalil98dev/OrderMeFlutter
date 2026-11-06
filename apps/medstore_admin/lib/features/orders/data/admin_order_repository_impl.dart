@@ -35,11 +35,25 @@ class AdminOrderRepositoryImpl implements AdminOrderRepository {
       _api.put('$_path/$orderId', data: _body(draft), decode: ApiClient.ignoreBody);
 
   @override
-  Future<Result<void>> changeStatus(String orderId, OrderStatus status, {String? note}) => _api.post(
-    '$_path/$orderId/status',
-    data: {'status': status.apiName, 'note': note == null ? null : optionalText(note)},
-    decode: ApiClient.ignoreBody,
-  );
+  Future<Result<StatusChangeOutcome>> changeStatus(String orderId, OrderStatus status, {String? note}) =>
+      _api.post(
+        '$_path/$orderId/status',
+        data: {'status': status.apiName, 'note': note == null ? null : optionalText(note)},
+        decode: outcomeFromJson,
+      );
+
+  /// Tolerates an empty answer (an older API answered 204): nothing was issued.
+  static StatusChangeOutcome outcomeFromJson(Object? raw) {
+    if (raw is! Map<String, Object?>) return const StatusChangeOutcome();
+    final json = JsonMap.of(raw);
+    return StatusChangeOutcome(
+      invoiceId: json.stringOrNull('invoiceId'),
+      invoiceLabel: json.stringOrNull('invoiceLabel'),
+      invoiceTotal: json.moneyOrNull('invoiceTotal'),
+      paidFromWallet: json.moneyOrNull('paidFromWallet'),
+      amountDue: json.moneyOrNull('amountDue'),
+    );
+  }
 
   static Map<String, Object?> _body(OrderDraft draft) => {
     'notes': optionalText(draft.notes),
