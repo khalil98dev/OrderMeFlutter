@@ -66,6 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- iOS 14+ asks before an app talks to devices on the local network (the dev backend). -->
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>MedStore connects to the development server on your local network.</string>
 	<!-- Lets the simulator reach the local API over http; remote hosts still need https. -->
 	<key>NSAppTransportSecurity</key>
 	<dict>

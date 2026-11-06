@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:medstore_admin/app/admin_app.dart';
 import 'package:medstore_admin/app/di/injection.dart';
+import 'package:medstore_admin/features/notifications/domain/notification.dart';
+import 'package:medstore_admin/features/notifications/presentation/unread_cubit.dart';
 import 'package:medstore_admin/features/reports/domain/reports.dart';
 import 'package:medstore_core/medstore_core.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,9 +21,23 @@ class _MockProductRepository extends Mock implements ProductRepository {}
 
 class _MockReportRepository extends Mock implements ReportRepository {}
 
+/// Two unread on the server; [push] plays the hub sending one.
+class _FakeNotifications extends Fake implements NotificationRepository {
+  final _arrivals = StreamController<AppNotification>.broadcast();
+
+  void push(AppNotification notification) => _arrivals.add(notification);
+
+  @override
+  Future<Result<int>> unreadCount() async => const Result.ok(2);
+
+  @override
+  Stream<AppNotification> get arrivals => _arrivals.stream;
+}
+
 void main() {
   late _MockAuthCubit auth;
   late _MockLocaleCubit locale;
+  late _FakeNotifications notifications;
 
   Future<void> pumpApp(
     WidgetTester tester, {
@@ -44,12 +62,16 @@ void main() {
     when(() => reports.summary(any())).thenAnswer((_) async => const Result.err(NetworkFailure()));
     auth = _MockAuthCubit();
     locale = _MockLocaleCubit();
+    notifications = _FakeNotifications();
     sl
       ..registerSingleton<AuthCubit>(auth)
       ..registerSingleton<LocaleCubit>(locale)
       ..registerFactory(() => LoginCubit(_MockSignIn()))
       ..registerSingleton(ProductImages(_MockProductRepository()))
-      ..registerSingleton(GetSummaryReport(reports));
+      ..registerSingleton(GetSummaryReport(reports))
+      ..registerSingleton<NotificationRepository>(notifications)
+      // Lazy: built by the app inside the test's fake-async zone, so live events reach it on pump.
+      ..registerLazySingleton(() => UnreadCubit(notifications));
   });
 
   testWidgets('signed out: the login form is shown', (tester) async {
@@ -78,6 +100,35 @@ void main() {
     expect(find.text('Tableau de bord'), findsWidgets);
     expect(find.text('Créances'), findsOneWidget);
     expect(find.text('admin'), findsOneWidget);
+  });
+
+  testWidgets('a notification pushed live slides in and adds to the sidebar badge', (tester) async {
+    await pumpApp(
+      tester,
+      authState: const Authenticated(SessionUser(id: '1', userName: 'admin', role: UserRole.admin)),
+    );
+    expect(find.text('2'), findsOneWidget); // the unread count from the server
+
+    notifications.push(
+      AppNotification(
+        id: 'n1',
+        title: 'Nouvelle commande n° 12',
+        message: 'prof.amina a passé une commande.',
+        type: 'OrderPlaced',
+        link: 'orders/o1',
+        createdAt: DateTime(2026, 11, 6),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Nouvelle commande n° 12'), findsOneWidget);
+    expect(find.text('Voir la commande'), findsOneWidget);
+    expect(find.text('3'), findsOneWidget);
+
+    // It leaves by itself after a few seconds.
+    await tester.pump(const Duration(seconds: 7));
+    await tester.pumpAndSettle();
+    expect(find.text('Nouvelle commande n° 12'), findsNothing);
   });
 
   testWidgets('Arabic lays the app out right to left', (tester) async {

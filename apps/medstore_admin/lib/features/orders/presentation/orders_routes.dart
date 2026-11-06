@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +8,7 @@ import 'package:medstore_ui/medstore_ui.dart';
 
 import '../../../app/di/injection.dart';
 import '../../../app/shell/admin_page.dart';
+import '../../notifications/presentation/reload_on_notification.dart';
 import '../../teachers/domain/teacher_directory.dart';
 import '../domain/admin_orders.dart';
 import 'order_detail_page.dart';
@@ -23,7 +26,12 @@ GoRoute ordersRoute() => GoRoute(
         create: (_) =>
             OrdersCubit((filter, page) => sl<ListOrders>()(filter, page: page), filter: const OrderFilter())
               ..load(),
-        child: const OrdersPage(),
+        // A new order or a status change pushed live shows up without a manual refresh.
+        child: ReloadOnNotification(
+          when: (notification) => notification.orderId != null,
+          onArrival: (context) => unawaited(context.read<OrdersCubit>().load()),
+          child: const OrdersPage(),
+        ),
       ),
     ),
   ),
@@ -37,7 +45,12 @@ GoRoute ordersRoute() => GoRoute(
           value: sl<ChangeOrderStatus>(),
           child: BlocProvider(
             create: (_) => LoadCubit<Order>(() => sl<GetOrder>()(id))..load(),
-            child: const OrderDetailPage(),
+            // Its status changed elsewhere (the teacher cancelled it, a colleague moved it on).
+            child: ReloadOnNotification(
+              when: (notification) => notification.orderId == id,
+              onArrival: (context) => unawaited(context.read<LoadCubit<Order>>().load()),
+              child: const OrderDetailPage(),
+            ),
           ),
         );
       },

@@ -617,5 +617,121 @@
   "markAllRead": "Tout marquer comme lu",
   "unreadOnly": "Non lues seulement",
   "noNotificationsTitle": "Aucune notification",
-  "noNotificationsMessage": "Les nouvelles notifications apparaîtront ici."
+  "noNotificationsMessage": "Les nouvelles notifications apparaîtront ici.",
+  "cart": "Panier",
+  "addToCart": "Ajouter au panier",
+  "inCart": "{count} dans le panier",
+  "@inCart": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cartEmptyTitle": "Votre panier est vide",
+  "cartEmptyMessage": "Ajoutez des livres depuis vos produits, puis passez commande ici.",
+  "browseProducts": "Voir mes produits",
+  "viewCart": "Voir le panier",
+  "placeOrder": "Passer la commande",
+  "copiesCount": "{count, plural, =1{1 exemplaire} other{{count} exemplaires}}",
+  "@copiesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "orderNotesHint": "Une précision pour l'équipe (facultatif)",
+  "orderSentTitle": "Commande envoyée",
+  "orderSentMessage": "Commande n° {number} : l'équipe MedStore vous préviendra dès qu'elle sera prête.",
+  "@orderSentMessage": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "viewOrder": "Voir la commande",
+  "confirmDelivery": "J'ai reçu ma commande",
+  "confirmDeliveryMessage": "Confirmez-vous avoir reçu cette commande ?",
+  "cancelMyOrderMessage": "Annuler cette commande ? L'équipe ne la préparera pas.",
+  "orderCancelled": "Commande annulée",
+  "deliveryConfirmed": "Réception confirmée, merci !",
+  "greeting": "Bonjour, {name}",
+  "@greeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingSubtitle": "Vos livres, prêts à être commandés.",
+  "noOrdersTeacherMessage": "Vos commandes apparaîtront ici, avec leur suivi.",
+  "orderProgress": "Suivi",
+  "readyPickupHint": "Votre commande est prête : vous pouvez venir la récupérer.",
+  "cartUnavailableHint": "Retirez les produits indisponibles pour commander.",
+  "notifOrderPlacedForYouTitle": "Commande n° {number} enregistrée",
+  "@notifOrderPlacedForYouTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOrderPlacedForYouMessage": "L'équipe MedStore a enregistré une commande pour vous.",
+  "notifOrderPreparingTitle": "Commande n° {number} en préparation",
+  "@notifOrderPreparingTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOrderPreparingMessage": "L'équipe MedStore prépare votre commande.",
+  "notifOrderReadyTitle": "Commande n° {number} prête",
+  "@notifOrderReadyTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOrderDeliveredTitle": "Commande n° {number} livrée",
+  "@notifOrderDeliveredTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOrderDeliveredMessage": "Votre commande a été remise.",
+  "notifOrderCancelledTitle": "Commande n° {number} annulée",
+  "@notifOrderCancelledTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "notifOrderCancelledMessage": "L'équipe MedStore a annulé votre commande.",
+  "notifInvoiceTitle": "Nouvelle facture {number}",
+  "@notifInvoiceTitle": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "notifInvoiceMessage": "Une nouvelle facture a été émise à votre nom.",
+  "notifDepositTitle": "Versement enregistré",
+  "notifDepositMessage": "Votre versement a été enregistré.",
+  "notifProductTitle": "Nouveau produit",
+  "notifProductMessage": "« {name} » est disponible à la commande.",
+  "@notifProductMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

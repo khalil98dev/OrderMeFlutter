@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../../../../core/cache/hybrid_cache.dart';
+import '../../../../core/error/failure.dart';
 import '../../../../core/network/token_refresher.dart';
 import '../../../../core/network/token_store.dart';
 import '../../../../core/realtime/realtime_client.dart';
@@ -38,12 +39,21 @@ class AuthRepositoryImpl implements AuthRepository {
       case Err(:final failure):
         return Result.err(failure);
       case Ok(value: final pair):
-        await _tokens.save(pair);
+        try {
+          await _tokens.save(pair);
+        } on Object catch (e) {
+          return Result.err(UnexpectedFailure('Could not store the session.', e));
+        }
     }
 
     final me = await _remote.me();
     if (me case Ok(:final value)) {
-      await _opened(value);
+      try {
+        await _opened(value);
+      } on Object catch (e) {
+        await _tokens.clear().catchError((Object _) {});
+        return Result.err(UnexpectedFailure('Could not open the session.', e));
+      }
     } else {
       await _tokens.clear();
     }
