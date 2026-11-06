@@ -52,7 +52,7 @@ class _OrderEditorPageState extends State<OrderEditorPage> {
           actions: [
             AppButton(
               label: strings.save,
-              icon: CupertinoIcons.check_mark,
+              icon: AppIcons.check,
               isLoading: state.isSaving,
               onPressed: cubit.save,
             ),
@@ -136,7 +136,7 @@ class _Lines extends StatelessWidget {
                 placeholder: hasTeacher
                     ? (state.isLoadingProducts ? strings.loading : strings.chooseProduct)
                     : strings.chooseTeacherFirst,
-                icon: CupertinoIcons.add,
+                icon: AppIcons.add,
                 options: {
                   for (final product in state.products)
                     product.id: product.code == null ? product.name : '${product.name} (${product.code})',
@@ -163,9 +163,10 @@ class _Lines extends StatelessWidget {
           AppTable(
             shrinkWrap: true,
             columns: [
+              // Product and quantity first: what is ordered and how many.
               AppTableColumn(strings.colProduct, flex: 3),
-              AppTableColumn.amount(strings.colUnitPrice),
               AppTableColumn(strings.colQuantity, width: 150),
+              AppTableColumn.amount(strings.colUnitPrice),
               AppTableColumn.amount(strings.colTotal),
               const AppTableColumn('', width: 44),
             ],
@@ -174,19 +175,24 @@ class _Lines extends StatelessWidget {
               final line = lines[index];
               final price = line.unitPrice;
               return [
-                Text(line.productName, maxLines: 1, overflow: TextOverflow.ellipsis),
-                price == null ? const Text('—') : AppMoney(price, style: AppTypography.subheadline),
+                Text(
+                  line.productName,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.subheadline.copyWith(fontWeight: FontWeight.w600),
+                ),
                 AppQuantityStepper(
                   value: line.quantity,
                   min: 1,
                   max: OrderDraft.maxQuantity,
                   onChanged: (quantity) => cubit.setQuantity(line.productId, quantity),
                 ),
+                price == null ? const Text('—') : AppMoney(price, style: AppTypography.subheadline),
                 price == null
                     ? const Text('—')
                     : AppMoney(price * line.quantity, style: AppTypography.subheadline),
                 AppIconButton(
-                  icon: CupertinoIcons.trash,
+                  icon: AppIcons.delete,
                   label: strings.remove,
                   tone: AppTone.danger,
                   onPressed: () => cubit.remove(line.productId),

@@ -78,7 +78,7 @@ class _FeedbackSectionState extends State<FeedbackSection> {
                   failure: _case == _LoadCase.error ? const NetworkFailure() : null,
                   onRetry: () => setState(() => _case = _LoadCase.loading),
                   empty: AppEmptyState(
-                    icon: CupertinoIcons.cart,
+                    icon: AppIcons.cart,
                     title: tr(context, 'Aucune commande', 'لا توجد طلبات'),
                     message: tr(
                       context,

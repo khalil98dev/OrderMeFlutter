@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_tone.dart';
 import '../../tokens/app_typography.dart';
@@ -56,10 +57,10 @@ class _Toast extends StatelessWidget {
   final AppTone tone;
 
   static IconData? _iconFor(AppTone tone) => switch (tone) {
-    AppTone.success => CupertinoIcons.check_mark_circled_solid,
-    AppTone.danger => CupertinoIcons.exclamationmark_circle_fill,
-    AppTone.warning => CupertinoIcons.exclamationmark_triangle_fill,
-    AppTone.info || AppTone.brand => CupertinoIcons.info_circle_fill,
+    AppTone.success => AppIcons.success,
+    AppTone.danger => AppIcons.error,
+    AppTone.warning => AppIcons.warning,
+    AppTone.info || AppTone.accent => AppIcons.info,
     AppTone.neutral => null,
   };
 

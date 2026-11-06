@@ -32,7 +32,7 @@ class NewInvoicePage extends StatelessWidget {
           actions: [
             AppButton(
               label: strings.issueInvoice,
-              icon: CupertinoIcons.doc_checkmark,
+              icon: AppIcons.documentDone,
               isLoading: state.isIssuing,
               onPressed: cubit.issue,
             ),
@@ -89,7 +89,7 @@ class NewInvoicePage extends StatelessWidget {
                     child: Center(child: CupertinoActivityIndicator()),
                   )
                 else if (draft.clientId != null && draft.available.isEmpty)
-                  AppEmptyState(icon: CupertinoIcons.doc_text, title: strings.noUninvoiced)
+                  AppEmptyState(icon: AppIcons.invoices, title: strings.noUninvoiced)
                 else if (draft.available.isNotEmpty) ...[
                   _UninvoicedTable(draft: draft),
                   const SizedBox(height: AppSpacing.sm),

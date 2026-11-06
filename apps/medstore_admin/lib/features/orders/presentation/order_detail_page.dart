@@ -8,11 +8,13 @@ import '../../../app/forms/form_values.dart';
 import '../../../app/l10n/labels.dart';
 import '../../../app/shell/admin_page.dart';
 import '../domain/admin_orders.dart';
+import 'order_changes.dart';
 
 /// One order: its lines, its timeline, and the moves the team may make (prepare, ready, delivered,
 /// cancel) or a revision of its lines.
 ///
-/// Expects a `LoadCubit<Order>` and [ChangeOrderStatus] above it.
+/// Expects a `LoadCubit<Order>`, [ChangeOrderStatus] and [OrderChanges] above it; each change is
+/// reported to [OrderChanges] so the orders list follows.
 class OrderDetailPage extends StatelessWidget {
   const OrderDetailPage({super.key});
 
@@ -32,7 +34,7 @@ class OrderDetailPage extends StatelessWidget {
           if (order.status.staffCanRevise)
             AppButton(
               label: strings.reviseOrder,
-              icon: CupertinoIcons.pencil,
+              icon: AppIcons.edit,
               variant: AppButtonVariant.plain,
               onPressed: () => _revise(context, order),
             ),
@@ -59,9 +61,11 @@ class OrderDetailPage extends StatelessWidget {
 
   static Future<void> _revise(BuildContext context, Order order) async {
     final cubit = context.read<LoadCubit<Order>>();
+    final changes = context.read<OrderChanges>();
     final message = await context.push<String>('/orders/${order.id}/edit', extra: order);
     if (!context.mounted || message == null) return;
     showAppToast(context, message, tone: AppTone.success);
+    changes.changed(order.id);
     await cubit.load();
   }
 
@@ -70,6 +74,7 @@ class OrderDetailPage extends StatelessWidget {
     final strings = AppStrings.of(context);
     final cubit = context.read<LoadCubit<Order>>();
     final changeStatus = context.read<ChangeOrderStatus>();
+    final changes = context.read<OrderChanges>();
     final cancelling = status == OrderStatus.cancelled;
 
     final note = await showAppTextPrompt(
@@ -88,10 +93,12 @@ class OrderDetailPage extends StatelessWidget {
     switch (result) {
       case Ok():
         showAppToast(context, strings.orderStatusChanged, tone: AppTone.success);
+        changes.changed(order.id); // the orders list shows the new status
         await cubit.load();
       case Err(:final failure):
         showAppToast(context, problemText(strings, failure), tone: AppTone.danger);
-        await cubit.load(); // a 409 means it changed meanwhile: show the current state
+        changes.changed(order.id); // a 409 means it changed meanwhile: the list may be stale too
+        await cubit.load(); // show the current state
     }
   }
 }
@@ -106,13 +113,53 @@ class _OrderBody extends StatelessWidget {
     final strings = AppStrings.of(context);
     final locale = Localizations.localeOf(context);
     final notes = order.notes;
+    final copies = order.lines.fold<int>(0, (sum, line) => sum + line.quantity);
 
     return SingleChildScrollView(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // What was ordered comes first: each product and how many copies.
           Expanded(
             flex: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(child: AppFieldLabel(strings.orderLines)),
+                    Text(
+                      '${strings.linesCount(order.lines.length)} · ${strings.copiesCount(copies)}',
+                      style: AppTypography.footnote.copyWith(
+                        color: AppColors.textSecondary.resolveFrom(context),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                for (final (index, line) in order.lines.indexed) ...[
+                  if (index > 0) const SizedBox(height: AppSpacing.xs),
+                  _OrderLineCard(line: line),
+                ],
+                const SizedBox(height: AppSpacing.md),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: SizedBox(
+                    width: 320,
+                    child: AppInfoRow(
+                      label: strings.total,
+                      emphasized: true,
+                      child: AppMoney(order.total, style: AppTypography.headline),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.lg),
+          Expanded(
+            flex: 2,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -136,66 +183,104 @@ class _OrderBody extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                AppFieldLabel(strings.orderLines),
-                AppTable(
-                  shrinkWrap: true,
-                  columns: [
-                    AppTableColumn(strings.colProduct, flex: 3),
-                    AppTableColumn(strings.fieldCode, width: 120),
-                    AppTableColumn.amount(strings.colUnitPrice),
-                    AppTableColumn(strings.colQuantity, width: 70),
-                    AppTableColumn.amount(strings.colTotal),
+                AppSection(
+                  header: strings.orderHistory,
+                  children: [
+                    for (final step in order.history)
+                      AppListTile(
+                        leading: AppBadge(
+                          label: orderStatusText(strings, step.status),
+                          tone: orderStatusTone(step.status),
+                        ),
+                        title: AppDateFormat.dateTime(step.changedAt, locale),
+                        subtitle: [
+                          step.changedByName == null
+                              ? actorText(strings, step.actor)
+                              : strings.byName(step.changedByName!),
+                          ?step.note,
+                        ].join(' · '),
+                      ),
                   ],
-                  rowCount: order.lines.length,
-                  cells: (context, index) {
-                    final line = order.lines[index];
-                    return [
-                      Text(line.productName, maxLines: 1, overflow: TextOverflow.ellipsis),
-                      Text(line.productCode ?? '—'),
-                      AppMoney(line.unitPrice, style: AppTypography.subheadline),
-                      Text('${line.quantity}'),
-                      AppMoney(line.lineTotal, style: AppTypography.subheadline),
-                    ];
-                  },
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: SizedBox(
-                    width: 320,
-                    child: AppInfoRow(
-                      label: strings.total,
-                      emphasized: true,
-                      child: AppMoney(order.total, style: AppTypography.headline),
-                    ),
-                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: AppSpacing.lg),
-          Expanded(
-            flex: 2,
-            child: AppSection(
-              header: strings.orderHistory,
+        ],
+      ),
+    );
+  }
+}
+
+/// One line, read at a glance: the product's name in full and its quantity, large; the code, unit
+/// price and line total quieter beside them.
+class _OrderLineCard extends StatelessWidget {
+  const _OrderLineCard({required this.line});
+
+  final OrderLine line;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+    final accent = AppColors.accent.resolveFrom(context);
+    final secondary = AppTypography.footnote.copyWith(color: AppColors.textSecondary.resolveFrom(context));
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: BoxDecoration(
+        color: AppColors.surface.resolveFrom(context),
+        borderRadius: const BorderRadius.all(Radius.circular(14)),
+        border: Border.all(color: AppColors.separator.resolveFrom(context), width: 0.5),
+      ),
+      child: Row(
+        children: [
+          // The quantity: the number the workshop prints from.
+          Container(
+            width: 64,
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+            decoration: BoxDecoration(
+              color: AppColors.accentTint.resolveFrom(context),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Column(
               children: [
-                for (final step in order.history)
-                  AppListTile(
-                    leading: AppBadge(
-                      label: orderStatusText(strings, step.status),
-                      tone: orderStatusTone(step.status),
-                    ),
-                    title: AppDateFormat.dateTime(step.changedAt, locale),
-                    subtitle: [
-                      step.changedByName == null
-                          ? actorText(strings, step.actor)
-                          : strings.byName(step.changedByName!),
-                      ?step.note,
-                    ].join(' · '),
+                Text(
+                  '${line.quantity}',
+                  style: AppTypography.tabular(
+                    AppTypography.title2.copyWith(fontWeight: FontWeight.w700, height: 1.1, color: accent),
                   ),
+                ),
+                Text(
+                  strings.colQuantity,
+                  style: AppTypography.caption.copyWith(fontWeight: FontWeight.w600, color: accent),
+                ),
               ],
             ),
           ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  line.productName,
+                  style: AppTypography.headline.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
+                ),
+                const SizedBox(height: 2),
+                Row(
+                  children: [
+                    if (line.productCode case final code?) ...[
+                      Text(code, style: secondary),
+                      Text('  ·  ', style: secondary),
+                    ],
+                    AppMoney(line.unitPrice, style: secondary),
+                    Text(' × ${line.quantity}', style: secondary),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          AppMoney(line.lineTotal, style: AppTypography.subheadline.copyWith(fontWeight: FontWeight.w600)),
         ],
       ),
     );

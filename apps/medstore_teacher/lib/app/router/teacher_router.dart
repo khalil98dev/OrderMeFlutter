@@ -5,11 +5,17 @@ import 'package:medstore_core/medstore_core.dart';
 import 'package:medstore_ui/medstore_ui.dart';
 
 import '../../features/auth/login_page.dart';
+import '../../features/cart/cart_bar.dart';
+import '../../features/cart/cart_page.dart';
+import '../../features/notifications/domain/notification.dart';
+import '../../features/notifications/presentation/notifications_page.dart';
+import '../../features/orders/domain/my_orders.dart';
+import '../../features/orders/presentation/order_detail_page.dart';
+import '../../features/orders/presentation/orders_page.dart';
 import '../../features/products/product_detail_page.dart';
 import '../../features/products/products_page.dart';
 import '../../features/profile/profile_page.dart';
 import '../di/injection.dart';
-import '../shell/coming_soon_page.dart';
 import '../shell/splash_page.dart';
 import '../shell/teacher_shell.dart';
 
@@ -30,30 +36,15 @@ class TeacherTab {
 }
 
 const teacherTabs = <TeacherTab>[
-  TeacherTab(
-    path: '/products',
-    icon: CupertinoIcons.book,
-    activeIcon: CupertinoIcons.book_fill,
-    label: _products,
-  ),
-  TeacherTab(
-    path: '/orders',
-    icon: CupertinoIcons.cart,
-    activeIcon: CupertinoIcons.cart_fill,
-    label: _orders,
-  ),
+  TeacherTab(path: '/products', icon: AppIcons.products, activeIcon: AppIcons.products, label: _products),
+  TeacherTab(path: '/orders', icon: AppIcons.orders, activeIcon: AppIcons.orders, label: _orders),
   TeacherTab(
     path: '/notifications',
-    icon: CupertinoIcons.bell,
-    activeIcon: CupertinoIcons.bell_fill,
+    icon: AppIcons.notifications,
+    activeIcon: AppIcons.notifications,
     label: _notifications,
   ),
-  TeacherTab(
-    path: '/profile',
-    icon: CupertinoIcons.person_crop_circle,
-    activeIcon: CupertinoIcons.person_crop_circle_fill,
-    label: _profile,
-  ),
+  TeacherTab(path: '/profile', icon: AppIcons.profile, activeIcon: AppIcons.profile, label: _profile),
 ];
 
 String _products(AppStrings s) => s.navProducts;
@@ -65,6 +56,7 @@ String _profile(AppStrings s) => s.navProfile;
 class TeacherRouter {
   TeacherRouter(AuthCubit auth) : _refresh = StreamListenable(auth.stream) {
     config = GoRouter(
+      navigatorKey: _rootKey,
       initialLocation: TeacherRoutes.home,
       refreshListenable: _refresh,
       redirect: (context, state) {
@@ -85,14 +77,27 @@ class TeacherRouter {
           path: TeacherRoutes.login,
           pageBuilder: (_, _) => const NoTransitionPage(child: LoginPage()),
         ),
+        // Over the tabs, as a sheet that slides up.
+        GoRoute(
+          path: CartBar.route,
+          parentNavigatorKey: _rootKey,
+          pageBuilder: (_, state) => CupertinoPage(
+            key: state.pageKey,
+            fullscreenDialog: true,
+            child: MultiRepositoryProvider(
+              providers: [RepositoryProvider.value(value: sl<PlaceOrder>())],
+              child: BlocProvider(create: (_) => SubmitCubit<Order>(), child: const CartPage()),
+            ),
+          ),
+        ),
         // One navigator per tab, kept alive: each tab keeps its scroll position and its pushed pages.
         // Same order as [teacherTabs].
         StatefulShellRoute.indexedStack(
-          builder: (context, state, shell) => TeacherShell(shell: shell),
+          builder: (context, state, shell) => TeacherShell(shell: shell, location: state.uri.path),
           branches: [
             StatefulShellBranch(routes: [_productsRoute()]),
-            StatefulShellBranch(routes: [_comingSoonRoute(teacherTabs[1])]),
-            StatefulShellBranch(routes: [_comingSoonRoute(teacherTabs[2])]),
+            StatefulShellBranch(routes: [_ordersRoute()]),
+            StatefulShellBranch(routes: [_notificationsRoute()]),
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -107,7 +112,9 @@ class TeacherRouter {
     );
   }
 
-  /// `/products` (the list) and `/products/:id` (one book).
+  static final _rootKey = GlobalKey<NavigatorState>();
+
+  /// `/products` (the grid) and `/products/:id` (one book).
   static GoRoute _productsRoute() => GoRoute(
     path: '/products',
     pageBuilder: (_, _) => NoTransitionPage(
@@ -128,9 +135,44 @@ class TeacherRouter {
     ],
   );
 
-  static GoRoute _comingSoonRoute(TeacherTab tab) => GoRoute(
-    path: tab.path,
-    pageBuilder: (_, _) => NoTransitionPage(child: ComingSoonPage(tab: tab)),
+  /// `/orders` (the app's list) and `/orders/:id` (one order, its tracker and actions).
+  static GoRoute _ordersRoute() => GoRoute(
+    path: '/orders',
+    pageBuilder: (_, _) => const NoTransitionPage(child: OrdersPage()),
+    routes: [
+      GoRoute(
+        path: ':id',
+        builder: (_, state) {
+          final id = state.pathParameters['id']!;
+          return MultiRepositoryProvider(
+            providers: [
+              RepositoryProvider.value(value: sl<CancelMyOrder>()),
+              RepositoryProvider.value(value: sl<ConfirmDelivery>()),
+            ],
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (_) => LoadCubit<Order>(() => sl<GetOrder>()(id))..load()),
+                BlocProvider(create: (_) => SubmitCubit<void>()),
+              ],
+              child: OrderDetailPage(orderId: id),
+            ),
+          );
+        },
+      ),
+    ],
+  );
+
+  static GoRoute _notificationsRoute() => GoRoute(
+    path: '/notifications',
+    pageBuilder: (_, _) => NoTransitionPage(
+      child: BlocProvider(
+        create: (_) => NotificationsCubit(
+          (filter, page) => sl<NotificationRepository>().list(filter, page: page),
+          filter: const NotificationFilter(),
+        )..load(),
+        child: const NotificationsPage(),
+      ),
+    ),
   );
 
   final StreamListenable _refresh;

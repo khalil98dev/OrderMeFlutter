@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../config/app_config.dart';
 import '../error/failure.dart';
@@ -93,3 +96,25 @@ BaseOptions baseOptions(AppConfig config) => BaseOptions(
   receiveTimeout: const Duration(seconds: 30),
   headers: const {'X-Api-Version': '1', 'Accept': 'application/json'},
 );
+
+/// Debug builds only: accepts the dev backend's self-signed certificate for its own host and port.
+///
+/// Installed as [HttpOverrides.global], so it covers every `HttpClient` in the app: Dio and the SignalR
+/// hub (its negotiate request and its WebSocket) alike. Any other host is still checked normally.
+void trustDevCertificate(AppConfig config) {
+  if (!kDebugMode || kIsWeb) return;
+  final uri = Uri.parse(config.apiBaseUrl);
+  if (uri.scheme != 'https') return;
+  HttpOverrides.global = _DevCertificateOverrides(uri.host, uri.port);
+}
+
+final class _DevCertificateOverrides extends HttpOverrides {
+  _DevCertificateOverrides(this._host, this._port);
+
+  final String _host;
+  final int _port;
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) => super.createHttpClient(context)
+    ..badCertificateCallback = (cert, host, port) => host == _host && port == _port;
+}

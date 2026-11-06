@@ -22,7 +22,7 @@ class DisplaySection extends StatelessWidget {
               AppBadge(
                 label: tr(context, 'En attente', 'في الانتظار'),
                 tone: AppTone.warning,
-                icon: CupertinoIcons.clock,
+                icon: AppIcons.clock,
               ),
               AppBadge(label: tr(context, 'En préparation', 'قيد التحضير'), tone: AppTone.info),
               AppBadge(label: tr(context, 'Prête', 'جاهزة'), tone: AppTone.success),
@@ -59,7 +59,7 @@ class DisplaySection extends StatelessWidget {
           child: AppMetricCard(
             label: tr(context, 'À préparer', 'للتحضير'),
             value: '14',
-            icon: CupertinoIcons.cart,
+            icon: AppIcons.cart,
             tone: AppTone.warning,
             caption: tr(context, '3 depuis ce matin', '3 منذ الصباح'),
           ),
@@ -69,7 +69,7 @@ class DisplaySection extends StatelessWidget {
           child: AppMetricCard(
             label: tr(context, 'Encaissé ce mois', 'المحصّل هذا الشهر'),
             value: MoneyFormat.dzd(386500, locale),
-            icon: CupertinoIcons.money_dollar_circle,
+            icon: AppIcons.wallet,
             tone: AppTone.success,
             onTap: () {},
           ),

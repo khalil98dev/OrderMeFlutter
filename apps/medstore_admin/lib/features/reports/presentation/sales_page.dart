@@ -68,7 +68,7 @@ class _SalesPageState extends State<SalesPage> {
         hasData: report != null && report.rows.isNotEmpty,
         failure: state.failure,
         onRetry: cubit.load,
-        empty: AppEmptyState(icon: CupertinoIcons.chart_bar, title: strings.noSalesTitle),
+        empty: AppEmptyState(icon: AppIcons.reports, title: strings.noSalesTitle),
         builder: (context) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

@@ -10,7 +10,7 @@ import 'package:medstore_ui/medstore_ui.dart';
 ///   columns: [...],
 ///   cells: (context, order) => [...],
 ///   onTap: (order) => context.push('/orders/${order.id}'),
-///   empty: AppEmptyState(icon: CupertinoIcons.cart, title: strings.noOrdersTitle),
+///   empty: AppEmptyState(icon: AppIcons.cart, title: strings.noOrdersTitle),
 /// )
 /// ```
 class PagedTable<T, F> extends StatelessWidget {

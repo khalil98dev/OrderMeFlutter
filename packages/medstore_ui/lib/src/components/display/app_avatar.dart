@@ -29,12 +29,12 @@ class AppAvatar extends StatelessWidget {
         width: size,
         height: size,
         alignment: Alignment.center,
-        decoration: BoxDecoration(color: AppColors.brandTint.resolveFrom(context), shape: BoxShape.circle),
+        decoration: BoxDecoration(color: AppColors.accentTint.resolveFrom(context), shape: BoxShape.circle),
         child: Text(
           initialsOf(name),
           style: AppTypography.headline.copyWith(
             fontSize: size * 0.4,
-            color: AppColors.brand.resolveFrom(context),
+            color: AppColors.accent.resolveFrom(context),
           ),
         ),
       ),

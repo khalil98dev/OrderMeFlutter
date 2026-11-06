@@ -34,7 +34,7 @@ class InvoicesPage extends StatelessWidget {
       actions: [
         AppButton(
           label: strings.newInvoice,
-          icon: CupertinoIcons.add,
+          icon: AppIcons.add,
           onPressed: () => _open(context, '/invoices/new'),
         ),
       ],
@@ -99,7 +99,7 @@ class InvoicesPage extends StatelessWidget {
               ],
               onTap: (invoice) => _open(context, '/invoices/${invoice.id}'),
               empty: AppEmptyState(
-                icon: CupertinoIcons.doc_text,
+                icon: AppIcons.invoices,
                 title: strings.noInvoicesTitle,
                 message: strings.noInvoicesMessage,
               ),

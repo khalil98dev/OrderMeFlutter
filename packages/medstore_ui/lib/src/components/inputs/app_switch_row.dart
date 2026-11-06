@@ -58,7 +58,7 @@ class AppSwitchRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           CupertinoSwitch(
             value: value,
-            activeTrackColor: AppColors.brand.resolveFrom(context),
+            activeTrackColor: AppColors.accent.resolveFrom(context),
             onChanged: onChanged,
           ),
         ],

@@ -61,7 +61,7 @@ class _FormsSectionState extends State<FormsSection> {
               AppFieldBox(
                 label: strings.fieldTeacher,
                 placeholder: strings.chooseTeacher,
-                icon: CupertinoIcons.person,
+                icon: AppIcons.person,
                 errorText: strings.fieldRequired,
                 isRequired: true,
                 onTap: () {},
@@ -126,7 +126,7 @@ class _FormsSectionState extends State<FormsSection> {
             children: [
               AppButton(
                 label: strings.newDeposit,
-                icon: CupertinoIcons.add,
+                icon: AppIcons.add,
                 onPressed: () => showAppDialog<void>(
                   context,
                   builder: (context) => AppDialog(

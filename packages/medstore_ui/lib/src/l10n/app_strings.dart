@@ -2503,6 +2503,240 @@ abstract class AppStrings {
   /// In fr, this message translates to:
   /// **'Les nouvelles notifications apparaîtront ici.'**
   String get noNotificationsMessage;
+
+  /// No description provided for @cart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Panier'**
+  String get cart;
+
+  /// No description provided for @addToCart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter au panier'**
+  String get addToCart;
+
+  /// No description provided for @inCart.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} dans le panier'**
+  String inCart(int count);
+
+  /// No description provided for @cartEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre panier est vide'**
+  String get cartEmptyTitle;
+
+  /// No description provided for @cartEmptyMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoutez des livres depuis vos produits, puis passez commande ici.'**
+  String get cartEmptyMessage;
+
+  /// No description provided for @browseProducts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir mes produits'**
+  String get browseProducts;
+
+  /// No description provided for @viewCart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le panier'**
+  String get viewCart;
+
+  /// No description provided for @placeOrder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Passer la commande'**
+  String get placeOrder;
+
+  /// No description provided for @copiesCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 exemplaire} other{{count} exemplaires}}'**
+  String copiesCount(int count);
+
+  /// No description provided for @orderNotesHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une précision pour l\'équipe (facultatif)'**
+  String get orderNotesHint;
+
+  /// No description provided for @orderSentTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande envoyée'**
+  String get orderSentTitle;
+
+  /// No description provided for @orderSentMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande n° {number} : l\'équipe MedStore vous préviendra dès qu\'elle sera prête.'**
+  String orderSentMessage(int number);
+
+  /// No description provided for @viewOrder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la commande'**
+  String get viewOrder;
+
+  /// No description provided for @confirmDelivery.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'ai reçu ma commande'**
+  String get confirmDelivery;
+
+  /// No description provided for @confirmDeliveryMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmez-vous avoir reçu cette commande ?'**
+  String get confirmDeliveryMessage;
+
+  /// No description provided for @cancelMyOrderMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler cette commande ? L\'équipe ne la préparera pas.'**
+  String get cancelMyOrderMessage;
+
+  /// No description provided for @orderCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande annulée'**
+  String get orderCancelled;
+
+  /// No description provided for @deliveryConfirmed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réception confirmée, merci !'**
+  String get deliveryConfirmed;
+
+  /// No description provided for @greeting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonjour, {name}'**
+  String greeting(String name);
+
+  /// No description provided for @greetingSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos livres, prêts à être commandés.'**
+  String get greetingSubtitle;
+
+  /// No description provided for @noOrdersTeacherMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos commandes apparaîtront ici, avec leur suivi.'**
+  String get noOrdersTeacherMessage;
+
+  /// No description provided for @orderProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivi'**
+  String get orderProgress;
+
+  /// No description provided for @readyPickupHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre commande est prête : vous pouvez venir la récupérer.'**
+  String get readyPickupHint;
+
+  /// No description provided for @cartUnavailableHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirez les produits indisponibles pour commander.'**
+  String get cartUnavailableHint;
+
+  /// No description provided for @notifOrderPlacedForYouTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande n° {number} enregistrée'**
+  String notifOrderPlacedForYouTitle(String number);
+
+  /// No description provided for @notifOrderPlacedForYouMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipe MedStore a enregistré une commande pour vous.'**
+  String get notifOrderPlacedForYouMessage;
+
+  /// No description provided for @notifOrderPreparingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande n° {number} en préparation'**
+  String notifOrderPreparingTitle(String number);
+
+  /// No description provided for @notifOrderPreparingMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipe MedStore prépare votre commande.'**
+  String get notifOrderPreparingMessage;
+
+  /// No description provided for @notifOrderReadyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande n° {number} prête'**
+  String notifOrderReadyTitle(String number);
+
+  /// No description provided for @notifOrderDeliveredTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande n° {number} livrée'**
+  String notifOrderDeliveredTitle(String number);
+
+  /// No description provided for @notifOrderDeliveredMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre commande a été remise.'**
+  String get notifOrderDeliveredMessage;
+
+  /// No description provided for @notifOrderCancelledTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commande n° {number} annulée'**
+  String notifOrderCancelledTitle(String number);
+
+  /// No description provided for @notifOrderCancelledMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipe MedStore a annulé votre commande.'**
+  String get notifOrderCancelledMessage;
+
+  /// No description provided for @notifInvoiceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle facture {number}'**
+  String notifInvoiceTitle(String number);
+
+  /// No description provided for @notifInvoiceMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une nouvelle facture a été émise à votre nom.'**
+  String get notifInvoiceMessage;
+
+  /// No description provided for @notifDepositTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Versement enregistré'**
+  String get notifDepositTitle;
+
+  /// No description provided for @notifDepositMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre versement a été enregistré.'**
+  String get notifDepositMessage;
+
+  /// No description provided for @notifProductTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau produit'**
+  String get notifProductTitle;
+
+  /// No description provided for @notifProductMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {name} » est disponible à la commande.'**
+  String notifProductMessage(String name);
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

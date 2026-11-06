@@ -35,7 +35,7 @@ class OrdersPage extends StatelessWidget {
       actions: [
         AppButton(
           label: strings.newOrder,
-          icon: CupertinoIcons.add,
+          icon: AppIcons.add,
           onPressed: () => _open(context, '/orders/new'),
         ),
       ],
@@ -97,7 +97,7 @@ class OrdersPage extends StatelessWidget {
               ],
               onTap: (order) => _open(context, '/orders/${order.id}'),
               empty: AppEmptyState(
-                icon: CupertinoIcons.cart,
+                icon: AppIcons.cart,
                 title: strings.noOrdersTitle,
                 message: strings.noOrdersMessage,
               ),

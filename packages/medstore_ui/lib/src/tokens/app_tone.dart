@@ -8,10 +8,10 @@ enum AppTone {
   /// No particular meaning: grey.
   neutral,
 
-  /// Brand emphasis or "selected": garnet.
-  brand,
+  /// Emphasis or "selected": Apple's blue.
+  accent,
 
-  /// Done, paid, delivered: teal.
+  /// Done, paid, delivered: green.
   success,
 
   /// Needs attention soon (pending, due): orange.
@@ -36,7 +36,7 @@ extension AppToneColors on AppTone {
   ToneColors resolve(BuildContext context) {
     final (foreground, background) = switch (this) {
       AppTone.neutral => (AppColors.textSecondary, AppColors.neutralTint),
-      AppTone.brand => (AppColors.brand, AppColors.brandTint),
+      AppTone.accent => (AppColors.accent, AppColors.accentTint),
       AppTone.success => (AppColors.signal, AppColors.signalTint),
       AppTone.warning => (AppColors.warning, AppColors.warningTint),
       AppTone.danger => (AppColors.destructive, AppColors.destructiveTint),

@@ -5,9 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:medstore_core/medstore_core.dart';
 import 'package:medstore_ui/medstore_ui.dart';
 
+import '../../features/notifications/presentation/live_notification_banner.dart';
+import '../../features/notifications/presentation/unread_cubit.dart';
 import '../router/admin_destinations.dart';
 
-/// The signed-in frame: sidebar on the start side, the selected page beside it.
+/// The signed-in frame: sidebar on the start side, the selected page beside it. The notifications
+/// entry carries the unread count, and live notifications slide in over the page.
 class AdminShell extends StatefulWidget {
   const AdminShell({super.key, required this.shell});
 
@@ -24,6 +27,7 @@ class _AdminShellState extends State<AdminShell> {
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
     final shell = widget.shell;
+    final unread = context.watch<UnreadCubit>().state;
 
     return CupertinoPageScaffold(
       child: Row(
@@ -45,11 +49,25 @@ class _AdminShellState extends State<AdminShell> {
                   icon: d.icon,
                   activeIcon: d.activeIcon,
                   section: d.section(strings),
+                  badge: d.path == '/notifications' ? unread : 0,
+                  color: d.color,
                 ),
             ],
             footer: (context, compact) => _UserFooter(compact: compact),
           ),
-          Expanded(child: shell),
+          // A notification pushed live slides in over the page, at the top end.
+          Expanded(
+            child: Stack(
+              children: [
+                Positioned.fill(child: shell),
+                const PositionedDirectional(
+                  top: AppSpacing.md,
+                  end: AppSpacing.md,
+                  child: SafeArea(child: LiveNotificationBanner()),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -79,7 +97,7 @@ class _UserFooter extends StatelessWidget {
         minimumSize: const Size.square(32),
         onPressed: () => context.read<AuthCubit>().signOut(),
         child: Icon(
-          CupertinoIcons.square_arrow_right,
+          AppIcons.signOut,
           size: 18,
           color: AppColors.textSecondary.resolveFrom(context),
           semanticLabel: strings.signOut,
@@ -135,10 +153,10 @@ class _Avatar extends StatelessWidget {
       width: 32,
       height: 32,
       alignment: Alignment.center,
-      decoration: BoxDecoration(color: AppColors.brandTint.resolveFrom(context), shape: BoxShape.circle),
+      decoration: BoxDecoration(color: AppColors.accentTint.resolveFrom(context), shape: BoxShape.circle),
       child: Text(
         name.isEmpty ? '' : name.characters.first.toUpperCase(),
-        style: AppTypography.headline.copyWith(fontSize: 14, color: AppColors.brand.resolveFrom(context)),
+        style: AppTypography.headline.copyWith(fontSize: 14, color: AppColors.accent.resolveFrom(context)),
       ),
     );
   }

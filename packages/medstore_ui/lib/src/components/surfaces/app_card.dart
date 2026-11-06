@@ -4,7 +4,8 @@ import '../../tokens/app_colors.dart';
 import '../../tokens/app_metrics.dart';
 import 'pressable.dart';
 
-/// A white (dark mode: elevated grey) card with a hairline border, the base of every grouped block.
+/// A white (dark mode: elevated grey) card with a light border and a soft shadow, the base of every
+/// grouped block.
 ///
 /// ```dart
 /// AppCard(child: ...)
@@ -28,7 +29,8 @@ class AppCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surface.resolveFrom(context),
           borderRadius: AppRadii.mdRadius,
-          border: Border.all(color: AppColors.border.resolveFrom(context), width: 0.5),
+          border: Border.all(color: AppColors.border.resolveFrom(context)),
+          boxShadow: AppShadows.of(context, AppShadows.card),
         ),
         child: Padding(padding: padding, child: child),
       ),

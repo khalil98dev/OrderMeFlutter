@@ -48,13 +48,13 @@ class _ClientDebtsPageState extends State<ClientDebtsPage> {
       actions: [
         AppButton(
           label: strings.navWallet,
-          icon: CupertinoIcons.money_dollar_circle,
+          icon: AppIcons.wallet,
           variant: AppButtonVariant.plain,
           onPressed: () => context.go('/wallet/${widget.clientId}'),
         ),
         AppButton(
           label: strings.newDebt,
-          icon: CupertinoIcons.add,
+          icon: AppIcons.add,
           onPressed: () => _create(debts?.totals.clientName),
         ),
       ],
@@ -101,7 +101,7 @@ class _ClientDebtsPageState extends State<ClientDebtsPage> {
               Expanded(
                 child: debts.items.isEmpty
                     ? AppEmptyState(
-                        icon: CupertinoIcons.checkmark_seal,
+                        icon: AppIcons.verified,
                         title: strings.noDebtsTitle,
                         tone: AppTone.success,
                       )

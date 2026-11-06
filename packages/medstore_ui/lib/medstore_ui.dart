@@ -34,6 +34,7 @@ export 'src/components/inputs/app_quantity_stepper.dart';
 export 'src/components/inputs/app_search_field.dart';
 export 'src/components/inputs/app_segmented_control.dart';
 export 'src/components/inputs/app_select_field.dart';
+export 'src/components/inputs/app_select_popup.dart';
 export 'src/components/inputs/app_switch_row.dart';
 export 'src/components/inputs/app_text_field.dart';
 export 'src/components/inputs/language_switch.dart';
@@ -60,6 +61,7 @@ export 'src/l10n/app_strings.dart';
 // Tokens and theme
 export 'src/theme/app_theme.dart';
 export 'src/tokens/app_colors.dart';
+export 'src/tokens/app_icons.dart';
 export 'src/tokens/app_metrics.dart';
 export 'src/tokens/app_tone.dart';
 export 'src/tokens/app_typography.dart';

@@ -1,27 +1,99 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:medstore_core/medstore_core.dart';
 import 'package:medstore_ui/medstore_ui.dart';
 
-/// One product in the teacher's list: cover, name, subject and level, price, availability.
-class ProductCard extends StatelessWidget {
+import '../../app/widgets/soft_card.dart';
+import '../cart/cart_bar.dart';
+import '../cart/cart_cubit.dart';
+
+/// One book in the teacher's grid: a large cover, name, subject and level, price, and a "+" that adds
+/// a copy to the cart (the cover flies into the cart). An unavailable book shows its badge instead.
+class ProductCard extends StatefulWidget {
   const ProductCard({super.key, required this.product, required this.onTap});
 
   final Product product;
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) {
-    final details = [product.subject, product.level].whereType<String>().join(' · ');
+  State<ProductCard> createState() => _ProductCardState();
+}
 
-    return AppCard(
-      onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      child: Row(
+class _ProductCardState extends State<ProductCard> {
+  /// On the cover alone, so the flight takes off from the cover and not from the whole card.
+  final _coverKey = GlobalKey();
+
+  void _add() {
+    final images = context.read<ProductImages>();
+    context.read<CartCubit>().add(widget.product); // state first: the animation is decoration
+    final cover = _coverKey.currentContext;
+    if (cover == null) return;
+    unawaited(
+      flyToTarget(
+        cover,
+        target: cartTarget,
+        child: ClipRRect(
+          borderRadius: AppRadii.smRadius,
+          child: AppCoverImage(image: images.cover(widget.product), width: 56),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+    final product = widget.product;
+    final details = [product.subject, product.level].whereType<String>().join(' · ');
+    final inCart = context.select<CartCubit, int>((cart) => cart.state.quantityOf(product.id));
+
+    return SoftCard(
+      onTap: widget.onTap,
+      padding: const EdgeInsets.all(AppSpacing.xs),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppCoverImage(image: context.read<ProductImages>().cover(product), width: 60),
-          const SizedBox(width: AppSpacing.sm),
           Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Hero(
+                  tag: 'product-cover:${product.id}',
+                  child: ClipRRect(
+                    key: _coverKey,
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    child: ColoredBox(
+                      color: AppColors.neutralTint.resolveFrom(context),
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => AppCoverImage(
+                          image: context.read<ProductImages>().cover(product),
+                          width: constraints.maxWidth,
+                          height: constraints.maxHeight,
+                          semanticLabel: product.name,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                if (!product.isAvailable)
+                  const PositionedDirectional(
+                    top: AppSpacing.xs,
+                    start: AppSpacing.xs,
+                    child: ProductAvailabilityBadge(isAvailable: false),
+                  ),
+                if (inCart > 0)
+                  PositionedDirectional(
+                    top: AppSpacing.xs,
+                    end: AppSpacing.xs,
+                    child: AppBadge(label: strings.inCart(inCart), tone: AppTone.accent, icon: AppIcons.cart),
+                  ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(AppSpacing.xxs, AppSpacing.xs, AppSpacing.xxs, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -29,24 +101,35 @@ class ProductCard extends StatelessWidget {
                   product.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.headline.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
-                ),
-                if (details.isNotEmpty)
-                  Text(
-                    details,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTypography.footnote.copyWith(
-                      color: AppColors.textSecondary.resolveFrom(context),
-                    ),
+                  style: AppTypography.subheadline.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary.resolveFrom(context),
                   ),
-                const SizedBox(height: AppSpacing.xs),
+                ),
+                Text(
+                  details.isEmpty ? productTypeText(strings, product.type) : details,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.caption.copyWith(color: AppColors.textSecondary.resolveFrom(context)),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
                 Row(
                   children: [
                     Expanded(
-                      child: ProductPrice(price: product.price, style: AppTypography.subheadline),
+                      child: ProductPrice(
+                        price: product.price,
+                        style: AppTypography.subheadline.copyWith(fontWeight: FontWeight.w700),
+                      ),
                     ),
-                    ProductAvailabilityBadge(isAvailable: product.isAvailable),
+                    if (product.isAvailable)
+                      AppIconButton(
+                        icon: AppIcons.add,
+                        label: strings.addToCart,
+                        tone: AppTone.accent,
+                        filled: true,
+                        size: 34,
+                        onPressed: _add,
+                      ),
                   ],
                 ),
               ],

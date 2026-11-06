@@ -1,28 +1,39 @@
 import 'package:flutter/cupertino.dart';
 
-/// MedStore colors: the garnet of the logo's gem on calm, Apple-style neutral surfaces.
+/// MedStore colors, on Apple's palette: calm neutral surfaces, Apple's system blue for everything you
+/// can press or select, and Apple's system colors for meaning (green done, orange pending, red
+/// destructive) and for the sidebar's icon tiles.
 ///
 /// Every token is a [CupertinoDynamicColor]: one constant that carries its light and dark value.
 /// `CupertinoThemeData` resolves them by itself; in a widget use `AppColors.x.resolveFrom(context)`.
 ///
-/// Restraint (60-30-10): neutrals carry the screen, garnet marks actions and selection, teal is spent
-/// only on "done / paid / delivered". Destructive red is iOS system red, brighter and more orange than
-/// the garnet, so "delete" never reads as "brand".
+/// Restraint (60-30-10): neutrals carry the screen, blue marks actions and selection, the other colors
+/// only carry a meaning. The garnet of the logo is identity, not interface: it stays in the logo.
 abstract final class AppColors {
+  // ── Accent: Apple's system blue ──────────────────────────────────────────
+  /// Buttons, links, the selected sidebar entry and tab, switches, focus.
+  static const accent = CupertinoDynamicColor.withBrightness(
+    color: Color(0xFF007AFF),
+    darkColor: Color(0xFF0A84FF),
+  );
+
+  /// The far end of an accent gradient (Apple's indigo), for the few hero surfaces.
+  static const accentDeep = CupertinoDynamicColor.withBrightness(
+    color: Color(0xFF5856D6),
+    darkColor: Color(0xFF5E5CE6),
+  );
+
+  /// Tinted fill behind accent content (tinted button, unread row).
+  static const accentTint = CupertinoDynamicColor.withBrightness(
+    color: Color(0x1A007AFF),
+    darkColor: Color(0x330A84FF),
+  );
+
   // ── Brand: garnet, from the logo ─────────────────────────────────────────
+  /// The logo's gem. Identity only (the logo, the app icon): never a button or a selection.
   static const brand = CupertinoDynamicColor.withBrightness(
     color: Color(0xFFC4143F),
     darkColor: Color(0xFFF0506F),
-  );
-  static const brandDeep = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF8E0C2C),
-    darkColor: Color(0xFFC4143F),
-  );
-
-  /// Tinted fill behind brand content (selected row, tinted button).
-  static const brandTint = CupertinoDynamicColor.withBrightness(
-    color: Color(0x1AC4143F),
-    darkColor: Color(0x33F0506F),
   );
 
   /// Silver of the logo's rim, for quiet chrome.
@@ -32,14 +43,15 @@ abstract final class AppColors {
   );
 
   // ── Semantic ─────────────────────────────────────────────────────────────
-  /// "This is done": paid, delivered, ready.
+  /// "This is done": paid, delivered, ready. Apple's green, one step darker in light mode so green
+  /// *text* stays readable on white (WCAG AA).
   static const signal = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF0D9488),
-    darkColor: Color(0xFF2DD4BF),
+    color: Color(0xFF248A3D),
+    darkColor: Color(0xFF30D158),
   );
   static const signalTint = CupertinoDynamicColor.withBrightness(
-    color: Color(0x1A0D9488),
-    darkColor: Color(0x262DD4BF),
+    color: Color(0x1A34C759),
+    darkColor: Color(0x2630D158),
   );
 
   /// Darker than iOS orange in light mode so warning *text* stays readable on its tint (WCAG AA).
@@ -77,26 +89,26 @@ abstract final class AppColors {
   // ── Surfaces ─────────────────────────────────────────────────────────────
   /// Page background, under grouped content.
   static const canvas = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF2F2F7),
-    darkColor: Color(0xFF000000),
+    color: Color(0xFFF5F6F8),
+    darkColor: Color(0xFF0B0B0E),
   );
 
   /// Cards, rows, fields.
   static const surface = CupertinoDynamicColor.withBrightness(
     color: Color(0xFFFFFFFF),
-    darkColor: Color(0xFF1C1C1E),
+    darkColor: Color(0xFF17181C),
   );
 
   /// Nested surfaces, dialogs, popovers.
   static const surfaceRaised = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF9F9FB),
-    darkColor: Color(0xFF2C2C2E),
+    color: Color(0xFFF9FAFB),
+    darkColor: Color(0xFF222328),
   );
 
   /// Desktop sidebar.
   static const sidebar = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF6F6F7),
-    darkColor: Color(0xFF1E1E1E),
+    color: Color(0xFFFFFFFF),
+    darkColor: Color(0xFF111215),
   );
 
   /// Translucent navigation and tab bars (blurred behind).
@@ -111,23 +123,23 @@ abstract final class AppColors {
     darkColor: Color(0xFFF2F4F8),
   );
   static const textSecondary = CupertinoDynamicColor.withBrightness(
-    color: Color(0x993C3C43),
-    darkColor: Color(0x99EBEBF5),
+    color: Color(0xFF5D6472),
+    darkColor: Color(0xFFA3A9B6),
   );
   static const textTertiary = CupertinoDynamicColor.withBrightness(
-    color: Color(0x4D3C3C43),
-    darkColor: Color(0x4DEBEBF5),
+    color: Color(0xFF98A0AD),
+    darkColor: Color(0xFF6B7280),
   );
   static const onBrand = Color(0xFFFFFFFF);
 
   // ── Lines and states ─────────────────────────────────────────────────────
   static const separator = CupertinoDynamicColor.withBrightness(
-    color: Color(0x333C3C43),
-    darkColor: Color(0x40545458),
+    color: Color(0xFFEAECF0),
+    darkColor: Color(0xFF2A2C33),
   );
   static const border = CupertinoDynamicColor.withBrightness(
-    color: Color(0x1F000000),
-    darkColor: Color(0x26FFFFFF),
+    color: Color(0xFFE4E7EC),
+    darkColor: Color(0xFF2E3038),
   );
   static const hover = CupertinoDynamicColor.withBrightness(
     color: Color(0x0A000000),

@@ -35,11 +35,7 @@ class TeachersPage extends StatelessWidget {
       title: strings.navTeachers,
       subtitle: total > 0 ? strings.teachersCount(total) : null,
       actions: [
-        AppButton(
-          label: strings.newTeacher,
-          icon: CupertinoIcons.add,
-          onPressed: () => _create(context, schools),
-        ),
+        AppButton(label: strings.newTeacher, icon: AppIcons.add, onPressed: () => _create(context, schools)),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,7 +84,7 @@ class TeachersPage extends StatelessWidget {
               ],
               onTap: (teacher) => context.push('/teachers/${teacher.id}'),
               empty: AppEmptyState(
-                icon: CupertinoIcons.person_2,
+                icon: AppIcons.teachers,
                 title: strings.noTeachersTitle,
                 message: strings.noTeachersMessage,
               ),

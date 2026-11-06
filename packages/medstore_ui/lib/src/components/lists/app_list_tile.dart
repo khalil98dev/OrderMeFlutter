@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 import '../surfaces/pressable.dart';
@@ -83,11 +84,7 @@ class AppListTile extends StatelessWidget {
               if (trailing != null) ...[const SizedBox(width: AppSpacing.sm), trailing!],
               if (chevron) ...[
                 const SizedBox(width: AppSpacing.xs),
-                Icon(
-                  CupertinoIcons.chevron_forward,
-                  size: 16,
-                  color: AppColors.textTertiary.resolveFrom(context),
-                ),
+                Icon(AppIcons.forward, size: 16, color: AppColors.textTertiary.resolveFrom(context)),
               ],
             ],
           ),

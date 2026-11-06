@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../l10n/app_strings.dart';
 import 'app_field_box.dart';
+import 'app_select_popup.dart';
 
 /// Picks one value from a list too long for a segmented control: a school level, a payment method,
 /// a role, a report grouping.
@@ -15,9 +16,9 @@ import 'app_field_box.dart';
 /// )
 /// ```
 ///
-/// Opens an action sheet with every option (the current one in bold). With [allowNone] the sheet also
-/// offers [noneLabel] ("All" by default), which reports `null`: a filter's "all", an optional field's
-/// "none".
+/// Opens [showAppSelectPopup]: every option in a frosted panel over the blurred screen, the current
+/// one checked. With [allowNone] the list starts with [noneLabel] ("All" by default), which reports
+/// `null`: a filter's "all", an optional field's "none".
 class AppSelectField<T extends Object> extends StatelessWidget {
   const AppSelectField({
     super.key,
@@ -66,37 +67,16 @@ class AppSelectField<T extends Object> extends StatelessWidget {
 
   Future<void> _open(BuildContext context, ValueChanged<T?> onChanged) async {
     final strings = AppStrings.of(context);
-    final picked = await showCupertinoModalPopup<_Picked<T>>(
-      context: context,
-      builder: (context) => CupertinoActionSheet(
-        title: Text(label),
-        actions: [
-          if (allowNone)
-            CupertinoActionSheetAction(
-              isDefaultAction: value == null,
-              onPressed: () => Navigator.of(context).pop(_Picked<T>(null)),
-              child: Text(noneLabel ?? strings.filterAll),
-            ),
-          for (final MapEntry(key: option, value: text) in options.entries)
-            CupertinoActionSheetAction(
-              isDefaultAction: option == value,
-              onPressed: () => Navigator.of(context).pop(_Picked<T>(option)),
-              child: Text(text),
-            ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(strings.cancel),
-        ),
-      ),
+    final picked = await showAppSelectPopup<T?>(
+      context,
+      title: label,
+      options: [
+        if (allowNone) AppSelectOption(null, noneLabel ?? strings.filterAll),
+        for (final MapEntry(key: option, value: text) in options.entries) AppSelectOption(option, text),
+      ],
+      selected: value,
     );
+    // No answer: closed without picking. An answer of null: the "All" / "None" row.
     if (picked != null) onChanged(picked.value);
   }
-}
-
-/// Tells "closed the sheet" (`null`) from "picked the none option" (`_Picked(null)`).
-final class _Picked<T> {
-  const _Picked(this.value);
-
-  final T? value;
 }

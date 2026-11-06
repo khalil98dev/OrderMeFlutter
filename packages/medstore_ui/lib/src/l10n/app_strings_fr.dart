@@ -1333,4 +1333,149 @@ class AppStringsFr extends AppStrings {
 
   @override
   String get noNotificationsMessage => 'Les nouvelles notifications apparaîtront ici.';
+
+  @override
+  String get cart => 'Panier';
+
+  @override
+  String get addToCart => 'Ajouter au panier';
+
+  @override
+  String inCart(int count) {
+    return '$count dans le panier';
+  }
+
+  @override
+  String get cartEmptyTitle => 'Votre panier est vide';
+
+  @override
+  String get cartEmptyMessage => 'Ajoutez des livres depuis vos produits, puis passez commande ici.';
+
+  @override
+  String get browseProducts => 'Voir mes produits';
+
+  @override
+  String get viewCart => 'Voir le panier';
+
+  @override
+  String get placeOrder => 'Passer la commande';
+
+  @override
+  String copiesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count exemplaires',
+      one: '1 exemplaire',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderNotesHint => 'Une précision pour l\'équipe (facultatif)';
+
+  @override
+  String get orderSentTitle => 'Commande envoyée';
+
+  @override
+  String orderSentMessage(int number) {
+    return 'Commande n° $number : l\'équipe MedStore vous préviendra dès qu\'elle sera prête.';
+  }
+
+  @override
+  String get viewOrder => 'Voir la commande';
+
+  @override
+  String get confirmDelivery => 'J\'ai reçu ma commande';
+
+  @override
+  String get confirmDeliveryMessage => 'Confirmez-vous avoir reçu cette commande ?';
+
+  @override
+  String get cancelMyOrderMessage => 'Annuler cette commande ? L\'équipe ne la préparera pas.';
+
+  @override
+  String get orderCancelled => 'Commande annulée';
+
+  @override
+  String get deliveryConfirmed => 'Réception confirmée, merci !';
+
+  @override
+  String greeting(String name) {
+    return 'Bonjour, $name';
+  }
+
+  @override
+  String get greetingSubtitle => 'Vos livres, prêts à être commandés.';
+
+  @override
+  String get noOrdersTeacherMessage => 'Vos commandes apparaîtront ici, avec leur suivi.';
+
+  @override
+  String get orderProgress => 'Suivi';
+
+  @override
+  String get readyPickupHint => 'Votre commande est prête : vous pouvez venir la récupérer.';
+
+  @override
+  String get cartUnavailableHint => 'Retirez les produits indisponibles pour commander.';
+
+  @override
+  String notifOrderPlacedForYouTitle(String number) {
+    return 'Commande n° $number enregistrée';
+  }
+
+  @override
+  String get notifOrderPlacedForYouMessage => 'L\'équipe MedStore a enregistré une commande pour vous.';
+
+  @override
+  String notifOrderPreparingTitle(String number) {
+    return 'Commande n° $number en préparation';
+  }
+
+  @override
+  String get notifOrderPreparingMessage => 'L\'équipe MedStore prépare votre commande.';
+
+  @override
+  String notifOrderReadyTitle(String number) {
+    return 'Commande n° $number prête';
+  }
+
+  @override
+  String notifOrderDeliveredTitle(String number) {
+    return 'Commande n° $number livrée';
+  }
+
+  @override
+  String get notifOrderDeliveredMessage => 'Votre commande a été remise.';
+
+  @override
+  String notifOrderCancelledTitle(String number) {
+    return 'Commande n° $number annulée';
+  }
+
+  @override
+  String get notifOrderCancelledMessage => 'L\'équipe MedStore a annulé votre commande.';
+
+  @override
+  String notifInvoiceTitle(String number) {
+    return 'Nouvelle facture $number';
+  }
+
+  @override
+  String get notifInvoiceMessage => 'Une nouvelle facture a été émise à votre nom.';
+
+  @override
+  String get notifDepositTitle => 'Versement enregistré';
+
+  @override
+  String get notifDepositMessage => 'Votre versement a été enregistré.';
+
+  @override
+  String get notifProductTitle => 'Nouveau produit';
+
+  @override
+  String notifProductMessage(String name) {
+    return '« $name » est disponible à la commande.';
+  }
 }

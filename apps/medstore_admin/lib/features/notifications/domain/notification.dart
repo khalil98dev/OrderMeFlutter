@@ -3,9 +3,9 @@ import 'package:medstore_core/medstore_core.dart';
 
 /// An in-app notification for the signed-in team member.
 ///
-/// ASSUMED API (the backend has no notifications endpoint yet), adjust here when it lands:
-/// `GET /api/notifications?page&pageSize&unreadOnly`, `POST /api/notifications/{id}/read`,
-/// `POST /api/notifications/read-all`, and the SignalR event `NotificationCreated`.
+/// From `GET /api/notifications?page&pageSize&unreadOnly`, `GET /api/notifications/unread-count`,
+/// `POST /api/notifications/{id}/read`, `POST /api/notifications/read-all`, and the hub's live event
+/// `notification` (a `NotificationDto`).
 final class AppNotification extends Equatable {
   const AppNotification({
     required this.id,
@@ -13,6 +13,7 @@ final class AppNotification extends Equatable {
     required this.createdAt,
     this.message,
     this.type,
+    this.link,
     this.isRead = false,
   });
 
@@ -20,16 +21,32 @@ final class AppNotification extends Equatable {
   final String title;
   final String? message;
 
-  /// Free text from the server (`OrderPlaced`, `InvoiceOverdue`…), used only to pick an icon.
+  /// The server's `NotificationType` (`OrderPlaced`, `OrderStatusChanged`…), used only to pick an icon.
   final String? type;
+
+  /// Where it leads, relative to the app: `orders/{id}`, `invoices/{id}`, `products/{id}`, `wallet`.
+  final String? link;
   final bool isRead;
   final DateTime createdAt;
 
-  AppNotification asRead() =>
-      AppNotification(id: id, title: title, message: message, type: type, createdAt: createdAt, isRead: true);
+  /// The order it is about, when it leads to one.
+  String? get orderId => switch (link?.split('/')) {
+    ['orders', final id] when id.isNotEmpty => id,
+    _ => null,
+  };
+
+  AppNotification asRead() => AppNotification(
+    id: id,
+    title: title,
+    message: message,
+    type: type,
+    link: link,
+    createdAt: createdAt,
+    isRead: true,
+  );
 
   @override
-  List<Object?> get props => [id, title, message, type, isRead, createdAt];
+  List<Object?> get props => [id, title, message, type, link, isRead, createdAt];
 }
 
 final class NotificationFilter extends Equatable {
@@ -44,12 +61,14 @@ final class NotificationFilter extends Equatable {
 abstract interface class NotificationRepository {
   Future<Result<PagedList<AppNotification>>> list(NotificationFilter filter, {int page = 1});
 
+  Future<Result<int>> unreadCount();
+
   Future<Result<void>> markRead(String id);
 
   Future<Result<void>> markAllRead();
 
-  /// Fires when the server pushes a new notification.
-  Stream<void> get created;
+  /// Each notification the server pushes, as it arrives.
+  Stream<AppNotification> get arrivals;
 }
 
 class ListNotifications {

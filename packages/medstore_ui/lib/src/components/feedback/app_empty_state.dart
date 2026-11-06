@@ -9,7 +9,7 @@ import '../../tokens/app_typography.dart';
 ///
 /// ```dart
 /// AppEmptyState(
-///   icon: CupertinoIcons.cart,
+///   icon: AppIcons.cart,
 ///   title: strings.noOrdersTitle,
 ///   message: strings.noOrdersMessage,
 ///   action: AppButton(label: strings.newOrder, onPressed: newOrder),
@@ -22,7 +22,7 @@ class AppEmptyState extends StatelessWidget {
     required this.title,
     this.message,
     this.action,
-    this.tone = AppTone.brand,
+    this.tone = AppTone.accent,
   });
 
   final IconData icon;

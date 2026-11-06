@@ -33,7 +33,7 @@ class InvoiceDetailPage extends StatelessWidget {
         if (invoice != null) ...[
           AppButton(
             label: strings.downloadPdf,
-            icon: CupertinoIcons.arrow_down_doc,
+            icon: AppIcons.download,
             variant: AppButtonVariant.plain,
             onPressed: () => savePdf(
               context,

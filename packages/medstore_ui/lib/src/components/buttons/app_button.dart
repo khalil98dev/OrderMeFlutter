@@ -86,7 +86,7 @@ class AppButton extends StatelessWidget {
           color: enabled || isLoading ? colors.foreground : AppColors.textTertiary.resolveFrom(context),
           textStyle: small
               ? AppTypography.footnote.copyWith(fontWeight: FontWeight.w600)
-              : AppTypography.headline,
+              : AppTypography.callout.copyWith(fontWeight: FontWeight.w600),
         ),
       ),
     );
@@ -117,7 +117,7 @@ class _Content extends StatelessWidget {
     final leading = isLoading
         ? CupertinoActivityIndicator(color: color, radius: 8)
         : icon != null
-        ? Icon(icon, size: textStyle.fontSize! + 2, color: color)
+        ? Icon(icon, size: textStyle.fontSize! + 1, color: color)
         : null;
 
     return Row(
@@ -143,12 +143,12 @@ final class _ButtonColors {
   const _ButtonColors(this.foreground, this.background, this.disabledBackground);
 
   factory _ButtonColors.of(BuildContext context, AppButtonVariant variant) {
-    final brand = AppColors.brand.resolveFrom(context);
+    final accent = AppColors.accent.resolveFrom(context);
     final neutral = AppColors.neutralTint.resolveFrom(context);
     return switch (variant) {
-      AppButtonVariant.filled => _ButtonColors(AppColors.onBrand, brand, neutral),
-      AppButtonVariant.tinted => _ButtonColors(brand, AppColors.brandTint.resolveFrom(context), neutral),
-      AppButtonVariant.plain => _ButtonColors(brand, null, null),
+      AppButtonVariant.filled => _ButtonColors(AppColors.onBrand, accent, neutral),
+      AppButtonVariant.tinted => _ButtonColors(accent, AppColors.accentTint.resolveFrom(context), neutral),
+      AppButtonVariant.plain => _ButtonColors(accent, null, null),
       AppButtonVariant.destructive => _ButtonColors(
         AppColors.destructive.resolveFrom(context),
         AppColors.destructiveTint.resolveFrom(context),

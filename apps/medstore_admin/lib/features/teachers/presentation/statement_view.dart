@@ -63,7 +63,7 @@ class _StatementViewState extends State<StatementView> {
             const SizedBox(width: AppSpacing.sm),
             AppButton(
               label: strings.downloadPdf,
-              icon: CupertinoIcons.arrow_down_doc,
+              icon: AppIcons.download,
               variant: AppButtonVariant.tinted,
               onPressed: () =>
                   savePdf(context, 'releve-${apiDay(_from)}-${apiDay(_to)}.pdf', () => download(_params)),
@@ -114,7 +114,7 @@ class _StatementBody extends StatelessWidget {
               (strings.totalsPaidFromWallet, totals.paidFromWallet, AppTone.info),
               (strings.owedNow, totals.owedNow, AppTone.warning),
               (strings.overdueNow, totals.overdueNow, AppTone.danger),
-              (strings.walletBalanceNow, totals.walletBalanceNow, AppTone.brand),
+              (strings.walletBalanceNow, totals.walletBalanceNow, AppTone.accent),
             ])
               SizedBox(
                 width: 200,

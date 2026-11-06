@@ -49,10 +49,16 @@ Future<void> registerCoreModule(
   final cacheDir = await getApplicationSupportDirectory();
   Hive.init('${cacheDir.path}/cache');
 
+  final appConfig = config ?? AppConfig.fromEnvironment();
+  trustDevCertificate(appConfig);
+
   sl
     // Core
-    ..registerSingleton<AppConfig>(config ?? AppConfig.fromEnvironment())
-    ..registerLazySingleton(() => const FlutterSecureStorage())
+    ..registerSingleton<AppConfig>(appConfig)
+    ..registerLazySingleton(
+      // Ad-hoc signed macOS builds have no keychain access group, so use the login keychain there.
+      () => const FlutterSecureStorage(mOptions: MacOsOptions(usesDataProtectionKeychain: false)),
+    )
     ..registerLazySingleton(() => TokenStore(sl()))
     ..registerLazySingleton(() => TokenRefresher(dio: Dio(baseOptions(sl())), store: sl()))
     ..registerLazySingleton(() => createApiDio(config: sl(), store: sl(), refresher: sl()))

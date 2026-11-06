@@ -49,7 +49,7 @@ class _SchoolsPageState extends State<SchoolsPage> {
     return AdminPage(
       title: strings.navSchools,
       subtitle: count > 0 ? strings.schoolsCount(count) : null,
-      actions: [AppButton(label: strings.newSchool, icon: CupertinoIcons.add, onPressed: _edit)],
+      actions: [AppButton(label: strings.newSchool, icon: AppIcons.add, onPressed: _edit)],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -97,7 +97,7 @@ class _SchoolTable extends StatelessWidget {
       failure: state.failure,
       onRetry: cubit.load,
       empty: AppEmptyState(
-        icon: CupertinoIcons.building_2_fill,
+        icon: AppIcons.schools,
         title: strings.noSchoolsTitle,
         message: strings.noSchoolsMessage,
       ),

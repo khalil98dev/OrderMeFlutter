@@ -18,7 +18,7 @@ class _MotionSectionState extends State<MotionSection> {
 
   @override
   Widget build(BuildContext context) {
-    final brand = AppTone.brand.resolve(context);
+    final brand = AppTone.accent.resolve(context);
     return GallerySection(
       title: tr(context, 'Mouvement', 'الحركة'),
       components: 'AppBounceTarget · flyToTarget',
@@ -40,9 +40,9 @@ class _MotionSectionState extends State<MotionSection> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(CupertinoIcons.cart_fill, size: 30, color: brand.foreground),
+                      Icon(AppIcons.cart, size: 30, color: brand.foreground),
                       const SizedBox(width: AppSpacing.xxs),
-                      AppBadge(label: '$_count', tone: AppTone.brand),
+                      AppBadge(label: '$_count', tone: AppTone.accent),
                     ],
                   ),
                 ),
@@ -71,9 +71,9 @@ class _MotionSectionState extends State<MotionSection> {
 typedef _DemoProduct = ({String fr, String ar, IconData icon, AppTone tone});
 
 const List<_DemoProduct> _demoProducts = [
-  (fr: 'Physique 1re', ar: 'فيزياء أولى', icon: CupertinoIcons.book_fill, tone: AppTone.info),
-  (fr: 'Maths 2e', ar: 'رياضيات ثانية', icon: CupertinoIcons.doc_text_fill, tone: AppTone.success),
-  (fr: 'Chimie Bac', ar: 'كيمياء باك', icon: CupertinoIcons.lab_flask_solid, tone: AppTone.warning),
+  (fr: 'Physique 1re', ar: 'فيزياء أولى', icon: AppIcons.products, tone: AppTone.info),
+  (fr: 'Maths 2e', ar: 'رياضيات ثانية', icon: AppIcons.invoices, tone: AppTone.success),
+  (fr: 'Chimie Bac', ar: 'كيمياء باك', icon: AppIcons.lab, tone: AppTone.warning),
 ];
 
 /// A product tile. Its own key on the cover makes the flight start from the cover, not the whole tile.

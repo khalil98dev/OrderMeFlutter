@@ -3,6 +3,7 @@ import 'package:medstore_core/medstore_core.dart';
 
 import '../../failure_text.dart';
 import '../../l10n/app_strings.dart';
+import '../../tokens/app_icons.dart';
 import '../../tokens/app_tone.dart';
 import '../buttons/app_button.dart';
 import 'app_empty_state.dart';
@@ -27,7 +28,7 @@ class AppErrorState extends StatelessWidget {
     final strings = AppStrings.of(context);
     final offline = failure is NetworkFailure;
     return AppEmptyState(
-      icon: offline ? CupertinoIcons.wifi_slash : CupertinoIcons.exclamationmark_triangle,
+      icon: offline ? AppIcons.offline : AppIcons.warning,
       tone: offline ? AppTone.warning : AppTone.danger,
       title: strings.errorTitle,
       message: failureText(strings, failure),
@@ -35,7 +36,7 @@ class AppErrorState extends StatelessWidget {
           ? null
           : AppButton(
               label: strings.retry,
-              icon: CupertinoIcons.arrow_clockwise,
+              icon: AppIcons.retry,
               variant: AppButtonVariant.tinted,
               onPressed: onRetry,
             ),

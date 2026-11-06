@@ -1361,4 +1361,152 @@ class AppStringsAr extends AppStrings {
 
   @override
   String get noNotificationsMessage => 'ستظهر الإشعارات الجديدة هنا.';
+
+  @override
+  String get cart => 'السلة';
+
+  @override
+  String get addToCart => 'أضف إلى السلة';
+
+  @override
+  String inCart(int count) {
+    return '$count في السلة';
+  }
+
+  @override
+  String get cartEmptyTitle => 'سلتك فارغة';
+
+  @override
+  String get cartEmptyMessage => 'أضف كتبًا من منتجاتك، ثم أكّد طلبك هنا.';
+
+  @override
+  String get browseProducts => 'تصفح منتجاتي';
+
+  @override
+  String get viewCart => 'عرض السلة';
+
+  @override
+  String get placeOrder => 'تأكيد الطلب';
+
+  @override
+  String copiesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count نسخة',
+      many: '$count نسخة',
+      few: '$count نسخ',
+      two: 'نسختان',
+      one: 'نسخة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get orderNotesHint => 'ملاحظة للفريق (اختياري)';
+
+  @override
+  String get orderSentTitle => 'تم إرسال الطلب';
+
+  @override
+  String orderSentMessage(int number) {
+    return 'الطلب رقم $number: سيُعلمك فريق ميدستور فور جاهزيته.';
+  }
+
+  @override
+  String get viewOrder => 'عرض الطلب';
+
+  @override
+  String get confirmDelivery => 'استلمت طلبي';
+
+  @override
+  String get confirmDeliveryMessage => 'هل تؤكد أنك استلمت هذا الطلب؟';
+
+  @override
+  String get cancelMyOrderMessage => 'إلغاء هذا الطلب؟ لن يقوم الفريق بتحضيره.';
+
+  @override
+  String get orderCancelled => 'تم إلغاء الطلب';
+
+  @override
+  String get deliveryConfirmed => 'تم تأكيد الاستلام، شكرًا!';
+
+  @override
+  String greeting(String name) {
+    return 'مرحبًا، $name';
+  }
+
+  @override
+  String get greetingSubtitle => 'كتبك جاهزة للطلب.';
+
+  @override
+  String get noOrdersTeacherMessage => 'ستظهر طلباتك هنا مع متابعتها.';
+
+  @override
+  String get orderProgress => 'المتابعة';
+
+  @override
+  String get readyPickupHint => 'طلبك جاهز: يمكنك القدوم لاستلامه.';
+
+  @override
+  String get cartUnavailableHint => 'أزل المنتجات غير المتوفرة لإتمام الطلب.';
+
+  @override
+  String notifOrderPlacedForYouTitle(String number) {
+    return 'تم تسجيل الطلب رقم $number';
+  }
+
+  @override
+  String get notifOrderPlacedForYouMessage => 'سجّل فريق ميدستور طلبًا باسمك.';
+
+  @override
+  String notifOrderPreparingTitle(String number) {
+    return 'الطلب رقم $number قيد التحضير';
+  }
+
+  @override
+  String get notifOrderPreparingMessage => 'يقوم فريق ميدستور بتحضير طلبك.';
+
+  @override
+  String notifOrderReadyTitle(String number) {
+    return 'الطلب رقم $number جاهز';
+  }
+
+  @override
+  String notifOrderDeliveredTitle(String number) {
+    return 'تم تسليم الطلب رقم $number';
+  }
+
+  @override
+  String get notifOrderDeliveredMessage => 'تم تسليم طلبك.';
+
+  @override
+  String notifOrderCancelledTitle(String number) {
+    return 'تم إلغاء الطلب رقم $number';
+  }
+
+  @override
+  String get notifOrderCancelledMessage => 'ألغى فريق ميدستور طلبك.';
+
+  @override
+  String notifInvoiceTitle(String number) {
+    return 'فاتورة جديدة $number';
+  }
+
+  @override
+  String get notifInvoiceMessage => 'صدرت فاتورة جديدة باسمك.';
+
+  @override
+  String get notifDepositTitle => 'تم تسجيل الدفعة';
+
+  @override
+  String get notifDepositMessage => 'تم تسجيل دفعتك.';
+
+  @override
+  String get notifProductTitle => 'منتج جديد';
+
+  @override
+  String notifProductMessage(String name) {
+    return '«$name» متوفر للطلب.';
+  }
 }

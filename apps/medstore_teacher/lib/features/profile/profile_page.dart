@@ -4,6 +4,7 @@ import 'package:medstore_core/medstore_core.dart';
 import 'package:medstore_ui/medstore_ui.dart';
 
 import '../../app/shell/teacher_page.dart';
+import '../../app/widgets/soft_card.dart';
 
 /// The teacher's account: who is signed in, the language, and sign out.
 class ProfilePage extends StatelessWidget {
@@ -26,10 +27,10 @@ class ProfilePage extends StatelessWidget {
           padding: AppSpacing.screenMobile,
           sliver: SliverList.list(
             children: [
-              AppCard(
+              SoftCard(
                 child: Row(
                   children: [
-                    const AppLogo(size: 44),
+                    AppAvatar(name: user?.userName ?? '', size: 52),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Column(
@@ -55,10 +56,10 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              AppCard(
+              SoftCard(
                 child: Row(
                   children: [
-                    Icon(CupertinoIcons.globe, color: AppColors.brand.resolveFrom(context)),
+                    Icon(AppIcons.language, color: AppColors.accent.resolveFrom(context)),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Text(
@@ -76,7 +77,7 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: AppSpacing.lg),
               AppButton(
                 label: strings.signOut,
-                icon: CupertinoIcons.square_arrow_right,
+                icon: AppIcons.signOut,
                 variant: AppButtonVariant.destructive,
                 expand: true,
                 onPressed: () => context.read<AuthCubit>().signOut(),

@@ -7,8 +7,10 @@ import '../../features/invoices/data/invoice_repository_impl.dart';
 import '../../features/invoices/domain/invoice_repository.dart';
 import '../../features/notifications/data/notification_repository_impl.dart';
 import '../../features/notifications/domain/notification.dart';
+import '../../features/notifications/presentation/unread_cubit.dart';
 import '../../features/orders/data/admin_order_repository_impl.dart';
 import '../../features/orders/domain/admin_orders.dart';
+import '../../features/orders/presentation/order_changes.dart';
 import '../../features/products/data/admin_product_repository_impl.dart';
 import '../../features/products/domain/admin_product_repository.dart';
 import '../../features/products/domain/admin_product_usecases.dart';
@@ -71,6 +73,7 @@ Future<void> configureDependencies() async {
     ..registerLazySingleton(() => PlaceOrder(sl()))
     ..registerLazySingleton(() => ReviseOrder(sl()))
     ..registerLazySingleton(() => ChangeOrderStatus(sl()))
+    ..registerLazySingleton(OrderChanges.new, dispose: (changes) => changes.dispose())
     // Wallets
     ..registerLazySingleton<WalletRepository>(() => WalletRepositoryImpl(sl()))
     ..registerLazySingleton(() => ListWallets(sl()))
@@ -105,6 +108,8 @@ Future<void> configureDependencies() async {
     ..registerLazySingleton(() => ListNotifications(sl()))
     ..registerLazySingleton(() => MarkNotificationRead(sl()))
     ..registerLazySingleton(() => MarkAllNotificationsRead(sl()))
+    // The sidebar's unread badge: one for the app, started at sign-in.
+    ..registerLazySingleton(() => UnreadCubit(sl()))
     // Reports
     ..registerLazySingleton<ReportRepository>(() => ReportRepositoryImpl(sl()))
     ..registerLazySingleton(() => GetSummaryReport(sl()))

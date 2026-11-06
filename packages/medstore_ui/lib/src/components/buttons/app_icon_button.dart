@@ -8,8 +8,8 @@ import '../../tokens/app_tone.dart';
 /// A square icon-only button with a tooltip (desktop) and a screen-reader label.
 ///
 /// ```dart
-/// AppIconButton(icon: CupertinoIcons.pencil, label: strings.edit, onPressed: edit)
-/// AppIconButton(icon: CupertinoIcons.trash, label: strings.delete, tone: AppTone.danger, filled: true, onPressed: delete)
+/// AppIconButton(icon: AppIcons.edit, label: strings.edit, onPressed: edit)
+/// AppIconButton(icon: AppIcons.delete, label: strings.delete, tone: AppTone.danger, filled: true, onPressed: delete)
 /// ```
 ///
 /// [label] is required on purpose: an icon alone tells a screen reader nothing.

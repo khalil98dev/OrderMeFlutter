@@ -9,6 +9,7 @@ class AdminDestination {
     required this.activeIcon,
     required this.label,
     required this.section,
+    required this.color,
   });
 
   final String path;
@@ -16,6 +17,9 @@ class AdminDestination {
   final IconData activeIcon;
   final String Function(AppStrings strings) label;
   final String Function(AppStrings strings) section;
+
+  /// The sidebar tile's color: one of Apple's system colors, so each section is found at a glance.
+  final Color color;
 }
 
 String _operations(AppStrings s) => s.sectionOperations;
@@ -26,89 +30,101 @@ const adminDestinations = <AdminDestination>[
   // Operations
   AdminDestination(
     path: '/dashboard',
-    icon: CupertinoIcons.square_grid_2x2,
-    activeIcon: CupertinoIcons.square_grid_2x2_fill,
+    icon: AppIcons.dashboard,
+    activeIcon: AppIcons.dashboard,
     label: _dashboard,
     section: _operations,
+    color: CupertinoColors.systemBlue,
   ),
   AdminDestination(
     path: '/orders',
-    icon: CupertinoIcons.cart,
-    activeIcon: CupertinoIcons.cart_fill,
+    icon: AppIcons.cart,
+    activeIcon: AppIcons.cart,
     label: _orders,
     section: _operations,
+    color: CupertinoColors.systemOrange,
   ),
   AdminDestination(
     path: '/products',
-    icon: CupertinoIcons.book,
-    activeIcon: CupertinoIcons.book_fill,
+    icon: AppIcons.products,
+    activeIcon: AppIcons.products,
     label: _products,
     section: _operations,
+    color: CupertinoColors.systemIndigo,
   ),
   AdminDestination(
     path: '/teachers',
-    icon: CupertinoIcons.person_2,
-    activeIcon: CupertinoIcons.person_2_fill,
+    icon: AppIcons.teachers,
+    activeIcon: AppIcons.teachers,
     label: _teachers,
     section: _operations,
+    color: CupertinoColors.systemTeal,
   ),
   AdminDestination(
     path: '/schools',
-    icon: CupertinoIcons.building_2_fill,
-    activeIcon: CupertinoIcons.building_2_fill,
+    icon: AppIcons.schools,
+    activeIcon: AppIcons.schools,
     label: _schools,
     section: _operations,
+    color: CupertinoColors.systemBrown,
   ),
   // Finance
   AdminDestination(
     path: '/invoices',
-    icon: CupertinoIcons.doc_text,
-    activeIcon: CupertinoIcons.doc_text_fill,
+    icon: AppIcons.invoices,
+    activeIcon: AppIcons.invoices,
     label: _invoices,
     section: _finance,
+    color: CupertinoColors.systemGreen,
   ),
   AdminDestination(
     path: '/wallet',
-    icon: CupertinoIcons.money_dollar_circle,
-    activeIcon: CupertinoIcons.money_dollar_circle_fill,
+    icon: AppIcons.wallet,
+    activeIcon: AppIcons.wallet,
     label: _wallet,
     section: _finance,
+    color: CupertinoColors.systemMint,
   ),
   AdminDestination(
     path: '/debts',
-    icon: CupertinoIcons.exclamationmark_triangle,
-    activeIcon: CupertinoIcons.exclamationmark_triangle_fill,
+    icon: AppIcons.warning,
+    activeIcon: AppIcons.warning,
     label: _debts,
     section: _finance,
+    color: CupertinoColors.systemPink,
   ),
   AdminDestination(
     path: '/reports',
-    icon: CupertinoIcons.chart_bar,
-    activeIcon: CupertinoIcons.chart_bar_fill,
+    icon: AppIcons.reports,
+    activeIcon: AppIcons.reports,
     label: _reports,
     section: _finance,
+    color: CupertinoColors.systemPurple,
   ),
   // System
   AdminDestination(
     path: '/notifications',
-    icon: CupertinoIcons.bell,
-    activeIcon: CupertinoIcons.bell_fill,
+    icon: AppIcons.notifications,
+    activeIcon: AppIcons.notifications,
     label: _notifications,
     section: _system,
+    color: CupertinoColors.systemRed,
   ),
   AdminDestination(
     path: '/security',
-    icon: CupertinoIcons.lock_shield,
-    activeIcon: CupertinoIcons.lock_shield_fill,
+    icon: AppIcons.security,
+    activeIcon: AppIcons.security,
     label: _security,
     section: _system,
+    color: CupertinoColors.systemGrey,
   ),
   AdminDestination(
     path: '/settings',
-    icon: CupertinoIcons.gear,
-    activeIcon: CupertinoIcons.gear_solid,
+    icon: AppIcons.settings,
+    activeIcon: AppIcons.settings,
     label: _settings,
     section: _system,
+    color: CupertinoColors.systemGrey,
   ),
 ];
 
