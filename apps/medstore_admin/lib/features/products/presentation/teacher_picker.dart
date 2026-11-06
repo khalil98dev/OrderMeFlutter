@@ -37,7 +37,7 @@ class TeacherField extends StatelessWidget {
           ),
           child: AppListTile(
             leading: teacher == null
-                ? Icon(AppIcons.addPerson, color: AppColors.brand.resolveFrom(context))
+                ? Icon(AppIcons.addPerson, color: AppColors.accent.resolveFrom(context))
                 : AppAvatar(name: teacher.fullName, size: 32),
             title: teacher?.fullName ?? strings.chooseTeacher,
             subtitle: teacher?.schoolName,

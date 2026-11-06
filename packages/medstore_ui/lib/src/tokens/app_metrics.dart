@@ -63,6 +63,9 @@ abstract final class AppDurations {
   /// The target's bounce when something lands in it.
   static const Duration bounce = Duration(milliseconds: 450);
 
+  /// A target's smooth swell and settle (`AppBounceTarget.pop`).
+  static const Duration pop = Duration(milliseconds: 520);
+
   static const Curve easeOut = Curves.easeOutCubic;
   static const Curve standard = Curves.easeInOutCubic;
 

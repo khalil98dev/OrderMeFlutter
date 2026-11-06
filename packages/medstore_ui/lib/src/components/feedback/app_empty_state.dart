@@ -22,7 +22,7 @@ class AppEmptyState extends StatelessWidget {
     required this.title,
     this.message,
     this.action,
-    this.tone = AppTone.brand,
+    this.tone = AppTone.accent,
   });
 
   final IconData icon;

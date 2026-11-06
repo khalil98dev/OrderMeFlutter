@@ -43,6 +43,40 @@ void main() {
     expect(reported, isTrue);
   });
 
+  testWidgets('AppSelectField: the popup blurs the page, and closing it changes nothing', (tester) async {
+    var changes = 0;
+    await pumpUi(
+      tester,
+      SizedBox(
+        width: 300,
+        child: AppSelectField<_Level>(
+          label: 'Cycle',
+          options: const {_Level.primary: 'Primaire', _Level.secondary: 'Secondaire'},
+          value: _Level.primary,
+          onChanged: (_) => changes++,
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('Primaire'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 120)); // opening: half way
+    expect(find.byType(BackdropFilter), findsWidgets, reason: 'the page behind is blurred');
+    await tester.pumpAndSettle();
+    expect(find.text('Secondaire'), findsOneWidget);
+
+    await tester.tap(find.text('Annuler')); // the Cancel row
+    await tester.pumpAndSettle();
+    expect(find.text('Secondaire'), findsNothing);
+
+    await tester.tap(find.text('Primaire'));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(5, 5)); // outside the panel
+    await tester.pumpAndSettle();
+    expect(find.text('Secondaire'), findsNothing);
+    expect(changes, 0);
+  });
+
   testWidgets('showAppTextPrompt: confirm stays off while a required text is empty', (tester) async {
     String? result = 'untouched';
     await pumpUi(

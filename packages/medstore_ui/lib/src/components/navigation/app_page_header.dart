@@ -52,7 +52,7 @@ class AppPageHeader extends StatelessWidget {
             onPressed: onBack,
             child: Icon(
               AppIcons.back,
-              color: AppColors.brand.resolveFrom(context),
+              color: AppColors.accent.resolveFrom(context),
               semanticLabel: backLabel ?? AppStrings.of(context).back,
             ),
           ),

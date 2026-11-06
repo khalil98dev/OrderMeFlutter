@@ -164,7 +164,7 @@ class _BannerCard extends StatelessWidget {
                           strings.viewOrder,
                           style: AppTypography.footnote.copyWith(
                             fontWeight: FontWeight.w600,
-                            color: AppColors.brand.resolveFrom(context),
+                            color: AppColors.accent.resolveFrom(context),
                           ),
                         ),
                       ],

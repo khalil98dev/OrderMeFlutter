@@ -26,7 +26,7 @@ class AppMessage extends StatelessWidget {
     AppTone.danger => AppIcons.error,
     AppTone.warning => AppIcons.warning,
     AppTone.success => AppIcons.success,
-    AppTone.neutral || AppTone.brand || AppTone.info => AppIcons.info,
+    AppTone.neutral || AppTone.accent || AppTone.info => AppIcons.info,
   };
 
   @override

@@ -14,11 +14,17 @@ class AppSidebarItem {
     this.activeIcon,
     this.section,
     this.badge = 0,
+    this.color,
   });
 
   final String label;
   final IconData icon;
   final IconData? activeIcon;
+
+  /// The color of the item's icon tile, as in macOS System Settings: a white glyph on a small rounded
+  /// square of this color. Use Apple's system colors (`CupertinoColors.systemBlue`…); null draws the
+  /// bare icon.
+  final Color? color;
 
   /// Items with the same section are grouped under its title.
   final String? section;
@@ -28,8 +34,8 @@ class AppSidebarItem {
   final int badge;
 }
 
-/// macOS-style sidebar for the desktop app: sections, a garnet selection, and a collapse button that
-/// shrinks it to an icon rail.
+/// macOS-style sidebar for the desktop app: sections, colored icon tiles, a blue selection, and a
+/// collapse button that shrinks it to an icon rail.
 ///
 /// Direction-aware: the border and the collapse animation sit on the *end* side, so in Arabic the
 /// sidebar is on the right and everything mirrors.
@@ -296,18 +302,21 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     final item = widget.item;
     final selected = widget.selected;
-    final color = selected
-        ? AppColors.brand.resolveFrom(context)
-        : AppColors.textPrimary.resolveFrom(context);
+    final accent = AppColors.accent.resolveFrom(context);
+    final tileColor = item.color == null ? null : CupertinoDynamicColor.resolve(item.color!, context);
+    // Selected: white on the accent, like a focused macOS sidebar.
+    final color = selected ? AppColors.onBrand : AppColors.textPrimary.resolveFrom(context);
     final background = selected
-        ? AppColors.brandTint.resolveFrom(context)
+        ? accent
         : _hovered
         ? AppColors.hover.resolveFrom(context)
         : const Color(0x00000000);
     final glyph = RotationTransition(
       turns: _swing,
       alignment: Alignment.topCenter,
-      child: Icon(selected ? (item.activeIcon ?? item.icon) : item.icon, size: 19, color: color),
+      child: tileColor == null
+          ? Icon(selected ? (item.activeIcon ?? item.icon) : item.icon, size: 19, color: color)
+          : _IconTile(icon: item.icon, color: tileColor, raised: selected),
     );
     final icon = widget.compact
         ? Stack(
@@ -350,7 +359,7 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
                           overflow: TextOverflow.ellipsis,
                           style: AppTypography.subheadline.copyWith(
                             color: color,
-                            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                            fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                           ),
                         ),
                       ),
@@ -363,6 +372,36 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
     );
 
     return widget.compact ? Tooltip(message: item.label, child: tile) : tile;
+  }
+}
+
+/// A white glyph on a rounded square of [color], lit from above: the System Settings icon.
+class _IconTile extends StatelessWidget {
+  const _IconTile({required this.icon, required this.color, required this.raised});
+
+  final IconData icon;
+  final Color color;
+
+  /// On the blue selection: a thin white ring keeps a blue tile from melting into it.
+  final bool raised;
+
+  @override
+  Widget build(BuildContext context) {
+    final top = Color.lerp(color, const Color(0xFFFFFFFF), 0.18)!;
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(6.5)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [top, color],
+        ),
+        border: raised ? Border.all(color: const Color(0xCCFFFFFF)) : null,
+      ),
+      child: Icon(icon, size: 14, color: AppColors.onBrand),
+    );
   }
 }
 

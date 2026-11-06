@@ -18,7 +18,7 @@ class AppMetricCard extends StatelessWidget {
     required this.label,
     required this.value,
     this.icon,
-    this.tone = AppTone.brand,
+    this.tone = AppTone.accent,
     this.caption,
     this.onTap,
   });

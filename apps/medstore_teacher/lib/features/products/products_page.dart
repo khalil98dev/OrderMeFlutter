@@ -93,11 +93,11 @@ class _Greeting extends StatelessWidget {
         gradient: LinearGradient(
           begin: AlignmentDirectional.topStart,
           end: AlignmentDirectional.bottomEnd,
-          colors: [AppColors.brand.resolveFrom(context), AppColors.brandDeep.resolveFrom(context)],
+          colors: [AppColors.accent.resolveFrom(context), AppColors.accentDeep.resolveFrom(context)],
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.brand.resolveFrom(context).withValues(alpha: 0.3),
+            color: AppColors.accent.resolveFrom(context).withValues(alpha: 0.3),
             blurRadius: 24,
             offset: const Offset(0, 10),
           ),

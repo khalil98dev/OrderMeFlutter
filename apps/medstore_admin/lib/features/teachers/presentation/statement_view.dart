@@ -114,7 +114,7 @@ class _StatementBody extends StatelessWidget {
               (strings.totalsPaidFromWallet, totals.paidFromWallet, AppTone.info),
               (strings.owedNow, totals.owedNow, AppTone.warning),
               (strings.overdueNow, totals.overdueNow, AppTone.danger),
-              (strings.walletBalanceNow, totals.walletBalanceNow, AppTone.brand),
+              (strings.walletBalanceNow, totals.walletBalanceNow, AppTone.accent),
             ])
               SizedBox(
                 width: 200,

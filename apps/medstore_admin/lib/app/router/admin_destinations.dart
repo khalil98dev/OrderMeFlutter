@@ -9,6 +9,7 @@ class AdminDestination {
     required this.activeIcon,
     required this.label,
     required this.section,
+    required this.color,
   });
 
   final String path;
@@ -16,6 +17,9 @@ class AdminDestination {
   final IconData activeIcon;
   final String Function(AppStrings strings) label;
   final String Function(AppStrings strings) section;
+
+  /// The sidebar tile's color: one of Apple's system colors, so each section is found at a glance.
+  final Color color;
 }
 
 String _operations(AppStrings s) => s.sectionOperations;
@@ -30,6 +34,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.dashboard,
     label: _dashboard,
     section: _operations,
+    color: CupertinoColors.systemBlue,
   ),
   AdminDestination(
     path: '/orders',
@@ -37,6 +42,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.cart,
     label: _orders,
     section: _operations,
+    color: CupertinoColors.systemOrange,
   ),
   AdminDestination(
     path: '/products',
@@ -44,6 +50,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.products,
     label: _products,
     section: _operations,
+    color: CupertinoColors.systemIndigo,
   ),
   AdminDestination(
     path: '/teachers',
@@ -51,6 +58,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.teachers,
     label: _teachers,
     section: _operations,
+    color: CupertinoColors.systemTeal,
   ),
   AdminDestination(
     path: '/schools',
@@ -58,6 +66,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.schools,
     label: _schools,
     section: _operations,
+    color: CupertinoColors.systemBrown,
   ),
   // Finance
   AdminDestination(
@@ -66,6 +75,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.invoices,
     label: _invoices,
     section: _finance,
+    color: CupertinoColors.systemGreen,
   ),
   AdminDestination(
     path: '/wallet',
@@ -73,6 +83,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.wallet,
     label: _wallet,
     section: _finance,
+    color: CupertinoColors.systemMint,
   ),
   AdminDestination(
     path: '/debts',
@@ -80,6 +91,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.warning,
     label: _debts,
     section: _finance,
+    color: CupertinoColors.systemPink,
   ),
   AdminDestination(
     path: '/reports',
@@ -87,6 +99,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.reports,
     label: _reports,
     section: _finance,
+    color: CupertinoColors.systemPurple,
   ),
   // System
   AdminDestination(
@@ -95,6 +108,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.notifications,
     label: _notifications,
     section: _system,
+    color: CupertinoColors.systemRed,
   ),
   AdminDestination(
     path: '/security',
@@ -102,6 +116,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.security,
     label: _security,
     section: _system,
+    color: CupertinoColors.systemGrey,
   ),
   AdminDestination(
     path: '/settings',
@@ -109,6 +124,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.settings,
     label: _settings,
     section: _system,
+    color: CupertinoColors.systemGrey,
   ),
 ];
 

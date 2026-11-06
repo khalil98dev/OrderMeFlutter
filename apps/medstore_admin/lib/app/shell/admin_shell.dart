@@ -50,6 +50,7 @@ class _AdminShellState extends State<AdminShell> {
                   activeIcon: d.activeIcon,
                   section: d.section(strings),
                   badge: d.path == '/notifications' ? unread : 0,
+                  color: d.color,
                 ),
             ],
             footer: (context, compact) => _UserFooter(compact: compact),
@@ -152,10 +153,10 @@ class _Avatar extends StatelessWidget {
       width: 32,
       height: 32,
       alignment: Alignment.center,
-      decoration: BoxDecoration(color: AppColors.brandTint.resolveFrom(context), shape: BoxShape.circle),
+      decoration: BoxDecoration(color: AppColors.accentTint.resolveFrom(context), shape: BoxShape.circle),
       child: Text(
         name.isEmpty ? '' : name.characters.first.toUpperCase(),
-        style: AppTypography.headline.copyWith(fontSize: 14, color: AppColors.brand.resolveFrom(context)),
+        style: AppTypography.headline.copyWith(fontSize: 14, color: AppColors.accent.resolveFrom(context)),
       ),
     );
   }

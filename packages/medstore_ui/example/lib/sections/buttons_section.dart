@@ -71,7 +71,7 @@ class ButtonsSection extends StatelessWidget {
               AppIconButton(
                 icon: AppIcons.print,
                 label: tr(context, 'Imprimer', 'طباعة'),
-                tone: AppTone.brand,
+                tone: AppTone.accent,
                 filled: true,
                 onPressed: () {},
               ),

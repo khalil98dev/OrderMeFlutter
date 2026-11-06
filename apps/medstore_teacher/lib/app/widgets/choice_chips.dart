@@ -44,7 +44,7 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brand = AppColors.brand.resolveFrom(context);
+    final accent = AppColors.accent.resolveFrom(context);
     return Semantics(
       selected: selected,
       button: true,
@@ -57,9 +57,9 @@ class _Chip extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           decoration: BoxDecoration(
-            color: selected ? brand : AppColors.surface.resolveFrom(context),
+            color: selected ? accent : AppColors.surface.resolveFrom(context),
             borderRadius: const BorderRadius.all(Radius.circular(999)),
-            border: Border.all(color: selected ? brand : AppColors.border.resolveFrom(context)),
+            border: Border.all(color: selected ? accent : AppColors.border.resolveFrom(context)),
           ),
           child: Text(
             label,

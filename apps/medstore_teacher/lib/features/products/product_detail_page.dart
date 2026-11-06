@@ -109,7 +109,10 @@ class _ProductDetailsState extends State<_ProductDetails> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [AppColors.brandTint.resolveFrom(context), AppColors.canvas.resolveFrom(context)],
+                    colors: [
+                      AppColors.accentTint.resolveFrom(context),
+                      AppColors.canvas.resolveFrom(context),
+                    ],
                   ),
                 ),
                 child: Center(
@@ -140,7 +143,7 @@ class _ProductDetailsState extends State<_ProductDetails> {
                     Wrap(
                       spacing: AppSpacing.xs,
                       children: [
-                        AppBadge(label: productTypeText(strings, product.type), tone: AppTone.brand),
+                        AppBadge(label: productTypeText(strings, product.type), tone: AppTone.accent),
                         ProductAvailabilityBadge(isAvailable: product.isAvailable),
                       ],
                     ),

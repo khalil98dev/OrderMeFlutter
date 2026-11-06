@@ -10,12 +10,12 @@ import '../tokens/app_typography.dart';
 /// tab bars, dialogs) are set in Inter / IBM Plex Sans Arabic like the rest of the app.
 abstract final class AppTheme {
   static const CupertinoThemeData cupertino = CupertinoThemeData(
-    primaryColor: AppColors.brand,
+    primaryColor: AppColors.accent,
     primaryContrastingColor: AppColors.onBrand,
     scaffoldBackgroundColor: AppColors.canvas,
     barBackgroundColor: AppColors.bar,
     textTheme: CupertinoTextThemeData(
-      primaryColor: AppColors.brand,
+      primaryColor: AppColors.accent,
       textStyle: TextStyle(
         inherit: false,
         fontFamily: AppTypography.family,
@@ -54,7 +54,7 @@ abstract final class AppTheme {
         fontFamilyFallback: AppTypography.fallback,
         fontSize: 17,
         fontWeight: FontWeight.w500,
-        color: AppColors.brand,
+        color: AppColors.accent,
       ),
       tabLabelTextStyle: TextStyle(
         inherit: false,

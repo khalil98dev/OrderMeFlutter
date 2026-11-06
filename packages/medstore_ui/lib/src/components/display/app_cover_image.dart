@@ -77,9 +77,9 @@ class _Placeholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: AppColors.brandTint.resolveFrom(context),
+      color: AppColors.accentTint.resolveFrom(context),
       child: Center(
-        child: Icon(icon, size: iconSize, color: AppColors.brand.resolveFrom(context)),
+        child: Icon(icon, size: iconSize, color: AppColors.accent.resolveFrom(context)),
       ),
     );
   }

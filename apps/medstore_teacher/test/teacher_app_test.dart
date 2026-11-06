@@ -4,11 +4,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:medstore_core/medstore_core.dart';
 import 'package:medstore_teacher/app/di/injection.dart';
 import 'package:medstore_teacher/app/teacher_app.dart';
+import 'package:medstore_teacher/features/cart/cart_bar.dart';
 import 'package:medstore_teacher/features/cart/cart_cubit.dart';
 import 'package:medstore_teacher/features/notifications/domain/notification.dart';
 import 'package:medstore_teacher/features/notifications/presentation/unread_cubit.dart';
 import 'package:medstore_teacher/features/orders/domain/my_orders.dart';
 import 'package:medstore_teacher/features/orders/presentation/orders_page.dart';
+import 'package:medstore_ui/medstore_ui.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockAuthCubit extends MockCubit<AuthState> implements AuthCubit {}
@@ -145,19 +147,44 @@ void main() {
     // Only "Physique BAC" is available, so there is exactly one add button.
     final add = find.byTooltip('Ajouter au panier');
     expect(add, findsOneWidget);
-    expect(find.text('Voir le panier'), findsNothing);
+    // The round cart shows only its count: nothing while empty.
+    Finder cartCount(String count) => find.descendant(of: find.byType(CartBar), matching: find.text(count));
+    expect(cartCount('1'), findsNothing);
 
     await tester.tap(add);
-    await tester.pumpAndSettle(); // the flight lands and the cart bounces
+    await tester.pump(); // the flight takes off
+    await tester.pump(const Duration(milliseconds: 700)); // …lands…
+    await tester.pump(const Duration(milliseconds: 150)); // …and the cart swells toward 1.5×
+    final swollen = tester.getSize(find.byType(CartBar));
+    expect(
+      tester
+          .widget<ScaleTransition>(
+            find.descendant(of: find.byType(AppBounceTarget), matching: find.byType(ScaleTransition)).first,
+          )
+          .scale
+          .value,
+      greaterThan(1.3),
+    );
+    await tester.pumpAndSettle(); // then settles back to its size
+    expect(
+      tester
+          .widget<ScaleTransition>(
+            find.descendant(of: find.byType(AppBounceTarget), matching: find.byType(ScaleTransition)).first,
+          )
+          .scale
+          .value,
+      1,
+    );
+    expect(swollen, tester.getSize(find.byType(CartBar))); // scaling never moves the layout
 
     expect(sl<CartCubit>().state.copies, 1);
-    expect(find.text('Voir le panier'), findsOneWidget);
-    expect(find.text('1 exemplaire'), findsOneWidget);
+    expect(cartCount('1'), findsOneWidget);
+    expect(find.text('Voir le panier'), findsNothing); // no label, no total: just the circle
     expect(find.text('1 dans le panier'), findsOneWidget);
 
     await tester.tap(add);
     await tester.pumpAndSettle();
-    expect(find.text('2 exemplaires'), findsOneWidget);
+    expect(cartCount('2'), findsOneWidget);
   });
 
   testWidgets('Arabic lays the app out right to left', (tester) async {

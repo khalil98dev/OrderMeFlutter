@@ -79,7 +79,7 @@ class _TeacherShellState extends State<TeacherShell> with WidgetsBindingObserver
               Expanded(child: shell),
               CupertinoTabBar(
                 currentIndex: shell.currentIndex,
-                activeColor: AppColors.brand.resolveFrom(context),
+                activeColor: AppColors.accent.resolveFrom(context),
                 height: 56,
                 // Tapping the current tab again goes back to its first page.
                 onTap: (index) => shell.goBranch(index, initialLocation: index == shell.currentIndex),

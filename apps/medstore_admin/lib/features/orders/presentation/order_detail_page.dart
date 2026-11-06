@@ -221,7 +221,7 @@ class _OrderLineCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
-    final brand = AppColors.brand.resolveFrom(context);
+    final accent = AppColors.accent.resolveFrom(context);
     final secondary = AppTypography.footnote.copyWith(color: AppColors.textSecondary.resolveFrom(context));
 
     return Container(
@@ -238,7 +238,7 @@ class _OrderLineCard extends StatelessWidget {
             width: 64,
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: AppColors.brandTint.resolveFrom(context),
+              color: AppColors.accentTint.resolveFrom(context),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             child: Column(
@@ -246,12 +246,12 @@ class _OrderLineCard extends StatelessWidget {
                 Text(
                   '${line.quantity}',
                   style: AppTypography.tabular(
-                    AppTypography.title2.copyWith(fontWeight: FontWeight.w700, height: 1.1, color: brand),
+                    AppTypography.title2.copyWith(fontWeight: FontWeight.w700, height: 1.1, color: accent),
                   ),
                 ),
                 Text(
                   strings.colQuantity,
-                  style: AppTypography.caption.copyWith(fontWeight: FontWeight.w600, color: brand),
+                  style: AppTypography.caption.copyWith(fontWeight: FontWeight.w600, color: accent),
                 ),
               ],
             ),

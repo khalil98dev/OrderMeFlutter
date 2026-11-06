@@ -60,7 +60,7 @@ class _Toast extends StatelessWidget {
     AppTone.success => AppIcons.success,
     AppTone.danger => AppIcons.error,
     AppTone.warning => AppIcons.warning,
-    AppTone.info || AppTone.brand => AppIcons.info,
+    AppTone.info || AppTone.accent => AppIcons.info,
     AppTone.neutral => null,
   };
 

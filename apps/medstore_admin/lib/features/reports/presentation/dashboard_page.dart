@@ -96,7 +96,7 @@ class _Summary extends StatelessWidget {
         group(
           '${strings.thePeriod} · ${AppDateFormat.day(report.from, locale)} – ${AppDateFormat.day(report.to, locale)}',
           [
-            (strings.ordersPlaced, '${report.ordersPlaced}', AppIcons.cart, AppTone.brand),
+            (strings.ordersPlaced, '${report.ordersPlaced}', AppIcons.cart, AppTone.accent),
             (strings.copiesOrdered, '${report.copiesOrdered}', AppIcons.products, AppTone.neutral),
             (strings.amountOrdered, money(report.amountOrdered), null, AppTone.neutral),
             (strings.invoicesIssued, '${report.invoicesIssued}', AppIcons.invoices, AppTone.info),
@@ -104,7 +104,7 @@ class _Summary extends StatelessWidget {
             (strings.depositsCount, '${report.deposits}', AppIcons.downloadCircle, AppTone.success),
             (strings.amountDeposited, money(report.amountDeposited), null, AppTone.success),
             (strings.amountPaidFromWallets, money(report.amountPaidFromWallets), null, AppTone.success),
-            (strings.newTeachers, '${report.newTeachers}', AppIcons.addPerson, AppTone.brand),
+            (strings.newTeachers, '${report.newTeachers}', AppIcons.addPerson, AppTone.accent),
           ],
         ),
         group(strings.ordersByStatus, [

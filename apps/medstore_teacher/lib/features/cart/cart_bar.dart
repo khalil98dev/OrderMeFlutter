@@ -10,98 +10,60 @@ import 'cart_cubit.dart';
 /// flight from the product list or a product page always finds it.
 final cartTarget = GlobalKey<AppBounceTargetState>();
 
-/// The floating cart above the tab bar: a round button while the cart is empty, a pill with the
-/// copies and the total once something is in it. Opens the cart.
+/// The floating cart above the tab bar: a round button, white while the cart is empty, blue with the
+/// count of copies once something is in it. Each item that lands in it makes it swell to 1.5× and
+/// settle back. Opens the cart.
 class CartBar extends StatelessWidget {
   const CartBar({super.key});
 
   static const route = '/cart';
 
+  static const _size = 60.0;
+
   @override
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
-    final locale = Localizations.localeOf(context);
-    final cart = context.watch<CartCubit>().state;
-    final brand = AppColors.brand.resolveFrom(context);
-    final expanded = !cart.isEmpty;
-
-    final icon = AppBounceTarget(
-      key: cartTarget,
-      child: CountBadge(
-        count: cart.copies,
-        color: expanded ? AppColors.textPrimary.resolveFrom(context) : null,
-        child: Icon(
-          expanded ? AppIcons.cart : AppIcons.cart,
-          size: 24,
-          color: expanded ? AppColors.onBrand : brand,
-        ),
-      ),
-    );
+    final copies = context.select<CartCubit, int>((cart) => cart.state.copies);
+    final accent = AppColors.accent.resolveFrom(context);
+    final filled = copies > 0;
 
     return Semantics(
       button: true,
-      label: strings.viewCart,
-      child: Pressable(
-        onTap: () => context.push(route),
-        borderRadius: const BorderRadius.all(Radius.circular(999)),
-        child: AnimatedContainer(
-          duration: AppDurations.of(context, AppDurations.expand),
-          curve: AppDurations.easeOut,
-          height: 58,
-          padding: EdgeInsets.symmetric(horizontal: expanded ? AppSpacing.lg : 17),
-          decoration: BoxDecoration(
-            gradient: expanded
-                ? LinearGradient(colors: [brand, AppColors.brandDeep.resolveFrom(context)])
-                : null,
-            color: expanded ? null : AppColors.surface.resolveFrom(context),
-            borderRadius: const BorderRadius.all(Radius.circular(999)),
-            boxShadow: [
-              BoxShadow(
-                color: (expanded ? brand : const Color(0xFF12131A)).withValues(alpha: expanded ? 0.35 : 0.12),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: AnimatedSize(
+      label: filled ? '${strings.viewCart}, ${strings.copiesCount(copies)}' : strings.viewCart,
+      excludeSemantics: true,
+      child: AppBounceTarget.pop(
+        key: cartTarget,
+        child: Pressable(
+          onTap: () => context.push(route),
+          borderRadius: const BorderRadius.all(Radius.circular(_size / 2)),
+          child: AnimatedContainer(
             duration: AppDurations.of(context, AppDurations.expand),
             curve: AppDurations.easeOut,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                icon,
-                if (expanded) ...[
-                  const SizedBox(width: AppSpacing.md),
-                  Flexible(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          strings.viewCart,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.headline.copyWith(color: AppColors.onBrand),
-                        ),
-                        Text(
-                          strings.copiesCount(cart.copies),
-                          maxLines: 1,
-                          style: AppTypography.caption.copyWith(
-                            color: AppColors.onBrand.withValues(alpha: 0.85),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (cart.total case final total?) ...[
-                    const SizedBox(width: AppSpacing.md),
-                    Text(
-                      MoneyFormat.dzd(total, locale),
-                      style: AppTypography.tabular(AppTypography.headline.copyWith(color: AppColors.onBrand)),
-                    ),
-                  ],
-                ],
+            width: _size,
+            height: _size,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: filled
+                  ? LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [accent, AppColors.accentDeep.resolveFrom(context)],
+                    )
+                  : null,
+              color: filled ? null : AppColors.surface.resolveFrom(context),
+              boxShadow: [
+                BoxShadow(
+                  color: (filled ? accent : const Color(0xFF12131A)).withValues(alpha: filled ? 0.35 : 0.12),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
               ],
+            ),
+            child: Center(
+              child: CountBadge(
+                count: copies,
+                child: Icon(AppIcons.cart, size: 26, color: filled ? AppColors.onBrand : accent),
+              ),
             ),
           ),
         ),

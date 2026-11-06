@@ -164,7 +164,7 @@ class _OrderDetails extends StatelessWidget {
               OrderStatusTracker(status: order.status),
               if (order.status == OrderStatus.ready) ...[
                 const SizedBox(height: AppSpacing.lg),
-                AppMessage(text: strings.readyPickupHint, tone: AppTone.brand, icon: AppIcons.bag),
+                AppMessage(text: strings.readyPickupHint, tone: AppTone.accent, icon: AppIcons.bag),
               ],
             ],
           ),
@@ -200,7 +200,7 @@ class _OrderDetails extends StatelessWidget {
                         height: 36,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: AppColors.brandTint.resolveFrom(context),
+                          color: AppColors.accentTint.resolveFrom(context),
                           borderRadius: AppRadii.smRadius,
                         ),
                         child: Text(
@@ -208,7 +208,7 @@ class _OrderDetails extends StatelessWidget {
                           style: AppTypography.tabular(
                             AppTypography.footnote.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: AppColors.brand.resolveFrom(context),
+                              color: AppColors.accent.resolveFrom(context),
                             ),
                           ),
                         ),

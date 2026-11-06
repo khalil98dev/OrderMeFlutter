@@ -22,6 +22,7 @@ abstract final class AppIcons {
   static const schools = LucideIcons.school;
   static const invoices = LucideIcons.fileText;
   static const wallet = LucideIcons.wallet;
+  static const deposit = LucideIcons.handCoins;
   static const debts = LucideIcons.triangleAlert;
   static const reports = LucideIcons.chartColumn;
   static const notifications = LucideIcons.bell;

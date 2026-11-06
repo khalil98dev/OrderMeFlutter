@@ -17,7 +17,7 @@ String orderStatusText(AppStrings s, OrderStatus status) => switch (status) {
 AppTone orderStatusTone(OrderStatus status) => switch (status) {
   OrderStatus.pending => AppTone.warning,
   OrderStatus.inPreparation => AppTone.info,
-  OrderStatus.ready => AppTone.brand,
+  OrderStatus.ready => AppTone.accent,
   OrderStatus.delivered => AppTone.success,
   OrderStatus.cancelled => AppTone.neutral,
 };
@@ -78,5 +78,5 @@ AppTone notificationTone(TeacherNotification n) => switch (n.type) {
   NotificationKind.orderStatusChanged => orderStatusTone(OrderStatus.fromApi(n.data['status'])),
   NotificationKind.depositRecorded => AppTone.success,
   NotificationKind.invoiceIssued => AppTone.info,
-  _ => AppTone.brand,
+  _ => AppTone.accent,
 };

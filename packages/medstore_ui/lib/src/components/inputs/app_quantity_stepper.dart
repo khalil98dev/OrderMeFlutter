@@ -81,7 +81,7 @@ class _StepButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = onPressed == null
         ? AppColors.textTertiary.resolveFrom(context)
-        : AppColors.brand.resolveFrom(context);
+        : AppColors.accent.resolveFrom(context);
     return CupertinoButton(
       onPressed: onPressed,
       padding: EdgeInsets.zero,

@@ -31,7 +31,7 @@ class OrderStatusTracker extends StatelessWidget {
     }
 
     final reached = _steps.indexOf(status);
-    final brand = AppColors.brand.resolveFrom(context);
+    final accent = AppColors.accent.resolveFrom(context);
     final done = AppColors.signal.resolveFrom(context);
     final idle = AppColors.separator.resolveFrom(context);
 
@@ -49,7 +49,7 @@ class OrderStatusTracker extends StatelessWidget {
                       icon: orderStatusIcon(_steps[i]),
                       color: i < reached || status == OrderStatus.delivered
                           ? done
-                          : (i == reached ? brand : idle),
+                          : (i == reached ? accent : idle),
                       current: i == reached && status != OrderStatus.delivered,
                     ),
                     Expanded(

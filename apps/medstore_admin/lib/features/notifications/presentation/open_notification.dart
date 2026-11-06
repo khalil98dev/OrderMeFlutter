@@ -28,7 +28,7 @@ IconData notificationIcon(AppNotification notification) => switch (notification.
 };
 
 AppTone notificationTone(AppNotification notification) => switch (notification.type) {
-  'OrderPlaced' || 'OrderPlacedForYou' => AppTone.brand,
+  'OrderPlaced' || 'OrderPlacedForYou' => AppTone.accent,
   'OrderStatusChanged' => AppTone.info,
   'InvoiceIssued' || 'DepositRecorded' => AppTone.success,
   _ => AppTone.neutral,

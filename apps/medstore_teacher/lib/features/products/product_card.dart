@@ -87,7 +87,7 @@ class _ProductCardState extends State<ProductCard> {
                   PositionedDirectional(
                     top: AppSpacing.xs,
                     end: AppSpacing.xs,
-                    child: AppBadge(label: strings.inCart(inCart), tone: AppTone.brand, icon: AppIcons.cart),
+                    child: AppBadge(label: strings.inCart(inCart), tone: AppTone.accent, icon: AppIcons.cart),
                   ),
               ],
             ),
@@ -125,7 +125,7 @@ class _ProductCardState extends State<ProductCard> {
                       AppIconButton(
                         icon: AppIcons.add,
                         label: strings.addToCart,
-                        tone: AppTone.brand,
+                        tone: AppTone.accent,
                         filled: true,
                         size: 34,
                         onPressed: _add,

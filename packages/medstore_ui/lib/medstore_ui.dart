@@ -34,6 +34,7 @@ export 'src/components/inputs/app_quantity_stepper.dart';
 export 'src/components/inputs/app_search_field.dart';
 export 'src/components/inputs/app_segmented_control.dart';
 export 'src/components/inputs/app_select_field.dart';
+export 'src/components/inputs/app_select_popup.dart';
 export 'src/components/inputs/app_switch_row.dart';
 export 'src/components/inputs/app_text_field.dart';
 export 'src/components/inputs/language_switch.dart';

@@ -157,12 +157,12 @@ class _NotificationTileState extends State<_NotificationTile> {
             transform: Matrix4.translationValues(0, _hovered ? -1 : 0, 0),
             decoration: BoxDecoration(
               color: unread
-                  ? AppColors.brandTint.resolveFrom(context).withValues(alpha: 0.45)
+                  ? AppColors.accentTint.resolveFrom(context).withValues(alpha: 0.45)
                   : AppColors.surface.resolveFrom(context),
               borderRadius: const BorderRadius.all(Radius.circular(14)),
               border: Border.all(
                 color: _hovered
-                    ? AppColors.brand.resolveFrom(context).withValues(alpha: 0.4)
+                    ? AppColors.accent.resolveFrom(context).withValues(alpha: 0.4)
                     : AppColors.separator.resolveFrom(context),
                 width: _hovered ? 1 : 0.5,
               ),
@@ -215,7 +215,7 @@ class _NotificationTileState extends State<_NotificationTile> {
                               strings.viewOrder,
                               style: AppTypography.caption.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.brand.resolveFrom(context),
+                                color: AppColors.accent.resolveFrom(context),
                               ),
                             ),
                           ],
@@ -234,7 +234,7 @@ class _NotificationTileState extends State<_NotificationTile> {
                         width: 9,
                         height: 9,
                         decoration: BoxDecoration(
-                          color: AppColors.brand.resolveFrom(context),
+                          color: AppColors.accent.resolveFrom(context),
                           shape: BoxShape.circle,
                         ),
                       ),

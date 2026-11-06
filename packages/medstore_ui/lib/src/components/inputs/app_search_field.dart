@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
 import '../../l10n/app_strings.dart';
+import '../../tokens/app_icons.dart';
 
 /// A search box that waits until the user stops typing before reporting the query.
 ///
@@ -66,6 +67,9 @@ class _AppSearchFieldState extends State<AppSearchField> {
       placeholder: widget.placeholder ?? AppStrings.of(context).search,
       onChanged: _typed,
       onSubmitted: _report,
+      // Lucide, like every other icon in the app.
+      prefixIcon: const Icon(AppIcons.search),
+      suffixIcon: const Icon(AppIcons.cancelled),
       // The built-in clear button empties the box and calls onChanged('') → reported at once.
     );
   }

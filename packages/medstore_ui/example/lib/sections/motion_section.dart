@@ -18,7 +18,7 @@ class _MotionSectionState extends State<MotionSection> {
 
   @override
   Widget build(BuildContext context) {
-    final brand = AppTone.brand.resolve(context);
+    final brand = AppTone.accent.resolve(context);
     return GallerySection(
       title: tr(context, 'Mouvement', 'الحركة'),
       components: 'AppBounceTarget · flyToTarget',
@@ -42,7 +42,7 @@ class _MotionSectionState extends State<MotionSection> {
                     children: [
                       Icon(AppIcons.cart, size: 30, color: brand.foreground),
                       const SizedBox(width: AppSpacing.xxs),
-                      AppBadge(label: '$_count', tone: AppTone.brand),
+                      AppBadge(label: '$_count', tone: AppTone.accent),
                     ],
                   ),
                 ),

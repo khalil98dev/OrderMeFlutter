@@ -36,7 +36,7 @@ class SettingsPage extends StatelessWidget {
                 AppCard(
                   child: Row(
                     children: [
-                      Icon(AppIcons.language, color: AppColors.brand.resolveFrom(context)),
+                      Icon(AppIcons.language, color: AppColors.accent.resolveFrom(context)),
                       const SizedBox(width: AppSpacing.sm),
                       Expanded(child: Text(strings.language, style: AppTypography.body)),
                       LanguageSwitch(

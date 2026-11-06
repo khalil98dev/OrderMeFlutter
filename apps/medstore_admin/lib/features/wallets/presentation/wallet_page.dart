@@ -58,11 +58,14 @@ class WalletPage extends StatelessWidget {
             AppMessage(text: problemText(strings, failure)),
             const SizedBox(height: AppSpacing.md),
           ],
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          // The figures, then the filters: each wraps to a new line in a narrow window instead of
+          // overflowing.
+          Wrap(
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.md,
             children: [
               SizedBox(
-                width: 220,
+                width: 260,
                 child: AppMetricCard(
                   label: strings.balance,
                   value: wallet == null ? '—' : MoneyFormat.dzd(wallet.balance, locale),
@@ -70,19 +73,19 @@ class WalletPage extends StatelessWidget {
                   tone: AppTone.success,
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
               SizedBox(
-                width: 220,
+                width: 260,
                 child: AppMetricCard(
                   label: strings.totalDeposited,
                   value: wallet == null ? '—' : MoneyFormat.dzd(wallet.totalDeposited, locale),
+                  icon: AppIcons.deposit,
                   tone: AppTone.info,
                 ),
               ),
-              const Spacer(),
-              const _TransactionFilters(),
             ],
           ),
+          const SizedBox(height: AppSpacing.lg),
+          const _TransactionFilters(),
           const SizedBox(height: AppSpacing.md),
           const Expanded(child: _Ledger()),
         ],
@@ -152,8 +155,10 @@ class _TransactionFilters extends StatelessWidget {
     TransactionFilter filtered({WalletTransactionType? type, DateTime? from, DateTime? to}) =>
         TransactionFilter(clientId: filter.clientId, type: type, from: from, to: to);
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      crossAxisAlignment: WrapCrossAlignment.end,
       children: [
         SizedBox(
           width: 200,
@@ -168,7 +173,6 @@ class _TransactionFilters extends StatelessWidget {
             onChanged: (type) => cubit.setFilter(filtered(type: type, from: filter.from, to: filter.to)),
           ),
         ),
-        const SizedBox(width: AppSpacing.sm),
         PeriodBar(
           from: filter.from,
           to: filter.to,
@@ -189,62 +193,80 @@ class _Ledger extends StatelessWidget {
     final locale = Localizations.localeOf(context);
     return PagedTable<WalletTransaction, TransactionFilter>(
       rowHeight: 60,
+      // Fixed widths only where the content has a known size (dates, amounts, buttons); the type and
+      // the details share the rest, so neither is squeezed to a few letters.
       columns: [
-        AppTableColumn(strings.colDate, width: 150),
+        AppTableColumn(strings.colDate, width: 140),
         AppTableColumn(strings.colType, flex: 2),
-        AppTableColumn(strings.fieldReference, flex: 2),
-        AppTableColumn(strings.colReceipt, width: 110),
-        AppTableColumn.amount(strings.colAmount),
-        AppTableColumn.amount(strings.colBalanceAfter),
+        AppTableColumn(strings.fieldReference, flex: 3),
+        AppTableColumn.amount(strings.colAmount, width: 120),
+        AppTableColumn.amount(strings.colBalanceAfter, width: 120),
         const AppTableColumn('', width: 84),
       ],
       empty: AppEmptyState(icon: AppIcons.list, title: strings.noTransactionsTitle),
-      cells: (context, entry) => [
-        Text(AppDateFormat.dateTime(entry.occurredAt, locale)),
-        Row(
-          children: [
-            Flexible(child: Text(transactionTypeText(strings, entry.type), maxLines: 1)),
-            if (entry.isVoided) ...[
-              const SizedBox(width: AppSpacing.xs),
-              AppBadge(label: strings.voidedBadge, tone: AppTone.danger),
+      cells: (context, entry) {
+        final secondary = AppTypography.footnote.copyWith(
+          color: AppColors.textSecondary.resolveFrom(context),
+        );
+        final details = [
+          entry.method == null ? null : paymentMethodText(strings, entry.method!),
+          entry.reference,
+        ].whereType<String>().join(' · ');
+        final extra = [entry.receiptLabel, entry.note].whereType<String>().join(' · ');
+        return [
+          Text(
+            AppDateFormat.dateTime(entry.occurredAt, locale),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          // The type, and under it "voided" when it was.
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(transactionTypeText(strings, entry.type), maxLines: 1, overflow: TextOverflow.ellipsis),
+              if (entry.isVoided) ...[
+                const SizedBox(height: 2),
+                AppBadge(label: strings.voidedBadge, tone: AppTone.danger),
+              ],
             ],
-          ],
-        ),
-        Text(
-          [
-            entry.method == null ? null : paymentMethodText(strings, entry.method!),
-            entry.reference,
-            entry.note,
-          ].whereType<String>().join(' · '),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        Text(entry.receiptLabel ?? '—'),
-        AppMoney(entry.amount, style: AppTypography.subheadline, tone: amountTone(entry.amount)),
-        AppMoney(entry.balanceAfter, style: AppTypography.subheadline),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (entry.hasReceipt)
-              AppIconButton(
-                icon: AppIcons.download,
-                label: strings.downloadReceipt,
-                onPressed: () => savePdf(
-                  context,
-                  '${entry.receiptLabel ?? 'receipt'}.pdf',
-                  () => context.read<DownloadReceipt>()(entry.id),
+          ),
+          // Method and reference; the receipt number and the note under them, quieter.
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(details.isEmpty ? '—' : details, maxLines: 1, overflow: TextOverflow.ellipsis),
+              if (extra.isNotEmpty)
+                Text(extra, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondary),
+            ],
+          ),
+          AppMoney(entry.amount, style: AppTypography.subheadline, tone: amountTone(entry.amount)),
+          AppMoney(entry.balanceAfter, style: AppTypography.subheadline),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (entry.hasReceipt)
+                AppIconButton(
+                  icon: AppIcons.download,
+                  label: strings.downloadReceipt,
+                  onPressed: () => savePdf(
+                    context,
+                    '${entry.receiptLabel ?? 'receipt'}.pdf',
+                    () => context.read<DownloadReceipt>()(entry.id),
+                  ),
                 ),
-              ),
-            if (entry.canBeVoided)
-              AppIconButton(
-                icon: AppIcons.undo,
-                label: strings.voidTransaction,
-                tone: AppTone.danger,
-                onPressed: () => _void(context, entry),
-              ),
-          ],
-        ),
-      ],
+              if (entry.canBeVoided)
+                AppIconButton(
+                  icon: AppIcons.undo,
+                  label: strings.voidTransaction,
+                  tone: AppTone.danger,
+                  onPressed: () => _void(context, entry),
+                ),
+            ],
+          ),
+        ];
+      },
     );
   }
 
