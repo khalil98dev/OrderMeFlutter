@@ -125,7 +125,7 @@ class _UninvoicedTable extends StatelessWidget {
     final cubit = context.read<NewInvoiceCubit>();
     return AppTable(
       shrinkWrap: true,
-      rowHeight: 64,
+      rowHeight: 48, // two lines at the Mac scale
       columns: [
         AppTableColumn(strings.colProduct, flex: 3),
         AppTableColumn(strings.colOrders, flex: 2),
@@ -149,7 +149,7 @@ class _UninvoicedTable extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          AppMoney(row.unitPrice, style: AppTypography.subheadline),
+          AppMoney(row.unitPrice, style: AppTypography.row),
           Text('${row.quantity}'),
           AppQuantityStepper(
             value: quantity,
@@ -157,7 +157,7 @@ class _UninvoicedTable extends StatelessWidget {
             max: row.quantity,
             onChanged: (value) => cubit.setQuantity(row.key, value),
           ),
-          AppMoney(row.unitPrice * quantity, style: AppTypography.subheadline),
+          AppMoney(row.unitPrice * quantity, style: AppTypography.row),
         ];
       },
     );

@@ -35,7 +35,7 @@ class ListsSection extends StatelessWidget {
                 leading: const AppAvatar(name: 'Karim Ait Said'),
                 title: 'Karim Ait Said',
                 subtitle: tr(context, 'CEM El Feth', 'متوسطة الفتح'),
-                trailing: const AppMoney(12500, style: AppTypography.subheadline),
+                trailing: AppMoney(12500, style: AppTypography.subheadline),
                 onTap: () {},
               ),
               AppListTile(

@@ -142,13 +142,13 @@ class _BannerCard extends StatelessWidget {
                         notification.title,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTypography.headline.copyWith(
-                          fontSize: 15,
+                        style: AppTypography.row.copyWith(
+                          fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary.resolveFrom(context),
                         ),
                       ),
                       if (notification.message case final message?) ...[
-                        const SizedBox(height: 2),
+                        const SizedBox(height: AppSpacing.xxs),
                         Text(
                           message,
                           maxLines: 2,
@@ -208,7 +208,7 @@ class _PulsingIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0, end: 1),
-      duration: AppDurations.of(context, const Duration(milliseconds: 900)),
+      duration: AppDurations.of(context, const Duration(milliseconds: 600)),
       curve: Curves.easeOut,
       builder: (context, t, child) => Stack(
         alignment: Alignment.center,

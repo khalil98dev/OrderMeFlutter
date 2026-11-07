@@ -37,10 +37,12 @@ class ProductAvailabilityBadge extends StatelessWidget {
 /// The price is a secured field on the server: a role without the right gets `null`, which must never be
 /// shown as 0 DA.
 class ProductPrice extends StatelessWidget {
-  const ProductPrice({super.key, required this.price, this.style = AppTypography.body, this.perCopy = false});
+  const ProductPrice({super.key, required this.price, this.style, this.perCopy = false});
 
   final num? price;
-  final TextStyle style;
+
+  /// Defaults to [AppTypography.body].
+  final TextStyle? style;
 
   /// Adds "/ copy" after the amount.
   final bool perCopy;
@@ -52,13 +54,15 @@ class ProductPrice extends StatelessWidget {
     if (price == null) {
       return Text(
         strings.priceHidden,
-        style: style.copyWith(color: AppColors.textTertiary.resolveFrom(context)),
+        style: (style ?? AppTypography.body).copyWith(color: AppColors.textTertiary.resolveFrom(context)),
       );
     }
     final amount = MoneyFormat.dzd(price, Localizations.localeOf(context));
     return Text(
       perCopy ? strings.pricePerCopy(amount) : amount,
-      style: AppTypography.tabular(style).copyWith(color: AppColors.textPrimary.resolveFrom(context)),
+      style: AppTypography.tabular(
+        style ?? AppTypography.body,
+      ).copyWith(color: AppColors.textPrimary.resolveFrom(context)),
     );
   }
 }

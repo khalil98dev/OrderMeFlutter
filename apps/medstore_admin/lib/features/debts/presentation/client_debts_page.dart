@@ -138,11 +138,11 @@ class _ClientDebtsPageState extends State<ClientDebtsPage> {
                             Text(item.label, maxLines: 1, overflow: TextOverflow.ellipsis),
                             Text(AppDateFormat.day(item.date, locale)),
                             Text(AppDateFormat.day(item.dueDate, locale)),
-                            AppMoney(item.amount, style: AppTypography.subheadline),
-                            AppMoney(item.amountPaid, style: AppTypography.subheadline),
+                            AppMoney(item.amount, style: AppTypography.row),
+                            AppMoney(item.amountPaid, style: AppTypography.row),
                             AppMoney(
                               item.amountDue,
-                              style: AppTypography.subheadline,
+                              style: AppTypography.row,
                               tone: item.isOverdue ? AppTone.danger : null,
                             ),
                           ];

@@ -79,7 +79,7 @@ class _TeacherAppState extends State<TeacherApp> {
             theme: AppTheme.cupertino,
             locale: locale,
             supportedLocales: AppStrings.supportedLocales,
-            localizationsDelegates: AppStrings.localizationsDelegates,
+            localizationsDelegates: appLocalizationsDelegates,
             localeResolutionCallback: LocaleCubit.resolve,
             routerConfig: _router.config,
           ),

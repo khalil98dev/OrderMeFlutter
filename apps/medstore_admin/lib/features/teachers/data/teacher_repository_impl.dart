@@ -58,6 +58,10 @@ class TeacherRepositoryImpl implements TeacherRepository {
       _api.post('$_path/$id/deactivate', decode: ApiClient.ignoreBody);
 
   @override
+  Future<Result<void>> setPassword(String id, String newPassword) =>
+      _api.post('$_path/$id/password', data: {'newPassword': newPassword}, decode: ApiClient.ignoreBody);
+
+  @override
   Future<Result<Statement>> statement(String id, {DateTime? from, DateTime? to}) =>
       _api.get('$_path/$id/statement', query: _period(from, to), decode: statementFromJson);
 

@@ -57,7 +57,9 @@ class _Chip extends StatelessWidget {
           alignment: Alignment.center,
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           decoration: BoxDecoration(
-            color: selected ? accent : AppColors.surface.resolveFrom(context),
+            color: selected
+                ? AppColors.accentFill.resolveFrom(context)
+                : AppColors.surface.resolveFrom(context),
             borderRadius: const BorderRadius.all(Radius.circular(999)),
             border: Border.all(color: selected ? accent : AppColors.border.resolveFrom(context)),
           ),

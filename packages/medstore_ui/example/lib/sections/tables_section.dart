@@ -62,12 +62,12 @@ class TablesSection extends StatelessWidget {
               AppInfoRow(label: strings.fieldPhone),
               AppInfoRow(
                 label: strings.amountPaid,
-                child: const AppMoney(5000, style: AppTypography.subheadline),
+                child: AppMoney(5000, style: AppTypography.subheadline),
               ),
               AppInfoRow(
                 label: strings.amountDue,
                 emphasized: true,
-                child: const AppMoney(7500, style: AppTypography.headline, tone: AppTone.danger),
+                child: AppMoney(7500, style: AppTypography.headline, tone: AppTone.danger),
               ),
             ],
           ),

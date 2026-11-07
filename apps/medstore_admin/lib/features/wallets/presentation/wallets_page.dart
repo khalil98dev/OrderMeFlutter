@@ -66,7 +66,7 @@ class WalletsPage extends StatelessWidget {
                       ? '—'
                       : AppDateFormat.dateTime(wallet.lastMovementAt!, locale),
                 ),
-                AppMoney(wallet.totalDeposited, style: AppTypography.subheadline),
+                AppMoney(wallet.totalDeposited, style: AppTypography.row),
                 AppMoney(
                   wallet.balance,
                   style: AppTypography.headline,

@@ -11,10 +11,19 @@ import 'package:flutter/cupertino.dart';
 /// only carry a meaning. The garnet of the logo is identity, not interface: it stays in the logo.
 abstract final class AppColors {
   // ── Accent: Apple's system blue ──────────────────────────────────────────
-  /// Buttons, links, the selected sidebar entry and tab, switches, focus.
+  /// Blue *text and icons*: links, plain and tinted buttons, the selected sidebar entry and tab.
+  /// One step deeper than #007AFF in light mode and lighter in dark mode, so it reads at 4.5:1 on
+  /// every surface and on [accentTint] (WCAG AA).
   static const accent = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF007AFF),
-    darkColor: Color(0xFF0A84FF),
+    color: Color(0xFF0066CC),
+    darkColor: Color(0xFF4A9AFF),
+  );
+
+  /// Blue *fills* that carry white text: the filled button, a selected chip, switches. Dark enough
+  /// for white at 4.5:1 in both modes; never use it for text.
+  static const accentFill = CupertinoDynamicColor.withBrightness(
+    color: Color(0xFF0066CC),
+    darkColor: Color(0xFF0071E3),
   );
 
   /// The far end of an accent gradient (Apple's indigo), for the few hero surfaces.
@@ -25,8 +34,8 @@ abstract final class AppColors {
 
   /// Tinted fill behind accent content (tinted button, unread row).
   static const accentTint = CupertinoDynamicColor.withBrightness(
-    color: Color(0x1A007AFF),
-    darkColor: Color(0x330A84FF),
+    color: Color(0x1A0066CC),
+    darkColor: Color(0x334A9AFF),
   );
 
   // ── Brand: garnet, from the logo ─────────────────────────────────────────
@@ -46,7 +55,7 @@ abstract final class AppColors {
   /// "This is done": paid, delivered, ready. Apple's green, one step darker in light mode so green
   /// *text* stays readable on white (WCAG AA).
   static const signal = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF248A3D),
+    color: Color(0xFF1E7B34),
     darkColor: Color(0xFF30D158),
   );
   static const signalTint = CupertinoDynamicColor.withBrightness(
@@ -56,24 +65,30 @@ abstract final class AppColors {
 
   /// Darker than iOS orange in light mode so warning *text* stays readable on its tint (WCAG AA).
   static const warning = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFB25F00),
+    color: Color(0xFF9A5000),
     darkColor: Color(0xFFFF9F0A),
   );
   static const warningTint = CupertinoDynamicColor.withBrightness(
     color: Color(0x1AFF9500),
     darkColor: Color(0x26FF9F0A),
   );
+
+  /// Red *text and icons*: delete, cancel, errors. Deeper than #FF3B30 in light mode and lighter in
+  /// dark mode, so it reads at 4.5:1 on surfaces and on [destructiveTint].
   static const destructive = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFFF3B30),
-    darkColor: Color(0xFFFF453A),
+    color: Color(0xFFD70015),
+    darkColor: Color(0xFFFF5E55),
   );
+
+  /// Red *fills* that carry white text: count badges. White on it reads at 5.4:1 in both modes.
+  static const destructiveFill = Color(0xFFD70015);
   static const destructiveTint = CupertinoDynamicColor.withBrightness(
     color: Color(0x1AFF3B30),
     darkColor: Color(0x26FF453A),
   );
   static const info = CupertinoDynamicColor.withBrightness(
     color: Color(0xFF5856D6),
-    darkColor: Color(0xFF5E5CE6),
+    darkColor: Color(0xFF9D9BFF),
   );
   static const infoTint = CupertinoDynamicColor.withBrightness(
     color: Color(0x1A5856D6),
@@ -127,8 +142,8 @@ abstract final class AppColors {
     darkColor: Color(0xFFA3A9B6),
   );
   static const textTertiary = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF98A0AD),
-    darkColor: Color(0xFF6B7280),
+    color: Color(0xFF636A77),
+    darkColor: Color(0xFF8B92A0),
   );
   static const onBrand = Color(0xFFFFFFFF);
 

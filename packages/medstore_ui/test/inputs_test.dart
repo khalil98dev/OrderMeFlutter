@@ -64,6 +64,31 @@ void main() {
     });
   });
 
+  group('AppDateField', () {
+    testWidgets('in Arabic, the field and the picker write dates with 0–9', (tester) async {
+      tester.view.physicalSize = const Size(800, 900);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await pumpUi(
+        tester,
+        SizedBox(
+          width: 300,
+          child: AppDateField(label: 'من', value: DateTime(2026, 11, 6), onChanged: (_) {}),
+        ),
+        locale: const Locale('ar'),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('06/11/2026'), findsOneWidget);
+
+      await tester.tap(find.text('06/11/2026'));
+      await tester.pumpAndSettle();
+      // The wheel's year and day: Western digits, never ٢٠٢٦ / ٦.
+      expect(find.text('2026'), findsWidgets);
+      expect(find.text('٢٠٢٦'), findsNothing);
+      expect(find.textContaining(RegExp('[٠-٩]')), findsNothing);
+    });
+  });
+
   group('AppButton', () {
     testWidgets('ignores taps while loading', (tester) async {
       var taps = 0;

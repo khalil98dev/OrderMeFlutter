@@ -44,7 +44,7 @@ class AppMessage extends StatelessWidget {
               Icon(icon ?? _defaultIcon(tone), size: 18, color: colors.foreground),
               const SizedBox(width: AppSpacing.xs),
               Expanded(
-                child: Text(text, style: AppTypography.subheadline.copyWith(color: colors.foreground)),
+                child: Text(text, style: AppTypography.row.copyWith(color: colors.foreground)),
               ),
             ],
           ),

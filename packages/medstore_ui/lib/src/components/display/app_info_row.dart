@@ -46,7 +46,7 @@ class AppInfoRow extends StatelessWidget {
                   Text(
                     value ?? '—',
                     textAlign: TextAlign.end,
-                    style: AppTypography.subheadline.copyWith(
+                    style: AppTypography.row.copyWith(
                       color: AppColors.textPrimary.resolveFrom(context),
                       fontWeight: emphasized ? FontWeight.w600 : null,
                     ),

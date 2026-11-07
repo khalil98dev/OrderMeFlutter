@@ -61,6 +61,7 @@ class _PressableState extends State<Pressable> {
           onTapCancel: () => _setPressed(false),
           child: AnimatedContainer(
             duration: AppDurations.of(context, AppDurations.micro),
+            curve: AppDurations.easeOut,
             foregroundDecoration: BoxDecoration(color: overlay, borderRadius: widget.borderRadius),
             child: widget.child,
           ),

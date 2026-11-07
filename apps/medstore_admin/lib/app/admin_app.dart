@@ -77,7 +77,7 @@ class _AdminAppState extends State<AdminApp> {
             theme: AppTheme.cupertino,
             locale: locale,
             supportedLocales: AppStrings.supportedLocales,
-            localizationsDelegates: AppStrings.localizationsDelegates,
+            localizationsDelegates: appLocalizationsDelegates,
             localeResolutionCallback: LocaleCubit.resolve,
             routerConfig: _router.config,
           ),

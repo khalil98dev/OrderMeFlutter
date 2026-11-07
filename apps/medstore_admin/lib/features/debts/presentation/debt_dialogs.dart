@@ -157,16 +157,16 @@ class DebtDialog extends StatelessWidget {
             AppInfoRow(label: strings.dueDate, value: AppDateFormat.day(debt.dueDate, locale)),
             AppInfoRow(
               label: strings.colAmount,
-              child: AppMoney(debt.amount, style: AppTypography.subheadline),
+              child: AppMoney(debt.amount, style: AppTypography.row),
             ),
             AppInfoRow(
               label: strings.amountPaid,
-              child: AppMoney(debt.amountPaid, style: AppTypography.subheadline),
+              child: AppMoney(debt.amountPaid, style: AppTypography.row),
             ),
             if (debt.amountWrittenOff > 0)
               AppInfoRow(
                 label: strings.writtenOff,
-                child: AppMoney(debt.amountWrittenOff, style: AppTypography.subheadline),
+                child: AppMoney(debt.amountWrittenOff, style: AppTypography.row),
               ),
             AppInfoRow(
               label: strings.amountDue,

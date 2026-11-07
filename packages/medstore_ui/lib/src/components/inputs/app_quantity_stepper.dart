@@ -85,7 +85,7 @@ class _StepButton extends StatelessWidget {
     return CupertinoButton(
       onPressed: onPressed,
       padding: EdgeInsets.zero,
-      minimumSize: const Size.square(AppSpacing.minTouchTarget),
+      minimumSize: Size.square(AppSpacing.minTouchTarget),
       child: Icon(icon, size: 18, color: color, semanticLabel: label),
     );
   }

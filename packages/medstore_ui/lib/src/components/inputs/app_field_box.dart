@@ -76,7 +76,7 @@ class AppFieldBox extends StatelessWidget {
             onTap: onTap,
             borderRadius: AppRadii.smRadius,
             child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: AppSpacing.minTouchTarget),
+              constraints: BoxConstraints(minHeight: AppSpacing.minTouchTarget),
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(start: AppSpacing.sm, end: AppSpacing.xs),
                 child: Row(
@@ -102,7 +102,7 @@ class AppFieldBox extends StatelessWidget {
           ),
         ),
         if (hasError) ...[
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             error,
             style: AppTypography.footnote.copyWith(color: AppColors.destructive.resolveFrom(context)),

@@ -38,11 +38,9 @@ class _InvoicedProductsPageState extends State<InvoicedProductsPage> {
   @override
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
-    final locale = Localizations.localeOf(context);
     final cubit = context.read<LoadCubit<InvoicedProducts>>();
     final state = context.watch<LoadCubit<InvoicedProducts>>().state;
     final summary = state.data;
-    String money(num value) => MoneyFormat.dzd(value, locale);
 
     return AdminPage(
       title: strings.byProductTitle,
@@ -70,14 +68,22 @@ class _InvoicedProductsPageState extends State<InvoicedProductsPage> {
                 width: 170,
                 onChanged: (from, to) => _setFilter(_filter.copyWith(from: () => from, to: () => to)),
               ),
-              AppCheckbox(
-                label: strings.onlyUnpaid,
-                value: _filter.onlyUnpaid,
-                onChanged: (value) => _setFilter(_filter.copyWith(onlyUnpaid: value)),
+              // As tall as a field, so the box lines up with them instead of floating above.
+              SizedBox(
+                height: 44,
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  widthFactor: 1,
+                  child: AppCheckbox(
+                    label: strings.onlyUnpaid,
+                    value: _filter.onlyUnpaid,
+                    onChanged: (value) => _setFilter(_filter.copyWith(onlyUnpaid: value)),
+                  ),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.lg),
           Expanded(
             child: AppLoadView(
               isLoading: state.isLoading || (!state.hasData && state.failure == null),
@@ -88,23 +94,8 @@ class _InvoicedProductsPageState extends State<InvoicedProductsPage> {
               builder: (context) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Wrap(
-                    spacing: AppSpacing.md,
-                    runSpacing: AppSpacing.md,
-                    children: [
-                      for (final (label, value, tone) in [
-                        (strings.totalQuantity, '${summary!.quantity}', AppTone.accent),
-                        (strings.total, money(summary.total), AppTone.info),
-                        (strings.leftAsDebt, money(summary.amountDue), AppTone.warning),
-                        (strings.colInvoices, '${summary.invoiceCount}', AppTone.neutral),
-                      ])
-                        SizedBox(
-                          width: 200,
-                          child: AppMetricCard(label: label, value: value, tone: tone),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.md),
+                  _Totals(summary: summary!),
+                  const SizedBox(height: AppSpacing.lg),
                   Expanded(
                     child: summary.products.isEmpty
                         ? AppEmptyState(
@@ -112,37 +103,7 @@ class _InvoicedProductsPageState extends State<InvoicedProductsPage> {
                             title: strings.noInvoicedProductsTitle,
                             message: strings.noInvoicedProductsMessage,
                           )
-                        : AppTable(
-                            columns: [
-                              AppTableColumn(strings.colProduct, flex: 3),
-                              AppTableColumn(strings.colInvoices, width: 90),
-                              AppTableColumn(strings.colQuantity, width: 110),
-                              AppTableColumn.amount(strings.colTotal),
-                              AppTableColumn.amount(strings.colDue),
-                              const AppTableColumn('', width: 40),
-                            ],
-                            rowCount: summary.products.length,
-                            onRowTap: (index) => _showSources(summary.products[index]),
-                            cells: (context, index) {
-                              final product = summary.products[index];
-                              return [
-                                Text(
-                                  [product.productName, ?product.productCode].join(' · '),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text('${product.invoiceCount}'),
-                                Text('${product.quantity}', style: AppTypography.headline),
-                                AppMoney(product.total, style: AppTypography.subheadline),
-                                AppMoney(
-                                  product.amountDue,
-                                  style: AppTypography.subheadline,
-                                  tone: product.amountDue > 0 ? AppTone.warning : null,
-                                ),
-                                const Icon(AppIcons.forward, size: 16),
-                              ];
-                            },
-                          ),
+                        : _ProductsTable(summary: summary, onOpen: _showSources),
                   ),
                 ],
               ),
@@ -161,7 +122,183 @@ class _InvoicedProductsPageState extends State<InvoicedProductsPage> {
   }
 }
 
-/// Every invoice line behind one product's total. A row closes with its invoice id, to open it.
+/// The period's four figures, side by side and sharing the width, two by two in a narrow window.
+class _Totals extends StatelessWidget {
+  const _Totals({required this.summary});
+
+  final InvoicedProducts summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+    final locale = Localizations.localeOf(context);
+    final cards = [
+      AppMetricCard(
+        label: strings.totalQuantity,
+        value: '${summary.quantity}',
+        icon: AppIcons.products,
+        tone: AppTone.accent,
+      ),
+      AppMetricCard(
+        label: strings.total,
+        value: MoneyFormat.dzd(summary.total, locale),
+        icon: AppIcons.invoices,
+        tone: AppTone.info,
+        prominent: true,
+      ),
+      AppMetricCard(
+        label: strings.colDue,
+        value: MoneyFormat.dzd(summary.amountDue, locale),
+        icon: AppIcons.warning,
+        tone: summary.amountDue > 0 ? AppTone.warning : AppTone.success,
+      ),
+      AppMetricCard(
+        label: strings.colInvoices,
+        value: '${summary.invoiceCount}',
+        icon: AppIcons.documentDone,
+        tone: AppTone.neutral,
+      ),
+    ];
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        Widget row(List<Widget> children) => IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final (index, card) in children.indexed) ...[
+                if (index > 0) const SizedBox(width: AppSpacing.md),
+                Expanded(child: card),
+              ],
+            ],
+          ),
+        );
+        if (constraints.maxWidth >= 760) return row(cards);
+        return Column(
+          children: [
+            row(cards.sublist(0, 2)),
+            const SizedBox(height: AppSpacing.md),
+            row(cards.sublist(2)),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// One row per product: its name and code, its share of the copies, then the counts and amounts.
+class _ProductsTable extends StatelessWidget {
+  const _ProductsTable({required this.summary, required this.onOpen});
+
+  final InvoicedProducts summary;
+  final ValueChanged<InvoicedProduct> onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+    final secondary = AppTypography.footnote.copyWith(color: AppColors.textSecondary.resolveFrom(context));
+
+    return AppTable(
+      rowHeight: 48, // two lines at the Mac scale
+      columns: [
+        AppTableColumn(strings.colProduct, flex: 3),
+        AppTableColumn(strings.colInvoices, width: 90),
+        AppTableColumn(strings.colQuantity, width: 90),
+        AppTableColumn.amount(strings.colTotal),
+        AppTableColumn.amount(strings.colDue),
+        const AppTableColumn('', width: 32),
+      ],
+      rowCount: summary.products.length,
+      onRowTap: (index) => onOpen(summary.products[index]),
+      cells: (context, index) {
+        final product = summary.products[index];
+        final share = summary.quantity == 0 ? 0.0 : product.quantity / summary.quantity;
+        return [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product.productName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTypography.row.copyWith(fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  if (product.productCode case final code?) ...[
+                    Text(code, style: secondary),
+                    const SizedBox(width: AppSpacing.xs),
+                  ],
+                  // Its share of all the copies of the period.
+                  Expanded(child: _ShareBar(share: share)),
+                  const SizedBox(width: AppSpacing.xs),
+                  Text('${(share * 100).round()} %', style: AppTypography.tabular(secondary)),
+                ],
+              ),
+            ],
+          ),
+          Text('${product.invoiceCount}'),
+          Text('${product.quantity}', style: AppTypography.tabular(AppTypography.headline)),
+          AppMoney(product.total, style: AppTypography.row),
+          _Due(amount: product.amountDue),
+          const Icon(AppIcons.forward, size: 16),
+        ];
+      },
+    );
+  }
+}
+
+/// A thin bar filled to [share] (0 to 1), growing in when it first appears.
+class _ShareBar extends StatelessWidget {
+  const _ShareBar({required this.share});
+
+  final double share;
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = AppColors.accent.resolveFrom(context);
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(2)),
+      child: SizedBox(
+        height: 4,
+        child: ColoredBox(
+          color: AppColors.accentTint.resolveFrom(context),
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0, end: share.clamp(0, 1)),
+            duration: AppDurations.of(context, AppDurations.expand),
+            curve: AppDurations.easeOut,
+            builder: (context, value, _) => FractionallySizedBox(
+              alignment: AlignmentDirectional.centerStart,
+              widthFactor: value,
+              child: ColoredBox(color: accent),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// What is left to pay: orange when something is, a quiet dash when nothing is.
+class _Due extends StatelessWidget {
+  const _Due({required this.amount, this.style});
+
+  final num amount;
+  final TextStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    if (amount <= 0) {
+      return Text('—', style: AppTypography.row.copyWith(color: AppColors.textTertiary.resolveFrom(context)));
+    }
+    return AppMoney(amount, style: style ?? AppTypography.row, tone: AppTone.warning);
+  }
+}
+
+/// Every invoice line behind one product's total, one card each. A card closes the dialog with its
+/// invoice id, to open it.
 class _SourcesDialog extends StatelessWidget {
   const _SourcesDialog({required this.product});
 
@@ -171,11 +308,10 @@ class _SourcesDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = AppStrings.of(context);
     final locale = Localizations.localeOf(context);
-    final sources = product.sources;
 
     return AppDialog(
       title: strings.invoicedProductSources(product.productName),
-      width: 1000,
+      width: 760,
       actions: [
         AppButton(
           label: strings.close,
@@ -187,64 +323,116 @@ class _SourcesDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Wrap(
-            spacing: AppSpacing.lg,
+            spacing: AppSpacing.xs,
             runSpacing: AppSpacing.xs,
             children: [
-              Text(strings.copiesCount(product.quantity), style: AppTypography.headline),
-              AppMoney(product.total, style: AppTypography.headline),
+              AppBadge(label: strings.copiesCount(product.quantity), icon: AppIcons.products),
+              AppBadge(
+                label: MoneyFormat.dzd(product.total, locale),
+                icon: AppIcons.invoices,
+                tone: AppTone.info,
+              ),
               if (product.amountDue > 0)
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('${strings.leftAsDebt} : ', style: AppTypography.subheadline),
-                    AppMoney(product.amountDue, style: AppTypography.headline, tone: AppTone.warning),
-                  ],
+                AppBadge(
+                  label: '${strings.leftAsDebt} : ${MoneyFormat.dzd(product.amountDue, locale)}',
+                  icon: AppIcons.warning,
+                  tone: AppTone.warning,
                 ),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          AppTable(
-            shrinkWrap: true,
-            columns: [
-              AppTableColumn(strings.colNumber, width: 120),
-              AppTableColumn(strings.colTeacher, flex: 2),
-              AppTableColumn(strings.issueDate, width: 105),
-              AppTableColumn(strings.colOrders, flex: 2),
-              AppTableColumn.amount(strings.colUnitPrice),
-              AppTableColumn(strings.colQuantity, width: 70),
-              AppTableColumn.amount(strings.colTotal),
-              AppTableColumn.amount(strings.colDue),
-              AppTableColumn(strings.fieldPaymentStatus, width: 140),
-            ],
-            rowCount: sources.length,
-            onRowTap: (index) => Navigator.of(context).pop(sources[index].invoiceId),
-            cells: (context, index) {
-              final source = sources[index];
-              return [
-                Text(source.invoiceLabel),
-                Text(source.clientName ?? '—', maxLines: 1, overflow: TextOverflow.ellipsis),
-                Text(AppDateFormat.day(source.issueDate, locale)),
-                Text(
-                  source.orders.map((order) => '${order.orderNumber} (${order.quantity})').join(', '),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                AppMoney(source.unitPrice, style: AppTypography.subheadline),
-                Text('${source.quantity}'),
-                AppMoney(source.lineTotal, style: AppTypography.subheadline),
-                AppMoney(
-                  source.amountDue,
-                  style: AppTypography.subheadline,
-                  tone: source.amountDue > 0 ? AppTone.warning : null,
-                ),
-                AppBadge(
-                  label: paymentStatusText(strings, source.paymentStatus),
-                  tone: paymentStatusTone(source.paymentStatus),
-                ),
-              ];
-            },
-          ),
+          for (final (index, source) in product.sources.indexed) ...[
+            if (index > 0) const SizedBox(height: AppSpacing.xs),
+            _SourceCard(source: source, onTap: () => Navigator.of(context).pop(source.invoiceId)),
+          ],
         ],
+      ),
+    );
+  }
+}
+
+/// One invoice line: the invoice, its teacher and date, the orders it covers on the start side; the
+/// amount, the price × copies, what is left and the payment status on the end side.
+class _SourceCard extends StatelessWidget {
+  const _SourceCard({required this.source, required this.onTap});
+
+  final InvoicedProductSource source;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+    final locale = Localizations.localeOf(context);
+    final secondary = AppTypography.footnote.copyWith(color: AppColors.textSecondary.resolveFrom(context));
+
+    return Semantics(
+      button: true,
+      label: strings.viewInvoice,
+      child: AppCard(
+        onTap: onTap,
+        padding: const EdgeInsets.all(AppSpacing.sm),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(source.invoiceLabel, style: AppTypography.row.copyWith(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: AppSpacing.xxs),
+                  Text(
+                    [source.clientName ?? '—', AppDateFormat.day(source.issueDate, locale)].join(' · '),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: secondary,
+                  ),
+                  if (source.orders.isNotEmpty) ...[
+                    const SizedBox(height: AppSpacing.xs),
+                    // The orders this line bills, and how many copies each.
+                    Wrap(
+                      spacing: AppSpacing.xxs,
+                      runSpacing: AppSpacing.xxs,
+                      children: [
+                        for (final order in source.orders)
+                          AppBadge(
+                            label: '${strings.orderNumber(order.orderNumber)} · ${order.quantity}',
+                            icon: AppIcons.orders,
+                          ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                AppMoney(source.lineTotal, style: AppTypography.headline),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  '${source.quantity} × ${MoneyFormat.dzd(source.unitPrice, locale)}',
+                  style: AppTypography.tabular(secondary),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (source.amountDue > 0) ...[
+                      _Due(amount: source.amountDue, style: AppTypography.footnote),
+                      const SizedBox(width: AppSpacing.xs),
+                    ],
+                    AppBadge(
+                      label: paymentStatusText(strings, source.paymentStatus),
+                      tone: paymentStatusTone(source.paymentStatus),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            Icon(AppIcons.forward, size: 16, color: AppColors.textTertiary.resolveFrom(context)),
+          ],
+        ),
       ),
     );
   }

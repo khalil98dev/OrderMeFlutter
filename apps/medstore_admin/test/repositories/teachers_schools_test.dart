@@ -84,6 +84,11 @@ void main() {
       await repository.deactivate('t1');
       expect(api.last.path, '/api/admin/clients/t1/deactivate');
 
+      await repository.setPassword('t1', 'Nouveau-2026');
+      expect(api.last.method, 'POST');
+      expect(api.last.path, '/api/admin/clients/t1/password');
+      expect(api.lastBody, {'newPassword': 'Nouveau-2026'});
+
       api.reply = (_) => const FakeReply({
         'clientId': 't1',
         'clientName': 'Amina',

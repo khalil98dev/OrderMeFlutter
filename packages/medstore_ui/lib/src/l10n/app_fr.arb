@@ -773,5 +773,26 @@
   "paidFromWallet": "Payé par le portefeuille",
   "leftAsDebt": "Reste dû (créance)",
   "viewInvoice": "Voir la facture",
-  "fullyPaidFromWallet": "Entièrement réglée par le portefeuille."
+  "fullyPaidFromWallet": "Entièrement réglée par le portefeuille.",
+  "setTeacherPassword": "Nouveau mot de passe",
+  "setTeacherPasswordTitle": "Nouveau mot de passe pour {name}",
+  "@setTeacherPasswordTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "setTeacherPasswordHint": "Le mot de passe actuel n'est pas demandé. {name} sera déconnecté de tous ses appareils et se connectera avec le nouveau.",
+  "@setTeacherPasswordHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "teacherPasswordSet": "Mot de passe mis à jour. Communiquez-le à l'enseignant.",
+  "generatePassword": "Générer",
+  "copyPassword": "Copier",
+  "passwordCopied": "Mot de passe copié."
 }

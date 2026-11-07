@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../tokens/app_colors.dart';
+import '../../tokens/app_metrics.dart';
 import '../../tokens/app_typography.dart';
 
 /// The small bold label above a form control, with a "*" when the field is required.
@@ -21,7 +22,7 @@ class AppFieldLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(bottom: 6),
+      padding: const EdgeInsetsDirectional.only(bottom: AppSpacing.xs),
       child: Text(
         isRequired ? '$text *' : text,
         style: AppTypography.footnote.copyWith(

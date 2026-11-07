@@ -100,9 +100,7 @@ class _Toast extends StatelessWidget {
                     Flexible(
                       child: Text(
                         message,
-                        style: AppTypography.subheadline.copyWith(
-                          color: AppColors.canvas.resolveFrom(context),
-                        ),
+                        style: AppTypography.row.copyWith(color: AppColors.canvas.resolveFrom(context)),
                       ),
                     ),
                   ],

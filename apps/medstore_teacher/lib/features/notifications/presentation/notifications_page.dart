@@ -200,7 +200,7 @@ class NotificationTile extends StatelessWidget {
                     color: AppColors.textPrimary.resolveFrom(context),
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.xxs),
                 Text(
                   text.message,
                   style: AppTypography.footnote.copyWith(color: AppColors.textSecondary.resolveFrom(context)),
@@ -216,10 +216,11 @@ class NotificationTile extends StatelessWidget {
           AnimatedOpacity(
             opacity: isRead ? 0 : 1,
             duration: AppDurations.of(context, AppDurations.micro),
+            curve: AppDurations.easeOut,
             child: Container(
               width: 10,
               height: 10,
-              margin: const EdgeInsets.only(top: 6),
+              margin: const EdgeInsets.only(top: AppSpacing.xs),
               decoration: BoxDecoration(color: AppColors.accent.resolveFrom(context), shape: BoxShape.circle),
             ),
           ),

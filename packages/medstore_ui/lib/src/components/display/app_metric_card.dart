@@ -21,6 +21,7 @@ class AppMetricCard extends StatelessWidget {
     this.tone = AppTone.accent,
     this.caption,
     this.onTap,
+    this.prominent = false,
   });
 
   final String label;
@@ -33,6 +34,10 @@ class AppMetricCard extends StatelessWidget {
   /// A short line under the value ("+12% since last month").
   final String? caption;
   final VoidCallback? onTap;
+
+  /// The one figure the page is about (a wallet's balance, what is owed now): its value is set a
+  /// size larger (34 instead of 28), so the eye lands on it first. One per screen.
+  final bool prominent;
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +64,24 @@ class AppMetricCard extends StatelessWidget {
                 DecoratedBox(
                   decoration: BoxDecoration(color: colors.background, borderRadius: AppRadii.xsRadius),
                   child: Padding(
-                    padding: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(AppSpacing.xs),
                     child: Icon(icon, size: 16, color: colors.foreground),
                   ),
                 ),
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
-          Text(
-            value,
-            style: AppTypography.tabular(
-              AppTypography.title1,
-            ).copyWith(color: AppColors.textPrimary.resolveFrom(context)),
+          // One line always: a large amount in a narrow card shrinks to fit instead of wrapping.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              value,
+              maxLines: 1,
+              style: AppTypography.tabular(
+                prominent ? AppTypography.largeTitle : AppTypography.title1,
+              ).copyWith(color: AppColors.textPrimary.resolveFrom(context)),
+            ),
           ),
           if (caption != null) ...[
             const SizedBox(height: AppSpacing.xxs),

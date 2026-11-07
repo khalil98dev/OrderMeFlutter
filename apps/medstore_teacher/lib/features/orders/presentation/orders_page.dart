@@ -163,7 +163,7 @@ class OrderCard extends StatelessWidget {
                   strings.orderNumber(order.number),
                   style: AppTypography.headline.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.xxs),
                 Text(
                   '${AppDateFormat.dateTime(order.placedAt.toLocal(), locale)} · ${strings.copiesCount(order.totalQuantity)}',
                   maxLines: 1,

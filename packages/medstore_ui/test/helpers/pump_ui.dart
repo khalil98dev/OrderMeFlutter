@@ -9,7 +9,7 @@ Future<void> pumpUi(WidgetTester tester, Widget child, {Locale locale = const Lo
       theme: AppTheme.cupertino,
       locale: locale,
       supportedLocales: AppStrings.supportedLocales,
-      localizationsDelegates: AppStrings.localizationsDelegates,
+      localizationsDelegates: appLocalizationsDelegates,
       home: CupertinoPageScaffold(child: Center(child: child)),
     ),
   );

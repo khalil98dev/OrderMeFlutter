@@ -87,7 +87,7 @@ class _SalesPageState extends State<SalesPage> {
                     Text(row.label, maxLines: 1, overflow: TextOverflow.ellipsis),
                     Text('${row.orders}'),
                     Text('${row.copies}'),
-                    AppMoney(row.amount, style: AppTypography.subheadline),
+                    AppMoney(row.amount, style: AppTypography.row),
                   ];
                 },
               ),

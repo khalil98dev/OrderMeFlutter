@@ -105,7 +105,7 @@ class _ProductDetailsState extends State<_ProductDetails> {
                 margin: const EdgeInsets.all(AppSpacing.md),
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(28)),
+                  borderRadius: AppRadii.lgRadius,
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -226,7 +226,7 @@ class _AddBar extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.surface.resolveFrom(context),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
         boxShadow: const [BoxShadow(color: Color(0x1412131A), blurRadius: 24, offset: Offset(0, -6))],
       ),
       child: Padding(

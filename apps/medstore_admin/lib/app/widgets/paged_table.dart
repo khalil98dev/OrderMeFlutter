@@ -20,14 +20,16 @@ class PagedTable<T, F> extends StatelessWidget {
     required this.cells,
     required this.empty,
     this.onTap,
-    this.rowHeight = 56,
+    this.rowHeight,
   });
 
   final List<AppTableColumn> columns;
   final List<Widget> Function(BuildContext context, T item) cells;
   final ValueChanged<T>? onTap;
   final Widget empty;
-  final double rowHeight;
+
+  /// Null: [AppTable]'s own height for one line.
+  final double? rowHeight;
 
   @override
   Widget build(BuildContext context) {

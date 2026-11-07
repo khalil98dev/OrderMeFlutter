@@ -1572,4 +1572,29 @@ class AppStringsAr extends AppStrings {
 
   @override
   String get fullyPaidFromWallet => 'سُدِّدت بالكامل من المحفظة.';
+
+  @override
+  String get setTeacherPassword => 'كلمة مرور جديدة';
+
+  @override
+  String setTeacherPasswordTitle(String name) {
+    return 'كلمة مرور جديدة لـ $name';
+  }
+
+  @override
+  String setTeacherPasswordHint(String name) {
+    return 'لا حاجة إلى كلمة المرور الحالية. سيتم تسجيل خروج $name من كل أجهزته، ثم يسجّل الدخول بكلمة المرور الجديدة.';
+  }
+
+  @override
+  String get teacherPasswordSet => 'تم تحديث كلمة المرور. أبلغها للأستاذ.';
+
+  @override
+  String get generatePassword => 'توليد';
+
+  @override
+  String get copyPassword => 'نسخ';
+
+  @override
+  String get passwordCopied => 'تم نسخ كلمة المرور.';
 }

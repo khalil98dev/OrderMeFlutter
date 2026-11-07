@@ -242,7 +242,7 @@ class _ResourcesTab extends StatelessWidget {
     return _ListView<SecuredResource>(
       icon: AppIcons.orders,
       builder: (context, resources) => AppTable(
-        rowHeight: 64,
+        rowHeight: 48, // two lines at the Mac scale
         columns: [
           AppTableColumn(strings.resourceCol, width: 200),
           AppTableColumn(strings.colType, flex: 2),

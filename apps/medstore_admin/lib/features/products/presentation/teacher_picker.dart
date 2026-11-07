@@ -29,7 +29,7 @@ class TeacherField extends StatelessWidget {
             color: AppColors.textSecondary.resolveFrom(context),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.xs),
         DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: AppRadii.smRadius,
@@ -45,7 +45,7 @@ class TeacherField extends StatelessWidget {
           ),
         ),
         if (error != null) ...[
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             error,
             style: AppTypography.footnote.copyWith(color: AppColors.destructive.resolveFrom(context)),

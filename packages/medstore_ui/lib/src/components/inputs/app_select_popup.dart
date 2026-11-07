@@ -78,7 +78,7 @@ class _SelectPopupRoute<T> extends PopupRoute<AppSelectResult<T>> {
   Color? get barrierColor => null;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 320);
+  Duration get transitionDuration => const Duration(milliseconds: 280);
 
   @override
   Duration get reverseTransitionDuration => const Duration(milliseconds: 200);
@@ -327,8 +327,8 @@ class _OptionRowState extends State<_OptionRow> {
           },
           child: AnimatedContainer(
             duration: AppDurations.of(context, AppDurations.micro),
+            curve: AppDurations.easeOut,
             height: 44,
-            margin: const EdgeInsets.symmetric(vertical: 1),
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
             decoration: BoxDecoration(color: background, borderRadius: AppRadii.smRadius),
             child: Row(
@@ -347,6 +347,7 @@ class _OptionRowState extends State<_OptionRow> {
                 AnimatedOpacity(
                   opacity: widget.selected ? 1 : 0,
                   duration: AppDurations.of(context, AppDurations.micro),
+                  curve: AppDurations.easeOut,
                   child: Icon(AppIcons.check, size: 18, color: accent),
                 ),
               ],

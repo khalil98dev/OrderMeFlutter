@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show InkWell, Material, MaterialType;
 
 import '../../tokens/app_colors.dart';
 import '../../tokens/app_metrics.dart';
@@ -64,29 +65,43 @@ class AppButton extends StatelessWidget {
     final colors = _ButtonColors.of(context, variant);
     final enabled = onPressed != null && !isLoading;
     final small = size == AppButtonSize.small;
+    final radius = small ? AppRadii.xsRadius : AppRadii.smRadius;
+    final minSide = small ? (AppTypography.isMac ? 26.0 : 32.0) : AppSpacing.minTouchTarget;
 
     return Semantics(
       button: true,
       enabled: enabled,
-      child: CupertinoButton(
-        onPressed: enabled ? onPressed : null,
-        color: colors.background,
-        // While loading, keep the normal look: only the spinner says "busy".
-        disabledColor: (isLoading ? colors.background : colors.disabledBackground) ?? _transparent,
-        borderRadius: small ? AppRadii.xsRadius : AppRadii.smRadius,
-        padding: EdgeInsets.symmetric(horizontal: small ? AppSpacing.sm : AppSpacing.md),
-        minimumSize: Size.square(small ? 32 : AppSpacing.minTouchTarget),
-        pressedOpacity: 0.8,
-        child: _Content(
-          label: label,
-          icon: icon,
-          isLoading: isLoading,
-          expand: expand,
-          // Disabled: the same grey text for every variant, readable on the grey disabled fill.
-          color: enabled || isLoading ? colors.foreground : AppColors.textTertiary.resolveFrom(context),
-          textStyle: small
-              ? AppTypography.footnote.copyWith(fontWeight: FontWeight.w600)
-              : AppTypography.callout.copyWith(fontWeight: FontWeight.w600),
+      child: Material(
+        type: MaterialType.button,
+        color: (enabled || isLoading ? colors.background : colors.disabledBackground) ?? _transparent,
+        borderRadius: radius,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: enabled ? onPressed : null,
+          borderRadius: radius,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: minSide,
+              minHeight: minSide,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: small ? AppSpacing.sm : AppSpacing.md),
+              child: Center(
+                widthFactor: 1,
+                child: _Content(
+                  label: label,
+                  icon: icon,
+                  isLoading: isLoading,
+                  expand: expand,
+                  // Disabled: the same grey text for every variant, readable on the grey disabled fill.
+                  color: enabled || isLoading ? colors.foreground : AppColors.textTertiary.resolveFrom(context),
+                  textStyle: small
+                      ? AppTypography.footnote.copyWith(fontWeight: FontWeight.w600)
+                      : AppTypography.callout.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -146,7 +161,11 @@ final class _ButtonColors {
     final accent = AppColors.accent.resolveFrom(context);
     final neutral = AppColors.neutralTint.resolveFrom(context);
     return switch (variant) {
-      AppButtonVariant.filled => _ButtonColors(AppColors.onBrand, accent, neutral),
+      AppButtonVariant.filled => _ButtonColors(
+        AppColors.onBrand,
+        AppColors.accentFill.resolveFrom(context),
+        neutral,
+      ),
       AppButtonVariant.tinted => _ButtonColors(accent, AppColors.accentTint.resolveFrom(context), neutral),
       AppButtonVariant.plain => _ButtonColors(accent, null, null),
       AppButtonVariant.destructive => _ButtonColors(

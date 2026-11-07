@@ -155,7 +155,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         ),
         gap,
         Text(strings.fieldType, style: _labelStyle(context)),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.xs),
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: AppSegmentedControl<ProductType>(

@@ -55,6 +55,7 @@ export 'src/components/surfaces/pressable.dart';
 export 'src/failure_text.dart';
 export 'src/features/login_form.dart';
 export 'src/features/products/product_widgets.dart';
+export 'src/formatting/app_localizations.dart';
 export 'src/formatting/date_format.dart';
 export 'src/formatting/money_format.dart';
 export 'src/l10n/app_strings.dart';

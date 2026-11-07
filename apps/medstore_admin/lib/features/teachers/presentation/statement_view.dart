@@ -155,9 +155,9 @@ class _StatementBody extends StatelessWidget {
                 ),
                 Text(AppDateFormat.day(invoice.issueDate, locale)),
                 Text(AppDateFormat.day(invoice.dueDate, locale)),
-                AppMoney(invoice.total, style: AppTypography.subheadline),
-                AppMoney(invoice.amountPaid, style: AppTypography.subheadline),
-                AppMoney(invoice.amountDue, style: AppTypography.subheadline),
+                AppMoney(invoice.total, style: AppTypography.row),
+                AppMoney(invoice.amountPaid, style: AppTypography.row),
+                AppMoney(invoice.amountDue, style: AppTypography.row),
               ];
             },
           ),
@@ -190,12 +190,8 @@ class _StatementBody extends StatelessWidget {
                   ],
                 ),
                 Text(movement.receiptLabel ?? '—'),
-                AppMoney(
-                  movement.amount,
-                  style: AppTypography.subheadline,
-                  tone: amountTone(movement.amount),
-                ),
-                AppMoney(movement.balanceAfter, style: AppTypography.subheadline),
+                AppMoney(movement.amount, style: AppTypography.row, tone: amountTone(movement.amount)),
+                AppMoney(movement.balanceAfter, style: AppTypography.row),
               ];
             },
           ),
@@ -218,10 +214,10 @@ class _StatementBody extends StatelessWidget {
               return [
                 Text(debt.description, maxLines: 1, overflow: TextOverflow.ellipsis),
                 Text(AppDateFormat.day(debt.dueDate, locale)),
-                AppMoney(debt.amount, style: AppTypography.subheadline),
+                AppMoney(debt.amount, style: AppTypography.row),
                 AppMoney(
                   debt.amountDue,
-                  style: AppTypography.subheadline,
+                  style: AppTypography.row,
                   tone: debt.isOverdue ? AppTone.danger : null,
                 ),
               ];

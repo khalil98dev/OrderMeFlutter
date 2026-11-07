@@ -31,16 +31,16 @@ class DisplaySection extends StatelessWidget {
             ],
           ),
         ),
-        const Demo(
+        Demo(
           label: 'AppMoney · AppAvatar',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppMoney(1250),
+              const AppMoney(1250),
               AppMoney(1234567, style: AppTypography.title2, tone: AppTone.success),
-              AppMoney(48000, tone: AppTone.danger),
-              SizedBox(height: AppSpacing.sm),
-              Row(
+              const AppMoney(48000, tone: AppTone.danger),
+              const SizedBox(height: AppSpacing.sm),
+              const Row(
                 children: [
                   AppAvatar(name: 'Amina Benali'),
                   SizedBox(width: AppSpacing.xs),

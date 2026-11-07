@@ -71,7 +71,8 @@ class ProductsPage extends StatelessWidget {
   }
 }
 
-/// "Hello, prof.amina": a garnet card with the count of books.
+/// "Hello, prof.amina" and the count of books, as plain text under the large title: it greets, it
+/// does not compete with the books below.
 class _Greeting extends StatelessWidget {
   const _Greeting();
 
@@ -85,73 +86,23 @@ class _Greeting extends StatelessWidget {
       },
     );
     final count = context.select<ProductsCubit, int>((cubit) => cubit.state.totalCount);
+    final secondary = AppColors.textSecondary.resolveFrom(context);
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(24)),
-        gradient: LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: [AppColors.accent.resolveFrom(context), AppColors.accentDeep.resolveFrom(context)],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          strings.greeting(name),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTypography.title3.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.accent.resolveFrom(context).withValues(alpha: 0.3),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  strings.greeting(name),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTypography.title2.copyWith(color: AppColors.onBrand),
-                ),
-                const SizedBox(height: AppSpacing.xxs),
-                Text(
-                  strings.greetingSubtitle,
-                  style: AppTypography.subheadline.copyWith(color: AppColors.onBrand.withValues(alpha: 0.85)),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: AppColors.onBrand.withValues(alpha: 0.18),
-                    borderRadius: const BorderRadius.all(Radius.circular(999)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
-                    child: Text(
-                      strings.productsCount(count),
-                      style: AppTypography.footnote.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.onBrand,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: AppColors.onBrand.withValues(alpha: 0.16),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(AppIcons.products, size: 32, color: AppColors.onBrand),
-          ),
-        ],
-      ),
+        const SizedBox(height: AppSpacing.xxs),
+        Text(
+          '${strings.greetingSubtitle} · ${strings.productsCount(count)}',
+          style: AppTypography.subheadline.copyWith(color: secondary),
+        ),
+      ],
     );
   }
 }

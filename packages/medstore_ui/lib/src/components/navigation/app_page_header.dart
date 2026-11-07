@@ -48,7 +48,7 @@ class AppPageHeader extends StatelessWidget {
         if (onBack != null) ...[
           CupertinoButton(
             padding: EdgeInsets.zero,
-            minimumSize: const Size.square(AppSpacing.minTouchTarget),
+            minimumSize: Size.square(AppSpacing.minTouchTarget),
             onPressed: onBack,
             child: Icon(
               AppIcons.back,
@@ -67,7 +67,8 @@ class AppPageHeader extends StatelessWidget {
                 header: true,
                 child: Text(
                   title,
-                  style: AppTypography.title1.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
+                  // Smaller than the page's key figures (28–34): the title names the page, the data leads it.
+                  style: AppTypography.title2.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
                 ),
               ),
               if (subtitle != null)

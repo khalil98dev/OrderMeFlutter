@@ -32,7 +32,7 @@ class AppCheckbox extends StatelessWidget {
     final onChanged = this.onChanged;
     final box = CupertinoCheckbox(
       value: value,
-      activeColor: AppColors.accent.resolveFrom(context),
+      activeColor: AppColors.accentFill.resolveFrom(context),
       semanticLabel: label,
       onChanged: onChanged == null ? null : (checked) => onChanged(checked ?? false),
     );
@@ -48,7 +48,7 @@ class AppCheckbox extends StatelessWidget {
           children: [
             box,
             const SizedBox(width: AppSpacing.xxs),
-            Text(label, style: AppTypography.subheadline.copyWith(color: textColor.resolveFrom(context))),
+            Text(label, style: AppTypography.row.copyWith(color: textColor.resolveFrom(context))),
           ],
         ),
       ),

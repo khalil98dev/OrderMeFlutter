@@ -64,8 +64,13 @@ class _AppSkeletonPulseState extends State<AppSkeletonPulse> with SingleTickerPr
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 900),
-    lowerBound: 0.45,
   );
+
+  /// Breathes between 45 % and full opacity, easing at both ends like a held breath, not a blink.
+  late final Animation<double> _opacity = Tween<double>(
+    begin: 0.45,
+    end: 1,
+  ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
   @override
   void didChangeDependencies() {
@@ -90,7 +95,7 @@ class _AppSkeletonPulseState extends State<AppSkeletonPulse> with SingleTickerPr
       excludeSemantics: true,
       // RepaintBoundary: the fade repaints only the skeleton, not the page around it.
       child: RepaintBoundary(
-        child: FadeTransition(opacity: _controller, child: widget.child),
+        child: FadeTransition(opacity: _opacity, child: widget.child),
       ),
     );
   }
@@ -132,7 +137,7 @@ class AppSkeletonList extends StatelessWidget {
                     children: [
                       // Varying widths look like real text instead of a grid of bars.
                       FractionallySizedBox(widthFactor: i.isEven ? 0.7 : 0.55, child: const AppSkeleton()),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: AppSpacing.xs),
                       const FractionallySizedBox(widthFactor: 0.35, child: AppSkeleton(height: 10)),
                     ],
                   ),

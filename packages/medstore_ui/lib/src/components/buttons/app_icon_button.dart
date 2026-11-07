@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Tooltip;
+import 'package:flutter/material.dart' show InkWell, Material, MaterialType, Tooltip;
 
 import '../../tokens/app_colors.dart';
 import '../../tokens/app_metrics.dart';
@@ -32,8 +32,7 @@ class AppIconButton extends StatelessWidget {
   /// Draws the tone's tinted background behind the icon.
   final bool filled;
 
-  /// Width and height of the visible button. The tap area is never smaller than 44 px on touch screens
-  /// thanks to `CupertinoButton`'s minimum size.
+  /// Width and height of the button, which is also its tap area.
   final double size;
 
   @override
@@ -45,13 +44,21 @@ class AppIconButton extends StatelessWidget {
 
     return Tooltip(
       message: label,
-      child: CupertinoButton(
-        onPressed: onPressed,
-        padding: EdgeInsets.zero,
-        minimumSize: Size.square(size),
-        color: filled ? colors.background : null,
+      child: Material(
+        type: MaterialType.button,
+        color: filled ? colors.background : const Color(0x00000000),
         borderRadius: AppRadii.smRadius,
-        child: Icon(icon, size: size * 0.55, color: iconColor, semanticLabel: label),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: AppRadii.smRadius,
+          child: SizedBox.square(
+            dimension: size,
+            child: Center(
+              child: Icon(icon, size: size * 0.55, color: iconColor, semanticLabel: label),
+            ),
+          ),
+        ),
       ),
     );
   }

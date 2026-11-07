@@ -203,17 +203,13 @@ class _InvoiceBody extends StatelessWidget {
                     children: [
                       AppInfoRow(
                         label: strings.total,
-                        child: AppMoney(summary.total, style: AppTypography.subheadline),
+                        child: AppMoney(summary.total, style: AppTypography.row),
                       ),
                       AppInfoRow(
                         label: strings.amountPaid,
                         child: summary.amountPaid == null
                             ? const Text('—')
-                            : AppMoney(
-                                summary.amountPaid!,
-                                style: AppTypography.subheadline,
-                                tone: AppTone.success,
-                              ),
+                            : AppMoney(summary.amountPaid!, style: AppTypography.row, tone: AppTone.success),
                       ),
                       AppInfoRow(
                         label: strings.amountDue,
@@ -253,9 +249,9 @@ class _InvoiceBody extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                AppMoney(line.unitPrice, style: AppTypography.subheadline),
+                AppMoney(line.unitPrice, style: AppTypography.row),
                 Text('${line.quantity}'),
-                AppMoney(line.lineTotal, style: AppTypography.subheadline),
+                AppMoney(line.lineTotal, style: AppTypography.row),
               ];
             },
           ),
@@ -270,7 +266,7 @@ class _InvoiceBody extends StatelessWidget {
                     subtitle: payment.refundedAt == null
                         ? null
                         : strings.refundedOn(AppDateFormat.dateTime(payment.refundedAt!, locale)),
-                    trailing: AppMoney(payment.amount, style: AppTypography.subheadline),
+                    trailing: AppMoney(payment.amount, style: AppTypography.row),
                   ),
               ],
             ),

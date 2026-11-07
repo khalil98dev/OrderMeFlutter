@@ -15,6 +15,7 @@ import '../../features/teachers/presentation/teachers_routes.dart';
 import '../../features/wallets/presentation/wallets_routes.dart';
 import '../shell/admin_shell.dart';
 import '../shell/coming_soon_page.dart';
+import '../shell/section_transition.dart';
 import '../shell/splash_page.dart';
 import 'admin_destinations.dart';
 
@@ -49,10 +50,12 @@ class AdminRouter {
           path: AdminRoutes.login,
           pageBuilder: (_, _) => const NoTransitionPage(child: LoginPage()),
         ),
-        // Each sidebar entry is a branch with its own navigator, kept alive (IndexedStack): switching back
-        // shows the page as it was left, without reloading.
-        StatefulShellRoute.indexedStack(
+        // Each sidebar entry is a branch with its own navigator, kept alive: switching back shows the
+        // page as it was left, without reloading. Switching cross-fades between the two sections.
+        StatefulShellRoute(
           builder: (context, state, shell) => AdminShell(shell: shell),
+          navigatorContainerBuilder: (context, shell, children) =>
+              SectionTransition(currentIndex: shell.currentIndex, children: children),
           branches: [
             for (final destination in adminDestinations)
               StatefulShellBranch(routes: [_routeFor(destination)]),

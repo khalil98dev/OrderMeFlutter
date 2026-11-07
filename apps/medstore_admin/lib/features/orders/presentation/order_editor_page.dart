@@ -179,7 +179,7 @@ class _Lines extends StatelessWidget {
                   line.productName,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.subheadline.copyWith(fontWeight: FontWeight.w600),
+                  style: AppTypography.row.copyWith(fontWeight: FontWeight.w600),
                 ),
                 AppQuantityStepper(
                   value: line.quantity,
@@ -187,10 +187,8 @@ class _Lines extends StatelessWidget {
                   max: OrderDraft.maxQuantity,
                   onChanged: (quantity) => cubit.setQuantity(line.productId, quantity),
                 ),
-                price == null ? const Text('—') : AppMoney(price, style: AppTypography.subheadline),
-                price == null
-                    ? const Text('—')
-                    : AppMoney(price * line.quantity, style: AppTypography.subheadline),
+                price == null ? const Text('—') : AppMoney(price, style: AppTypography.row),
+                price == null ? const Text('—') : AppMoney(price * line.quantity, style: AppTypography.row),
                 AppIconButton(
                   icon: AppIcons.delete,
                   label: strings.remove,

@@ -128,7 +128,7 @@ class _UserFooter extends StatelessWidget {
                       name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTypography.subheadline.copyWith(
+                      style: AppTypography.row.copyWith(
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary.resolveFrom(context),
                       ),
@@ -156,7 +156,10 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(color: AppColors.accentTint.resolveFrom(context), shape: BoxShape.circle),
       child: Text(
         name.isEmpty ? '' : name.characters.first.toUpperCase(),
-        style: AppTypography.headline.copyWith(fontSize: 14, color: AppColors.accent.resolveFrom(context)),
+        style: AppTypography.footnote.copyWith(
+          fontWeight: FontWeight.w700,
+          color: AppColors.accent.resolveFrom(context),
+        ),
       ),
     );
   }

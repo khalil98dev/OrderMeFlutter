@@ -47,7 +47,7 @@ void main() {
         theme: AppTheme.cupertino,
         locale: const Locale('fr'),
         supportedLocales: AppStrings.supportedLocales,
-        localizationsDelegates: AppStrings.localizationsDelegates,
+        localizationsDelegates: appLocalizationsDelegates,
         home: MultiBlocProvider(
           providers: [
             BlocProvider<ProductsCubit>.value(value: cubit),

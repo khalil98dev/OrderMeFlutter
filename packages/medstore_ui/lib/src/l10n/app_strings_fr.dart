@@ -1542,4 +1542,29 @@ class AppStringsFr extends AppStrings {
 
   @override
   String get fullyPaidFromWallet => 'Entièrement réglée par le portefeuille.';
+
+  @override
+  String get setTeacherPassword => 'Nouveau mot de passe';
+
+  @override
+  String setTeacherPasswordTitle(String name) {
+    return 'Nouveau mot de passe pour $name';
+  }
+
+  @override
+  String setTeacherPasswordHint(String name) {
+    return 'Le mot de passe actuel n\'est pas demandé. $name sera déconnecté de tous ses appareils et se connectera avec le nouveau.';
+  }
+
+  @override
+  String get teacherPasswordSet => 'Mot de passe mis à jour. Communiquez-le à l\'enseignant.';
+
+  @override
+  String get generatePassword => 'Générer';
+
+  @override
+  String get copyPassword => 'Copier';
+
+  @override
+  String get passwordCopied => 'Mot de passe copié.';
 }

@@ -220,7 +220,8 @@ class _OrderDetails extends StatelessWidget {
                           children: [
                             Text(line.productName, style: AppTypography.subheadline.copyWith(color: primary)),
                             Text(
-                              '${MoneyFormat.dzd(line.unitPrice, locale)} · ${strings.pricePerCopy}',
+                              // "450 DA / exemplaire": pricePerCopy takes the price (passing the function printed "Closure").
+                              strings.pricePerCopy(MoneyFormat.dzd(line.unitPrice, locale)),
                               style: AppTypography.caption.copyWith(color: secondary),
                             ),
                           ],

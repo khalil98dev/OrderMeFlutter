@@ -88,6 +88,7 @@ class _Dot extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: AppDurations.of(context, AppDurations.expand),
+      curve: AppDurations.easeOut,
       width: 34,
       height: 34,
       decoration: BoxDecoration(

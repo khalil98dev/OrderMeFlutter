@@ -21,7 +21,7 @@ class TokensSection extends StatelessWidget {
             children: [for (final tone in AppTone.values) _ToneSwatch(tone: tone)],
           ),
         ),
-        const Demo(
+        Demo(
           label: 'AppTypography',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

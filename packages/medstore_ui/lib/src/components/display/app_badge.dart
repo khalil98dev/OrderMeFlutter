@@ -29,7 +29,7 @@ class AppBadge extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(999)),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: 3),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs, vertical: AppSpacing.xxs),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

@@ -54,7 +54,7 @@ final class AppTableColumn {
 /// (endless scroll). Inside another scroll view (a detail page), set [shrinkWrap]: every row is then
 /// built at once, so keep that for short lists such as an order's lines.
 class AppTable extends StatelessWidget {
-  const AppTable({
+  AppTable({
     super.key,
     required this.columns,
     required this.rowCount,
@@ -62,9 +62,9 @@ class AppTable extends StatelessWidget {
     this.onRowTap,
     this.hasMore = false,
     this.onEndReached,
-    this.rowHeight = 56,
+    double? rowHeight,
     this.shrinkWrap = false,
-  });
+  }) : rowHeight = rowHeight ?? (AppTypography.isMac ? 36 : 44);
 
   final List<AppTableColumn> columns;
   final int rowCount;
@@ -74,6 +74,8 @@ class AppTable extends StatelessWidget {
   final ValueChanged<int>? onRowTap;
   final bool hasMore;
   final VoidCallback? onEndReached;
+
+  /// Each row's height: 44 on the phone, 36 at the Mac scale, unless given (two-line rows).
   final double rowHeight;
   final bool shrinkWrap;
 
@@ -81,7 +83,7 @@ class AppTable extends StatelessWidget {
   Widget build(BuildContext context) {
     final header = _Row(
       columns: columns,
-      height: 36,
+      height: AppTypography.isMac ? 28 : 32,
       children: [
         for (final column in columns)
           // Small capitals, spaced out: reads as a header without competing with the rows.
@@ -89,8 +91,7 @@ class AppTable extends StatelessWidget {
             column.label.toUpperCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTypography.caption.copyWith(
-              fontSize: 11,
+            style: AppTypography.caption2.copyWith(
               fontWeight: FontWeight.w600,
               letterSpacing: 0.6,
               color: AppColors.textSecondary.resolveFrom(context),

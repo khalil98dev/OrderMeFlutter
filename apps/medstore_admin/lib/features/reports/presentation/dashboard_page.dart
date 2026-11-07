@@ -76,7 +76,14 @@ class _Summary extends StatelessWidget {
             for (final (label, value, icon, tone) in metrics)
               SizedBox(
                 width: 230,
-                child: AppMetricCard(label: label, value: value, icon: icon, tone: tone),
+                child: AppMetricCard(
+                  label: label,
+                  value: value,
+                  icon: icon,
+                  tone: tone,
+                  // What is owed now is the figure the team opens the dashboard for.
+                  prominent: label == strings.owedNow,
+                ),
               ),
           ],
         ),

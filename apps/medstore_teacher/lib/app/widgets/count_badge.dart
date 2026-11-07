@@ -23,6 +23,8 @@ class CountBadge extends StatelessWidget {
           end: -10,
           child: AnimatedSwitcher(
             duration: AppDurations.of(context, AppDurations.micro),
+            switchInCurve: Curves.easeOutBack,
+            switchOutCurve: Curves.easeIn,
             transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
             child: count <= 0
                 ? const SizedBox.shrink()
@@ -30,18 +32,17 @@ class CountBadge extends StatelessWidget {
                     key: ValueKey(count),
                     constraints: const BoxConstraints(minWidth: 18),
                     height: 18,
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxs),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: color ?? AppColors.destructive.resolveFrom(context),
+                      color: color ?? AppColors.destructiveFill,
                       borderRadius: const BorderRadius.all(Radius.circular(9)),
                       border: Border.all(color: AppColors.surface.resolveFrom(context), width: 1.5),
                     ),
                     child: Text(
                       count > 99 ? '99+' : '$count',
                       style: AppTypography.tabular(
-                        AppTypography.caption.copyWith(
-                          fontSize: 11,
+                        AppTypography.caption2.copyWith(
                           height: 1,
                           fontWeight: FontWeight.w700,
                           color: AppColors.onBrand,

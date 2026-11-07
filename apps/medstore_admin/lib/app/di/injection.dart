@@ -61,6 +61,7 @@ Future<void> configureDependencies() async {
     ..registerLazySingleton(() => GetTeacher(sl()))
     ..registerLazySingleton(() => SaveTeacher(sl()))
     ..registerLazySingleton(() => DeactivateTeacher(sl()))
+    ..registerLazySingleton(() => SetTeacherPassword(sl()))
     ..registerLazySingleton(() => GetStatement(sl()))
     ..registerLazySingleton(() => DownloadStatementPdf(sl()))
     // Schools

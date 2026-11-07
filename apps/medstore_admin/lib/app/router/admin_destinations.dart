@@ -22,6 +22,13 @@ class AdminDestination {
   final Color color;
 }
 
+// Apple's orange, teal, green and mint one step deeper, so the white glyph on the tile reads at 3:1
+// (WCAG non-text contrast); the system values reach only 2.1–2.6.
+const _orange = Color(0xFFE07800);
+const _teal = Color(0xFF0A84A0);
+const _green = Color(0xFF248A3D);
+const _mint = Color(0xFF00A39B);
+
 String _operations(AppStrings s) => s.sectionOperations;
 String _finance(AppStrings s) => s.sectionFinance;
 String _system(AppStrings s) => s.sectionSystem;
@@ -42,7 +49,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.cart,
     label: _orders,
     section: _operations,
-    color: CupertinoColors.systemOrange,
+    color: _orange,
   ),
   AdminDestination(
     path: '/products',
@@ -58,7 +65,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.teachers,
     label: _teachers,
     section: _operations,
-    color: CupertinoColors.systemTeal,
+    color: _teal,
   ),
   AdminDestination(
     path: '/schools',
@@ -75,7 +82,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.invoices,
     label: _invoices,
     section: _finance,
-    color: CupertinoColors.systemGreen,
+    color: _green,
   ),
   AdminDestination(
     path: '/wallet',
@@ -83,7 +90,7 @@ const adminDestinations = <AdminDestination>[
     activeIcon: AppIcons.wallet,
     label: _wallet,
     section: _finance,
-    color: CupertinoColors.systemMint,
+    color: _mint,
   ),
   AdminDestination(
     path: '/debts',

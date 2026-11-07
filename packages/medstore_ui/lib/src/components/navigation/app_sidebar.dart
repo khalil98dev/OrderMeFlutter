@@ -241,8 +241,7 @@ class _SectionTitle extends StatelessWidget {
         text.toUpperCase(),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: AppTypography.caption.copyWith(
-          fontSize: 11,
+        style: AppTypography.caption2.copyWith(
           fontWeight: FontWeight.w700,
           letterSpacing: 0.8,
           color: AppColors.textTertiary.resolveFrom(context),
@@ -274,7 +273,7 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
 
   late final AnimationController _ring = AnimationController(vsync: this, duration: _ringDuration);
 
-  static const _ringDuration = Duration(milliseconds: 700);
+  static const _ringDuration = Duration(milliseconds: 500);
 
   /// A bell's swing: left, right, smaller each time, back to rest (in turns).
   late final Animation<double> _swing = TweenSequence<double>([
@@ -283,7 +282,7 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
     TweenSequenceItem(tween: Tween(begin: 0.06, end: -0.04), weight: 20),
     TweenSequenceItem(tween: Tween(begin: -0.04, end: 0.03), weight: 20),
     TweenSequenceItem(tween: Tween(begin: 0.03, end: 0), weight: 30),
-  ]).animate(_ring);
+  ]).animate(CurvedAnimation(parent: _ring, curve: Curves.easeInOut));
 
   @override
   void didUpdateWidget(_SidebarTile oldWidget) {
@@ -304,10 +303,11 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
     final selected = widget.selected;
     final accent = AppColors.accent.resolveFrom(context);
     final tileColor = item.color == null ? null : CupertinoDynamicColor.resolve(item.color!, context);
-    // Selected: white on the accent, like a focused macOS sidebar.
-    final color = selected ? AppColors.onBrand : AppColors.textPrimary.resolveFrom(context);
+    // Selected: accent text on a light accent tint (macOS's unemphasized selection), so the sidebar
+    // never outshines the page's own main button.
+    final color = selected ? accent : AppColors.textPrimary.resolveFrom(context);
     final background = selected
-        ? accent
+        ? AppColors.accentTint.resolveFrom(context)
         : _hovered
         ? AppColors.hover.resolveFrom(context)
         : const Color(0x00000000);
@@ -316,7 +316,7 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
       alignment: Alignment.topCenter,
       child: tileColor == null
           ? Icon(selected ? (item.activeIcon ?? item.icon) : item.icon, size: 19, color: color)
-          : _IconTile(icon: item.icon, color: tileColor, raised: selected),
+          : _IconTile(icon: item.icon, color: tileColor),
     );
     final icon = widget.compact
         ? Stack(
@@ -342,8 +342,9 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
           onTap: widget.onTap,
           child: AnimatedContainer(
             duration: AppDurations.of(context, AppDurations.micro),
-            height: 36,
-            margin: const EdgeInsets.only(bottom: 2),
+            curve: AppDurations.easeOut,
+            height: AppTypography.isMac ? 32 : 36,
+            margin: const EdgeInsets.only(bottom: AppSpacing.xxs),
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
             decoration: BoxDecoration(color: background, borderRadius: AppRadii.smRadius),
             child: widget.compact
@@ -357,7 +358,7 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
                           item.label,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTypography.subheadline.copyWith(
+                          style: AppTypography.row.copyWith(
                             color: color,
                             fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                           ),
@@ -377,13 +378,10 @@ class _SidebarTileState extends State<_SidebarTile> with SingleTickerProviderSta
 
 /// A white glyph on a rounded square of [color], lit from above: the System Settings icon.
 class _IconTile extends StatelessWidget {
-  const _IconTile({required this.icon, required this.color, required this.raised});
+  const _IconTile({required this.icon, required this.color});
 
   final IconData icon;
   final Color color;
-
-  /// On the blue selection: a thin white ring keeps a blue tile from melting into it.
-  final bool raised;
 
   @override
   Widget build(BuildContext context) {
@@ -392,20 +390,20 @@ class _IconTile extends StatelessWidget {
       width: 24,
       height: 24,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(6.5)),
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [top, color],
         ),
-        border: raised ? Border.all(color: const Color(0xCCFFFFFF)) : null,
       ),
       child: Icon(icon, size: 14, color: AppColors.onBrand),
     );
   }
 }
 
-/// The red count on an item: pops in with a spring when it changes, gone at zero, "99+" past 99.
+/// The red count on an item: pops in with a slight overshoot when it changes, gone at zero, "99+"
+/// past 99.
 class _CountPill extends StatelessWidget {
   const _CountPill({required this.count});
 
@@ -414,8 +412,8 @@ class _CountPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: AppDurations.of(context, AppDurations.bounce),
-      switchInCurve: Curves.elasticOut,
+      duration: AppDurations.of(context, AppDurations.expand),
+      switchInCurve: Curves.easeOutBack,
       switchOutCurve: Curves.easeIn,
       transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
       child: count <= 0
@@ -424,10 +422,10 @@ class _CountPill extends StatelessWidget {
               key: ValueKey(count),
               constraints: const BoxConstraints(minWidth: 18),
               height: 18,
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxs),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: AppColors.destructive.resolveFrom(context),
+                color: AppColors.destructiveFill,
                 borderRadius: const BorderRadius.all(Radius.circular(9)),
                 border: Border.all(color: AppColors.sidebar.resolveFrom(context), width: 1.5),
               ),
@@ -435,8 +433,7 @@ class _CountPill extends StatelessWidget {
                 count > 99 ? '99+' : '$count',
                 semanticsLabel: '$count',
                 style: AppTypography.tabular(
-                  AppTypography.caption.copyWith(
-                    fontSize: 11,
+                  AppTypography.caption2.copyWith(
                     height: 1,
                     fontWeight: FontWeight.w700,
                     color: AppColors.onBrand,

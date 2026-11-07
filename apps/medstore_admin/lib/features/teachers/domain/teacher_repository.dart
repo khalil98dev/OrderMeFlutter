@@ -19,6 +19,10 @@ abstract interface class TeacherRepository {
   /// Closes the account and ends its sessions. Orders and invoices stay.
   Future<Result<void>> deactivate(String id);
 
+  /// Gives the teacher a new password without the current one (they forgot it), and ends their
+  /// sessions. `POST /api/admin/clients/{id}/password`.
+  Future<Result<void>> setPassword(String id, String newPassword);
+
   /// The account for a period (local days, both included, at most 366 days).
   Future<Result<Statement>> statement(String id, {DateTime? from, DateTime? to});
 
@@ -81,6 +85,23 @@ class DeactivateTeacher implements UseCase<void, String> {
 
   @override
   Future<Result<void>> call(String id) => _repository.deactivate(id);
+}
+
+final class SetTeacherPasswordParams {
+  const SetTeacherPasswordParams(this.teacherId, this.newPassword);
+
+  final String teacherId;
+  final String newPassword;
+}
+
+class SetTeacherPassword implements UseCase<void, SetTeacherPasswordParams> {
+  const SetTeacherPassword(this._repository);
+
+  final TeacherRepository _repository;
+
+  @override
+  Future<Result<void>> call(SetTeacherPasswordParams params) =>
+      _repository.setPassword(params.teacherId, params.newPassword);
 }
 
 class GetStatement implements UseCase<Statement, StatementParams> {

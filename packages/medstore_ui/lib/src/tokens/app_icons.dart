@@ -50,6 +50,8 @@ abstract final class AppIcons {
   static const download = LucideIcons.fileDown;
   static const downloadCircle = LucideIcons.circleArrowDown;
   static const print = LucideIcons.printer;
+  static const copy = LucideIcons.copy;
+  static const password = LucideIcons.keyRound;
   static const send = LucideIcons.send;
   static const sort = LucideIcons.chevronsUpDown;
   static const show = LucideIcons.eye;

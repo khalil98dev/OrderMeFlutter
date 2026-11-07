@@ -108,7 +108,7 @@ class OrdersPage extends StatelessWidget {
                 Text('${order.lineCount}'),
                 Text('${order.totalQuantity}'),
                 AppBadge(label: orderStatusText(strings, order.status), tone: orderStatusTone(order.status)),
-                AppMoney(order.total, style: AppTypography.subheadline),
+                AppMoney(order.total, style: AppTypography.row),
               ],
             ),
           ),

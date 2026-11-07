@@ -46,6 +46,7 @@ GoRoute teachersRoute() => GoRoute(
           providers: [
             RepositoryProvider.value(value: sl<SaveTeacher>()),
             RepositoryProvider.value(value: sl<DeactivateTeacher>()),
+            RepositoryProvider.value(value: sl<SetTeacherPassword>()),
             RepositoryProvider.value(value: sl<GetStatement>()),
             RepositoryProvider.value(value: sl<DownloadStatementPdf>()),
           ],

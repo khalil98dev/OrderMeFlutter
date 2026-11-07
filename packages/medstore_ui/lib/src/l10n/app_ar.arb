@@ -459,5 +459,12 @@
   "paidFromWallet": "مدفوع من المحفظة",
   "leftAsDebt": "المتبقي (دَين)",
   "viewInvoice": "عرض الفاتورة",
-  "fullyPaidFromWallet": "سُدِّدت بالكامل من المحفظة."
+  "fullyPaidFromWallet": "سُدِّدت بالكامل من المحفظة.",
+  "setTeacherPassword": "كلمة مرور جديدة",
+  "setTeacherPasswordTitle": "كلمة مرور جديدة لـ {name}",
+  "setTeacherPasswordHint": "لا حاجة إلى كلمة المرور الحالية. سيتم تسجيل خروج {name} من كل أجهزته، ثم يسجّل الدخول بكلمة المرور الجديدة.",
+  "teacherPasswordSet": "تم تحديث كلمة المرور. أبلغها للأستاذ.",
+  "generatePassword": "توليد",
+  "copyPassword": "نسخ",
+  "passwordCopied": "تم نسخ كلمة المرور."
 }

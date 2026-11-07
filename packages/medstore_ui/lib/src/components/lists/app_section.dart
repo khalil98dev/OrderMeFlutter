@@ -45,7 +45,7 @@ class AppSection extends StatelessWidget {
       children: [
         if (header != null)
           Padding(
-            padding: const EdgeInsetsDirectional.only(start: AppSpacing.md, bottom: 6),
+            padding: const EdgeInsetsDirectional.only(start: AppSpacing.md, bottom: AppSpacing.xs),
             child: Text(header!.toUpperCase(), style: AppTypography.footnote.copyWith(color: secondary)),
           ),
         ClipRRect(
@@ -70,7 +70,11 @@ class AppSection extends StatelessWidget {
         ),
         if (footer != null)
           Padding(
-            padding: const EdgeInsetsDirectional.only(start: AppSpacing.md, end: AppSpacing.md, top: 6),
+            padding: const EdgeInsetsDirectional.only(
+              start: AppSpacing.md,
+              end: AppSpacing.md,
+              top: AppSpacing.xs,
+            ),
             child: Text(footer!, style: AppTypography.footnote.copyWith(color: secondary)),
           ),
       ],

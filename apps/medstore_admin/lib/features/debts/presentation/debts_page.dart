@@ -77,12 +77,12 @@ class DebtsPage extends StatelessWidget {
                 Text(row.oldestDueDate == null ? '—' : AppDateFormat.day(row.oldestDueDate!, locale)),
                 AppMoney(
                   row.overdueInvoices,
-                  style: AppTypography.subheadline,
+                  style: AppTypography.row,
                   tone: row.overdueInvoices > 0 ? AppTone.danger : null,
                 ),
-                AppMoney(row.upcomingInvoices, style: AppTypography.subheadline),
-                AppMoney(row.openDebts, style: AppTypography.subheadline),
-                AppMoney(row.walletBalance, style: AppTypography.subheadline, tone: AppTone.success),
+                AppMoney(row.upcomingInvoices, style: AppTypography.row),
+                AppMoney(row.openDebts, style: AppTypography.row),
+                AppMoney(row.walletBalance, style: AppTypography.row, tone: AppTone.success),
                 AppMoney(
                   row.totalOwed,
                   style: AppTypography.headline,

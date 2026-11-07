@@ -153,13 +153,14 @@ class _NotificationTileState extends State<_NotificationTile> {
           onTap: widget.onTap,
           child: AnimatedContainer(
             duration: AppDurations.of(context, AppDurations.micro),
+            curve: AppDurations.easeOut,
             padding: const EdgeInsets.all(AppSpacing.sm),
             transform: Matrix4.translationValues(0, _hovered ? -1 : 0, 0),
             decoration: BoxDecoration(
               color: unread
                   ? AppColors.accentTint.resolveFrom(context).withValues(alpha: 0.45)
                   : AppColors.surface.resolveFrom(context),
-              borderRadius: const BorderRadius.all(Radius.circular(14)),
+              borderRadius: AppRadii.mdRadius,
               border: Border.all(
                 color: _hovered
                     ? AppColors.accent.resolveFrom(context).withValues(alpha: 0.4)
@@ -186,13 +187,13 @@ class _NotificationTileState extends State<_NotificationTile> {
                     children: [
                       Text(
                         item.title,
-                        style: AppTypography.subheadline.copyWith(
+                        style: AppTypography.row.copyWith(
                           fontWeight: unread ? FontWeight.w700 : FontWeight.w500,
                           color: AppColors.textPrimary.resolveFrom(context),
                         ),
                       ),
                       if (item.message case final message?) ...[
-                        const SizedBox(height: 2),
+                        const SizedBox(height: AppSpacing.xxs),
                         Text(
                           message,
                           style: AppTypography.footnote.copyWith(
@@ -230,6 +231,7 @@ class _NotificationTileState extends State<_NotificationTile> {
                     AnimatedScale(
                       scale: unread ? 1 : 0,
                       duration: AppDurations.of(context, AppDurations.micro),
+                      curve: AppDurations.easeOut,
                       child: Container(
                         width: 9,
                         height: 9,

@@ -82,7 +82,7 @@ class _AppTextFieldState extends State<AppTextField> {
             color: AppColors.textSecondary.resolveFrom(context),
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: AppSpacing.xs),
         CupertinoTextField(
           controller: widget.controller,
           placeholder: widget.placeholder,
@@ -98,7 +98,11 @@ class _AppTextFieldState extends State<AppTextField> {
           onChanged: widget.onChanged,
           onSubmitted: widget.onSubmitted,
           style: AppTypography.body.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
+          // 32 high at the Mac scale (13 text), 44 on the phone (17 text).
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.sm,
+            vertical: AppTypography.isMac ? AppSpacing.xs : AppSpacing.sm,
+          ),
           decoration: BoxDecoration(
             color: AppColors.surface.resolveFrom(context),
             borderRadius: AppRadii.smRadius,
@@ -111,7 +115,7 @@ class _AppTextFieldState extends State<AppTextField> {
           suffix: widget.obscure
               ? CupertinoButton(
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                  minimumSize: const Size.square(AppSpacing.minTouchTarget),
+                  minimumSize: Size.square(AppSpacing.minTouchTarget),
                   onPressed: () => setState(() => _hidden = !_hidden),
                   child: Icon(
                     _hidden ? AppIcons.show : AppIcons.hide,
@@ -123,7 +127,7 @@ class _AppTextFieldState extends State<AppTextField> {
               : null,
         ),
         if (hasError) ...[
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             error,
             style: AppTypography.footnote.copyWith(color: AppColors.destructive.resolveFrom(context)),

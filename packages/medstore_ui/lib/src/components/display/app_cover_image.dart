@@ -58,6 +58,7 @@ class AppCoverImage extends StatelessWidget {
                   if (wasSynchronouslyLoaded) return child;
                   return AnimatedSwitcher(
                     duration: AppDurations.of(context, AppDurations.selection),
+                    switchInCurve: AppDurations.easeOut,
                     child: frame == null ? placeholder : child,
                   );
                 },

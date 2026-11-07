@@ -27,7 +27,7 @@ class _GalleryAppState extends State<GalleryApp> {
       theme: AppTheme.cupertino.copyWith(brightness: _brightness),
       locale: _locale,
       supportedLocales: AppStrings.supportedLocales,
-      localizationsDelegates: AppStrings.localizationsDelegates,
+      localizationsDelegates: appLocalizationsDelegates,
       home: GalleryPage(
         brightness: _brightness,
         onBrightnessChanged: (value) => setState(() => _brightness = value),

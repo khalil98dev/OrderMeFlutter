@@ -50,7 +50,7 @@ class ProductRow extends StatelessWidget {
                   product.clientName ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTypography.subheadline.copyWith(color: primary),
+                  style: AppTypography.row.copyWith(color: primary),
                 ),
                 second: classInfo.isEmpty ? null : classInfo,
                 secondColor: secondary,
@@ -67,7 +67,7 @@ class ProductRow extends StatelessWidget {
               width: 120,
               child: Align(
                 alignment: AlignmentDirectional.centerEnd,
-                child: ProductPrice(price: product.price, style: AppTypography.subheadline),
+                child: ProductPrice(price: product.price, style: AppTypography.row),
               ),
             ),
             const SizedBox(width: AppSpacing.md),

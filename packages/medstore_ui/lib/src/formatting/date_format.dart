@@ -14,10 +14,16 @@ import 'package:intl/intl.dart';
 abstract final class AppDateFormat {
   static String _tag(Locale locale) => locale.languageCode == 'ar' ? 'ar_DZ' : 'fr_DZ';
 
-  static String day(DateTime date, Locale locale) => DateFormat('dd/MM/yyyy', _tag(locale)).format(date);
+  /// intl has no date data for `ar_DZ` and falls back to `ar`, whose digits are Arabic-Indic
+  /// (٠١٢…): turning native digits off keeps 0–9, as amounts already do.
+  static DateFormat _format(String pattern, Locale locale) =>
+      DateFormat(pattern, _tag(locale))..useNativeDigits = false;
+
+  static String day(DateTime date, Locale locale) => _format('dd/MM/yyyy', locale).format(date);
 
   static String dateTime(DateTime instant, Locale locale) =>
-      DateFormat('dd/MM/yyyy HH:mm', _tag(locale)).format(instant.toLocal());
+      _format('dd/MM/yyyy HH:mm', locale).format(instant.toLocal());
 
-  static String month(DateTime date, Locale locale) => DateFormat.yMMMM(_tag(locale)).format(date);
+  static String month(DateTime date, Locale locale) =>
+      (DateFormat.yMMMM(_tag(locale))..useNativeDigits = false).format(date);
 }

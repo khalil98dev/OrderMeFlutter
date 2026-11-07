@@ -11,13 +11,14 @@ import '../../../app/widgets/submit_dialog.dart';
 import '../../schools/domain/school.dart';
 import '../domain/teacher.dart';
 import '../domain/teacher_repository.dart';
+import 'set_password_dialog.dart';
 import 'statement_view.dart';
 import 'teacher_form_dialog.dart';
 
 /// One teacher: profile, links to their wallet, debts and invoices, and their statement.
 ///
 /// Expects a `LoadCubit<Teacher>`, a `LoadCubit<List<School>>`, the statement's providers (see
-/// [StatementView]), [SaveTeacher] and [DeactivateTeacher] above it.
+/// [StatementView]), [SaveTeacher], [SetTeacherPassword] and [DeactivateTeacher] above it.
 class TeacherDetailPage extends StatelessWidget {
   const TeacherDetailPage({super.key, required this.teacherId});
 
@@ -55,6 +56,14 @@ class TeacherDetailPage extends StatelessWidget {
             variant: AppButtonVariant.tinted,
             onPressed: () => _edit(context, teacher),
           ),
+          // A deactivated account cannot sign in whatever its password: no reset for it.
+          if (teacher.isActive)
+            AppButton(
+              label: strings.setTeacherPassword,
+              icon: AppIcons.password,
+              variant: AppButtonVariant.plain,
+              onPressed: () => _setPassword(context, teacher),
+            ),
           if (teacher.isActive)
             AppButton(
               label: strings.deactivate,
@@ -99,6 +108,17 @@ class TeacherDetailPage extends StatelessWidget {
     if (!result.saved || !context.mounted) return;
     showAppToast(context, strings.teacherSaved, tone: AppTone.success);
     await cubit.load();
+  }
+
+  static Future<void> _setPassword(BuildContext context, Teacher teacher) async {
+    final strings = AppStrings.of(context);
+    final setPassword = context.read<SetTeacherPassword>();
+    final result = await showSubmitDialog<void>(
+      context,
+      builder: (_) => SetPasswordDialog(teacher: teacher, setPassword: setPassword),
+    );
+    if (!result.saved || !context.mounted) return;
+    showAppToast(context, strings.teacherPasswordSet, tone: AppTone.success);
   }
 
   static Future<void> _deactivate(BuildContext context, Teacher teacher) async {

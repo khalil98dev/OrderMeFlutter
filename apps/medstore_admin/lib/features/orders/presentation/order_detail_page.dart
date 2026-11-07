@@ -283,7 +283,7 @@ class _OrderLineCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: AppColors.surface.resolveFrom(context),
-        borderRadius: const BorderRadius.all(Radius.circular(14)),
+        borderRadius: AppRadii.mdRadius,
         border: Border.all(color: AppColors.separator.resolveFrom(context), width: 0.5),
       ),
       child: Row(
@@ -294,7 +294,7 @@ class _OrderLineCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
             decoration: BoxDecoration(
               color: AppColors.accentTint.resolveFrom(context),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderRadius: AppRadii.smRadius,
             ),
             child: Column(
               children: [
@@ -320,7 +320,7 @@ class _OrderLineCard extends StatelessWidget {
                   line.productName,
                   style: AppTypography.headline.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.xxs),
                 Row(
                   children: [
                     if (line.productCode case final code?) ...[
@@ -335,7 +335,7 @@ class _OrderLineCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
-          AppMoney(line.lineTotal, style: AppTypography.subheadline.copyWith(fontWeight: FontWeight.w600)),
+          AppMoney(line.lineTotal, style: AppTypography.row.copyWith(fontWeight: FontWeight.w600)),
         ],
       ),
     );

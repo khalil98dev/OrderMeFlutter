@@ -47,7 +47,10 @@ class CartBar extends StatelessWidget {
                   ? LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [accent, AppColors.accentDeep.resolveFrom(context)],
+                      colors: [
+                        AppColors.accentFill.resolveFrom(context),
+                        AppColors.accentDeep.resolveFrom(context),
+                      ],
                     )
                   : null,
               color: filled ? null : AppColors.surface.resolveFrom(context),

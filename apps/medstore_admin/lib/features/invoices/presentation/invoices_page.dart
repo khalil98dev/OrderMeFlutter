@@ -115,12 +115,12 @@ class InvoicesPage extends StatelessWidget {
                 Text(AppDateFormat.day(invoice.issueDate, locale)),
                 Text(AppDateFormat.day(invoice.dueDate, locale)),
                 InvoiceStatusBadge(invoice: invoice),
-                AppMoney(invoice.total, style: AppTypography.subheadline),
+                AppMoney(invoice.total, style: AppTypography.row),
                 invoice.amountDue == null
                     ? const Text('—')
                     : AppMoney(
                         invoice.amountDue!,
-                        style: AppTypography.subheadline,
+                        style: AppTypography.row,
                         tone: (invoice.isOverdue ?? false) ? AppTone.danger : null,
                       ),
               ],

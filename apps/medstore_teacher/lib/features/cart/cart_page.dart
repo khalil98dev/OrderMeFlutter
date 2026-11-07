@@ -175,7 +175,7 @@ class _CartLineTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTypography.headline.copyWith(color: AppColors.textPrimary.resolveFrom(context)),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: AppSpacing.xxs),
                   if (product.isAvailable)
                     ProductPrice(price: line.total, style: AppTypography.subheadline)
                   else
@@ -222,7 +222,7 @@ class _Summary extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.surface.resolveFrom(context),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
         boxShadow: const [BoxShadow(color: Color(0x1412131A), blurRadius: 24, offset: Offset(0, -6))],
       ),
       child: Padding(

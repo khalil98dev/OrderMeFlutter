@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import 'app_typography.dart';
+
 /// 8-point spacing.
 abstract final class AppSpacing {
   static const double xxs = 4;
@@ -10,8 +12,9 @@ abstract final class AppSpacing {
   static const double xl = 32;
   static const double xxl = 48;
 
-  /// Apple's minimum touch target.
-  static const double minTouchTarget = 44;
+  /// The smallest a control may be: Apple's 44 touch target on the phone, 32 with a pointer on the
+  /// Mac (where controls are denser, as in Apple's own desktop apps).
+  static double get minTouchTarget => AppTypography.isMac ? 32 : 44;
 
   static const EdgeInsets screenMobile = EdgeInsets.symmetric(horizontal: md, vertical: sm);
   static const EdgeInsets screenDesktop = EdgeInsets.all(lg);
@@ -64,7 +67,7 @@ abstract final class AppDurations {
   static const Duration bounce = Duration(milliseconds: 450);
 
   /// A target's smooth swell and settle (`AppBounceTarget.pop`).
-  static const Duration pop = Duration(milliseconds: 520);
+  static const Duration pop = Duration(milliseconds: 450);
 
   static const Curve easeOut = Curves.easeOutCubic;
   static const Curve standard = Curves.easeInOutCubic;

@@ -2851,6 +2851,48 @@ abstract class AppStrings {
   /// In fr, this message translates to:
   /// **'Entièrement réglée par le portefeuille.'**
   String get fullyPaidFromWallet;
+
+  /// No description provided for @setTeacherPassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau mot de passe'**
+  String get setTeacherPassword;
+
+  /// No description provided for @setTeacherPasswordTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau mot de passe pour {name}'**
+  String setTeacherPasswordTitle(String name);
+
+  /// No description provided for @setTeacherPasswordHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot de passe actuel n\'est pas demandé. {name} sera déconnecté de tous ses appareils et se connectera avec le nouveau.'**
+  String setTeacherPasswordHint(String name);
+
+  /// No description provided for @teacherPasswordSet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe mis à jour. Communiquez-le à l\'enseignant.'**
+  String get teacherPasswordSet;
+
+  /// No description provided for @generatePassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Générer'**
+  String get generatePassword;
+
+  /// No description provided for @copyPassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier'**
+  String get copyPassword;
+
+  /// No description provided for @passwordCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe copié.'**
+  String get passwordCopied;
 }
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {

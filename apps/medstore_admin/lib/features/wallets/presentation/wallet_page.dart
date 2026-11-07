@@ -58,11 +58,12 @@ class WalletPage extends StatelessWidget {
             AppMessage(text: problemText(strings, failure)),
             const SizedBox(height: AppSpacing.md),
           ],
-          // The figures, then the filters: each wraps to a new line in a narrow window instead of
-          // overflowing.
+          // The figures and the filters share one line when the window is wide enough; in a narrow
+          // one the filters move under the figures instead of overflowing.
           Wrap(
             spacing: AppSpacing.md,
             runSpacing: AppSpacing.md,
+            crossAxisAlignment: WrapCrossAlignment.end,
             children: [
               SizedBox(
                 width: 260,
@@ -71,6 +72,7 @@ class WalletPage extends StatelessWidget {
                   value: wallet == null ? '—' : MoneyFormat.dzd(wallet.balance, locale),
                   icon: AppIcons.wallet,
                   tone: AppTone.success,
+                  prominent: true,
                 ),
               ),
               SizedBox(
@@ -82,10 +84,9 @@ class WalletPage extends StatelessWidget {
                   tone: AppTone.info,
                 ),
               ),
+              const _TransactionFilters(),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
-          const _TransactionFilters(),
           const SizedBox(height: AppSpacing.md),
           const Expanded(child: _Ledger()),
         ],
@@ -192,7 +193,7 @@ class _Ledger extends StatelessWidget {
     final strings = AppStrings.of(context);
     final locale = Localizations.localeOf(context);
     return PagedTable<WalletTransaction, TransactionFilter>(
-      rowHeight: 60,
+      rowHeight: 48, // two lines at the Mac scale
       // Fixed widths only where the content has a known size (dates, amounts, buttons); the type and
       // the details share the rest, so neither is squeezed to a few letters.
       columns: [
@@ -226,7 +227,7 @@ class _Ledger extends StatelessWidget {
             children: [
               Text(transactionTypeText(strings, entry.type), maxLines: 1, overflow: TextOverflow.ellipsis),
               if (entry.isVoided) ...[
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.xxs),
                 AppBadge(label: strings.voidedBadge, tone: AppTone.danger),
               ],
             ],
@@ -241,8 +242,8 @@ class _Ledger extends StatelessWidget {
                 Text(extra, maxLines: 1, overflow: TextOverflow.ellipsis, style: secondary),
             ],
           ),
-          AppMoney(entry.amount, style: AppTypography.subheadline, tone: amountTone(entry.amount)),
-          AppMoney(entry.balanceAfter, style: AppTypography.subheadline),
+          AppMoney(entry.amount, style: AppTypography.row, tone: amountTone(entry.amount)),
+          AppMoney(entry.balanceAfter, style: AppTypography.row),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
